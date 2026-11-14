@@ -1,0 +1,5 @@
+# The website is a static Vite site. scripts/ is the offline Python data pipeline
+# (run on a team member's PC, never on Vercel), so it is not uploaded or deployed.
+scripts/
+docs/
+data_raw/
