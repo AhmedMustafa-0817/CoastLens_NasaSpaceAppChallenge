@@ -1,6 +1,6 @@
 # CoastLens mangrove alerts: Karachi coast
 
-Latest NISAR pass: 2026-10-23 · next pass about 2026-11-04 · generated 2026-11-15
+Latest NISAR pass: 2026-10-23 · next pass about 2026-11-16 · generated 2026-11-15
 
 These are places where the NISAR radar satellite sees mangrove thinning. They are leads for a field visit, not proof of damage. Please send photos and notes back so we can confirm or clear each alert.
 

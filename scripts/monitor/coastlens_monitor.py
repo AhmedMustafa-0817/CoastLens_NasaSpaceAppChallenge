@@ -166,6 +166,8 @@ def alerts():
     px_ha = abs(tr.a * tr.e) / 1e4
     last_date = npx["source"].split(" dates ")[1].split("-")[1][:8]
     next_pass = (dt.date(int(last_date[:4]), int(last_date[4:6]), int(last_date[6:])) + dt.timedelta(days=REPEAT_DAYS))
+    while next_pass <= dt.date.today():          # the next pass that has not happened yet
+        next_pass += dt.timedelta(days=REPEAT_DAYS)
 
     cands = []
     for k in range(1, n + 1):
