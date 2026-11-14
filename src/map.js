@@ -85,63 +85,90 @@ Promise.all([get('layers.json'), get('zones.geojson'), get('alerts.json'), get('
     r.querySelector('.mapx-info').hidden = !show;
   };
   rows.forEach((r, id) => {
-    r.querySelector('input[type=checkbox]').onchange = (ev) => setLayer(id, ev.target.checked);
+    r.querySelector('input[type=checkbox]').onchange = (ev) => { setLayer(id, ev.target.checked); story = null; markStory(); renderLegend(); };
     r.querySelector('input[type=range]').oninput = (ev) => on.get(id)?.setOpacity(+ev.target.value);
   });
 
-  // ---------- start-here stories ----------
+  // ---------- start-here stories (plain language for first-time visitors) ----------
   const zone = (id) => zones.features.find((f) => f.properties.id === id)?.properties;
   const zoneBounds = (...ids) => L.geoJSON({ type: 'FeatureCollection', features: zones.features.filter((f) => ids.includes(f.properties.id)) }).getBounds().pad(0.6);
-  const gt = S.gmw_timeseries.summary, ai = S.nisar_pixel.ai, zA = zone('A');
+  const gt = S.gmw_timeseries.summary, zA = zone('A');
   const alertBounds = L.latLngBounds(alerts.alerts.map((a) => [a.lat, a.lon])).pad(0.15);
   const rehri = L.latLngBounds([[24.775, 67.2], [24.825, 67.275]]);
+  const sq = (color, label) => ({ sq: color, label });
+  const bar = (from, to, a, b) => ({ bar: [from, to], a, b });
   const STORIES = [
-    { n: 1, title: 'Where are the mangroves?', layers: ['nisar_ai_mangrove_2025_26'], go: bounds,
-      text: `${gt.last.km2.toFixed(0)} km² of mangrove grow along this coast (Global Mangrove Watch, ${gt.last.year}). Green is our map made from NISAR radar alone: ${ai.held_out_accuracy.overall_accuracy_pct}% accurate on areas it never trained on.`,
-      key: 'Darker green = more certain it is mangrove.' },
-    { n: 3, title: 'Places that keep dying', layers: ['gmw4_lossyear'], go: zoneBounds('A', 'B'),
-      text: `Inside a growing coast, some patches lost forest year after year (pink dashed outlines). Zone ${zA.id} fell from ${zA.peak_km2.toFixed(2)} km² in ${zA.peak_year} to ${zA.km2_2025.toFixed(2)} km² in 2025: −${Math.round(zA.lost_pct)}%.`,
-      key: 'Yellow = lost long ago, red = lost recently.' },
-    { n: 5, title: 'Seeing through clouds', layers: [['nisar_hv_20261011', 1]], go: rehri,
-      text: 'The photo underneath needs clear skies. NISAR sends its own radar signal, so it sees the forest day or night, in any weather. Use the slider below to fade between radar and photo.',
-      key: 'Radar: bright = forest and buildings, black = water.', fade: ['nisar_hv_20261011', 'Photo', 'NISAR radar'] },
-    { n: 2, title: '40 years of change', layers: ['gmw4_change_1985_2025'], go: bounds,
-      text: `The mapped forest grew from ${gt.first.km2.toFixed(0)} km² in ${gt.first.year} to ${gt.last.km2.toFixed(0)} km² in ${gt.last.year} (+${Math.round(gt.net_change_pct)}%), much of it planted.`,
-      key: 'Blue = new mangrove since 1985, red = mangrove lost since 1985.' },
-    { n: 4, title: 'What is thinning right now', layers: ['nisar_hv_trend_2025_26'], go: alertBounds,
-      text: `NISAR sees ${alerts.alerts.length} patches of mangrove thinning this year, each backed by at least ${Math.min(...alerts.alerts.map((a) => Object.values(a.signals ?? {}).filter(Boolean).length))} of 4 independent signals (pink dots). Click a dot for the evidence and directions. Next NISAR check: about ${alerts.next_nisar_pass}.`,
-      key: 'Red = weakening compared with the rest of the forest, green = strengthening.' },
-    { n: 6, title: 'Old satellite vs NISAR', layers: [['alos_hv_2024', 1], ['nisar_hv_20261011', 1]], go: zoneBounds('C'),
-      text: 'Underneath: ALOS-2, the older L-band radar, which gives one picture a year. In zone C it showed the forest thinning in 2016, two years before ordinary photos did. On top: NISAR, every 12 days. Use the slider below to fade between them.',
-      key: 'Both radars: bright = forest, black = water.', fade: ['nisar_hv_20261011', 'ALOS-2 (2024)', 'NISAR (2026)'] },
+    { title: 'Where are the mangroves?', layers: ['nisar_ai_mangrove_2025_26'], go: bounds,
+      text: `Mangroves are trees that grow in seawater. They are nurseries for young fish, shrimp and crabs, and they shield the shore from waves and storms. Karachi's coast has about ${gt.last.km2.toFixed(0)} km² of them. The green on the map is where NISAR, a radar satellite, finds them.`,
+      key: [bar('#ffffd2', '#0a8c3c', 'Maybe forest', 'Mangrove forest')] },
+    { title: 'Places that keep dying', layers: ['gmw4_lossyear'], go: zoneBounds('A', 'B'),
+      text: `Most of this coast is greener than it was 40 years ago. But in a few places the forest keeps disappearing, year after year. In the worst one, about four-fifths of the forest is gone since ${zA.peak_year} (${zA.peak_km2.toFixed(2)} km² down to ${zA.km2_2025.toFixed(2)} km²). Once mangroves go, the shore behind them loses its shield.`,
+      key: [sq('#ffe678', 'Forest lost long ago'), sq('#e04a3a', 'Forest lost a few years ago'), sq('#c80028', 'Forest lost recently')] },
+    { title: 'Seeing through clouds', layers: [['nisar_hv_20261011', 1]], go: rehri,
+      text: 'Ordinary satellites take photos, so clouds and night hide the forest, often in the monsoon, exactly when storms hit. NISAR uses radar instead: it sees through cloud, day or night. Use the slider on the map to compare the photo with what NISAR sees.',
+      key: [sq('#d9d9d9', 'Trees and buildings (strong echo)'), sq('#111111', 'Water (no echo)')], fade: ['nisar_hv_20261011', 'Photo', 'Radar'] },
+    { title: '40 years of change', layers: ['gmw4_change_1985_2025'], go: bounds,
+      text: `In ${gt.first.year} there were about ${gt.first.km2.toFixed(0)} km² of mangroves here. In ${gt.last.year} there were about ${gt.last.km2.toFixed(0)} km², much of it planted by people. Good news, but a big total can hide the places that are still being lost.`,
+      key: [sq('#1d6fe0', 'New forest since 1985'), sq('#e63946', 'Forest lost since 1985')] },
+    { title: 'What is thinning right now', layers: ['nisar_hv_trend_2025_26'], go: alertBounds,
+      text: `NISAR checks this coast every 12 days. The ${alerts.alerts.length} pink dots are patches where the forest is getting thinner right now, backed up by other satellites too. That is where conservation teams should look first. Click a dot to see why, and how to get there.`,
+      key: [sq('#c82828', 'Forest getting weaker'), sq('#f5f5f0', 'No change'), sq('#1e9646', 'Forest getting stronger')] },
+    { title: 'Old satellite vs NISAR', layers: [['alos_hv_2024', 1], ['nisar_hv_20261011', 1]], go: zoneBounds('C'),
+      text: 'Before NISAR, radar gave us just one picture a year. In this spot it showed the forest thinning in 2016, two years before ordinary photos noticed. NISAR now checks every 12 days, so trouble can be caught while there is still time to act. Use the slider on the map to compare old and new.',
+      key: [sq('#d9d9d9', 'Forest (strong echo)'), sq('#111111', 'Water (no echo)')], fade: ['nisar_hv_20261011', 'Old (2024)', 'NISAR (2026)'] },
   ];
+  let story = null;
   const box = $('#stories');
   box.innerHTML = STORIES.map((st, i) => `<button class="mapx-story${i < 3 ? ' top' : ''}" data-i="${i}"><span class="mono">${String(i + 1).padStart(2, '0')}</span>${esc(st.title)}</button>`).join('')
     + `<div class="mapx-story-text" id="storyText" hidden></div>`;
+  const markStory = () => box.querySelectorAll('.mapx-story').forEach((b) => b.setAttribute('aria-pressed', String(story != null && +b.dataset.i === story)));
+
+  // ---------- floating legend (bottom-right of the map) ----------
+  const lg = $('#legend');
+  L.DomEvent.disableClickPropagation(lg);
+  L.DomEvent.disableScrollPropagation(lg);
+  const item = (k) => (k.bar
+    ? `<div class="mapx-lg-bar" style="background:linear-gradient(90deg,${k.bar[0]},${k.bar[1]})"></div><div class="mapx-lg-ends"><span>${esc(k.a)}</span><span>${esc(k.b)}</span></div>`
+    : `<li><i style="background:${k.sq}"></i>${esc(k.label)}</li>`);
+  const always = '<ul class="mapx-lg-list"><li><i class="mapx-sym-zone"></i>Area that keeps losing forest</li><li><i class="mapx-sym-alert"></i>Thinning now: check here first</li></ul>';
+  function renderLegend() {
+    let body = '';
+    if (story != null) {
+      const st = STORIES[story];
+      const bars = st.key.filter((k) => k.bar).map(item).join(''), sqs = st.key.filter((k) => !k.bar).map(item).join('');
+      body = (st.fade ? `<label class="mapx-fade"><span>${esc(st.fade[1])}</span><input type="range" min="0" max="1" step="0.05" value="${on.get(st.fade[0])?.options.opacity ?? 1}" aria-label="Slide between ${esc(st.fade[1])} and ${esc(st.fade[2])}"><span>${esc(st.fade[2])}</span></label>` : '')
+        + bars + (sqs ? `<ul class="mapx-lg-list">${sqs}</ul>` : '');
+    } else {
+      body = [...on.keys()].map((id) => cfg.layers.find((l) => l.id === id)).filter(Boolean)
+        .map((l) => `<div class="mapx-lg-layer"><b>${esc(l.title)}</b>${legend(l.legend)}</div>`).join('');
+    }
+    lg.innerHTML = `<h3>What the colours mean</h3>${body}${always}`;
+    const f = lg.querySelector('.mapx-fade input');
+    if (f) {
+      const id = STORIES[story].fade[0], rowRange = rows.get(id).querySelector('input[type=range]');
+      f.oninput = (ev) => { on.get(id)?.setOpacity(+ev.target.value); rowRange.value = ev.target.value; };
+    }
+  }
+  renderLegend();
+
   const show = (i) => {
     const st = STORIES[i];
     [...on.keys()].forEach((id) => setLayer(id, false));
     st.layers.forEach((x) => (Array.isArray(x) ? setLayer(x[0], true, x[1]) : setLayer(x, true)));
+    story = i;
+    markStory();
+    renderLegend();
     map.flyToBounds(st.go, { duration: 1.2 });
-    box.querySelectorAll('.mapx-story').forEach((b) => b.setAttribute('aria-pressed', b.dataset.i == i));
     const t = $('#storyText');
     t.hidden = false;
-    const ids = st.layers.map((x) => (Array.isArray(x) ? x[0] : x));
-    const legends = ids.map((id) => cfg.layers.find((l) => l.id === id)).filter(Boolean)
-      .map((l) => `<div class="mapx-story-legend"><span class="mono">${esc(l.title)}</span>${legend(l.legend)}</div>`).join('');
-    const fade = st.fade ? `<label class="mapx-fade"><span class="mono">${esc(st.fade[1])}</span><input type="range" min="0" max="1" step="0.05" value="1" aria-label="Fade between ${esc(st.fade[1])} and ${esc(st.fade[2])}"><span class="mono">${esc(st.fade[2])}</span></label>` : '';
-    t.innerHTML = `<p>${esc(st.text)}</p>${fade}<div class="mapx-key"><span class="mono">Legend</span><p>${esc(st.key)}</p>${legends}
-      <ul class="mapx-classes"><li><i class="mapx-sym-zone"></i>Decline zone: mangrove kept shrinking for years</li><li><i class="mapx-sym-alert"></i>NISAR alert: thinning now (click for details)</li></ul></div>
-      <button class="mapx-reset mono">Reset map</button>`;
+    t.innerHTML = `<p>${esc(st.text)}</p><button class="mapx-reset mono">Reset map</button>`;
     const panel = $('.mapx-panel');
     panel.scrollTo({ top: Math.max(0, t.offsetTop - panel.offsetTop - 120), behavior: 'smooth' });
-    if (st.fade) {
-      const rowRange = rows.get(st.fade[0]).querySelector('input[type=range]');
-      t.querySelector('.mapx-fade input').oninput = (ev) => { on.get(st.fade[0])?.setOpacity(+ev.target.value); rowRange.value = ev.target.value; };
-    }
     t.querySelector('.mapx-reset').onclick = () => {
       [...on.keys()].forEach((id) => setLayer(id, false));
-      box.querySelectorAll('.mapx-story').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+      story = null;
+      markStory();
+      renderLegend();
       t.hidden = true;
       map.flyToBounds(bounds, { duration: 1 });
     };
