@@ -1,5 +1,5 @@
 {
-  "_readme": "One entry per map layer. 'id' must equal the export file name from scripts/ee/export_layers.js (or the NISAR script) and the folder under public/tiles/. Set status to 'ready' only after real tiles exist in public/tiles/<id>/. Never mark mock data as ready.",
+  "_readme": "One entry per map layer. 'id' must equal the export file name from scripts/ee/export_layers.js (or the NISAR script) and the folder under public/tiles/. Set status to 'ready' only after real tiles exist in public/tiles/<id>/. Never mark mock data as ready. Numbers inside {{...}} in 'explain' and 'caveat' are filled in by the page from stats.json (or alerts.json with the prefix 'alerts.'), so the text cannot drift from the computed values.",
   "aoi": {
     "name": "Karachi mangrove coast, Rehri Goth to Port Qasim (outline)",
     "bbox": [
@@ -8,7 +8,7 @@
       67.433395,
       24.828817
     ],
-    "note": "Team-defined study box from Rehri Goth to Port Qasim and the creeks to the south: about 28 × 17.5 km (~490 km²). All statistics are computed inside this box. Red dashed outlines are decline zones: places where mangrove has kept shrinking for years."
+    "note": "Team-defined study box from Rehri Goth to Port Qasim and the creeks to the south: about 28 × 17.5 km (~490 km²). All statistics are computed inside this box. Red dashed outlines are decline zones: places where mangrove kept shrinking for years."
   },
   "center": [
     24.7501,
@@ -95,7 +95,7 @@
       "mode": "explore",
       "dates": "21 Nov 2025",
       "explain": "Same sensor, track and imaging mode as the 11 Oct 2026 image, about 11 months earlier, for comparison.",
-      "caveat": "Provisional data. We use the reprocessed (provisional) file: the earlier \"beta\" release of this date reads about 3.5 dB too dark.",
+      "caveat": "Provisional data. We use the reprocessed (provisional) file: the earlier \"beta\" release of this date reads several dB too dark.",
       "legend": {
         "type": "gradient",
         "colors": [
@@ -110,14 +110,14 @@
       "group": "nisar",
       "sensor": "NASA-ISRO NISAR L-band SAR (L2 GCOV, provisional), track 164 descending, frame 76",
       "resolution": "20 m",
-      "source": "NASA/JPL/ISRO via ASF DAAC (NISAR_L2_GCOV_V1); processed by CoastLens",
+      "source": "NASA/JPL/ISRO via ASF DAAC (NISAR_L2_GCOV_PROVISIONAL_V1); processed by CoastLens",
       "maxNativeZoom": 14,
       "status": "ready",
       "id": "nisar_hh_20261011",
       "title": "NISAR HH radar, 11 Oct 2026",
       "mode": "research",
       "dates": "11 Oct 2026",
-      "explain": "HH polarization. Strongly boosted where radar bounces off the water surface and then off tree trunks (\"double bounce\"), typical of flooded mangrove forest.",
+      "explain": "HH polarization. Strongly boosted where radar bounces off the water surface and then off tree trunks (\"double bounce\"), typical of flooded mangrove forest. HH is much brighter than HV, so this layer has its own grey scale (-20 to 0 dB; the HV layers use -25 to -5 dB).",
       "caveat": "Compare with HV to see structure (HV) versus double-bounce (HH) effects.",
       "legend": {
         "type": "gradient",
@@ -125,16 +125,16 @@
           "#000000",
           "#ffffff"
         ],
-        "min": "-25 dB",
-        "max": "-5 dB"
+        "min": "-20 dB",
+        "max": "0 dB"
       }
     },
     {
       "group": "nisar",
       "status": "ready",
       "maxNativeZoom": 14,
-      "sensor": "NASA-ISRO NISAR L-band SAR (L2 GUNW), track 142 ascending, frame 14",
-      "resolution": "20 m",
+      "sensor": "NASA-ISRO NISAR L-band SAR (L2 GUNW, beta product), track 142 ascending, frame 14",
+      "resolution": "20 m grid",
       "source": "NASA/JPL/ISRO via ASF DAAC (NISAR L2 GUNW); processed by CoastLens",
       "legend": {
         "type": "gradient",
@@ -150,14 +150,14 @@
       "mode": "explore",
       "dates": "14 Dec 2025 → 26 Dec 2025 (12 days)",
       "explain": "Coherence compares two radar passes 12 days apart. Bright = the surface stayed the same; dark = it changed (moving water, growing or moving leaves, wet/dry soil, tides).",
-      "caveat": "Forest canopies and water naturally have low coherence because leaves and waves move. Low coherence is not damage."
+      "caveat": "Forest canopies and water naturally have low coherence because leaves and waves move. Low coherence is not damage. This pair is an early beta product; no reprocessed version exists yet. Values below about 0.25 are within the noise of this measurement."
     },
     {
       "group": "nisar",
       "status": "ready",
       "maxNativeZoom": 14,
-      "sensor": "NASA-ISRO NISAR L-band SAR (L2 GUNW), track 142 ascending, frame 14",
-      "resolution": "20 m",
+      "sensor": "NASA-ISRO NISAR L-band SAR (L2 GUNW, provisional), track 142 ascending, frame 14",
+      "resolution": "20 m grid",
       "source": "NASA/JPL/ISRO via ASF DAAC (NISAR L2 GUNW); processed by CoastLens",
       "legend": {
         "type": "gradient",
@@ -172,8 +172,8 @@
       "title": "NISAR coherence, monsoon end (4–16 Sep 2026)",
       "mode": "explore",
       "dates": "4 Sep 2026 → 16 Sep 2026 (12 days)",
-      "explain": "Same measurement at the end of the monsoon. Compare with December: wetter, more changeable surfaces lose coherence.",
-      "caveat": "Rain, flooding and tides between the two passes lower coherence. Compare the same season across years before calling anything a trend."
+      "explain": "Same measurement at the end of the monsoon. Wetter, more changeable surfaces lose coherence. The December layer is an earlier beta product, so differences between the two can come from processing as well as season.",
+      "caveat": "Rain, flooding and tides between the two passes lower coherence. Compare the same season across years before calling anything a trend. Values below about 0.25 are within the noise of this measurement."
     },
     {
       "id": "nisar_ai_mangrove_2025_26",
@@ -184,9 +184,9 @@
       "source": "NASA/JPL/ISRO via ASF DAAC; per-pixel analysis by CoastLens (scripts/nisar/nisar_pixel_products.py)",
       "status": "ready",
       "mode": "explore",
-      "dates": "27 passes, Nov 2025 – Oct 2026",
-      "explain": "Our AI model learned what mangrove looks like to NISAR (10 radar features per pixel: brightness, texture, how it changes through the year) from Global Mangrove Watch labels, then mapped mangrove from radar alone. Tested on 2 km map blocks it never saw: 95.7% accurate, finds 96.7% of GMW's mangrove. Darker green = more certain. It maps 194.12 km² of mangrove.",
-      "caveat": "Trained on GMW, so it inherits GMW's own errors. Works day or night and through cloud, which optical maps cannot.",
+      "dates": "17 quad-pol passes, Nov 2025 – Oct 2026",
+      "explain": "Our AI model learned what mangrove looks like to NISAR (10 radar features per pixel: brightness, texture, how it changes through the year) from Global Mangrove Watch labels, then mapped mangrove from radar alone. Tested on 2 km map blocks it never saw, on pixels where GMW is sure: {{nisar_pixel.ai.held_out_accuracy.overall_accuracy_pct}}% accurate. It finds {{nisar_pixel.ai.held_out_accuracy.gmw_mangrove_found_by_nisar_pct}}% of GMW's mangrove, and {{nisar_pixel.ai.held_out_accuracy.nisar_mangrove_confirmed_by_gmw_pct}}% of what it marks is GMW mangrove (F1 {{nisar_pixel.ai.held_out_accuracy.f1}}). Darker green = more certain. The map shown comes from a model trained on the whole box and maps {{nisar_pixel.ai.mangrove_km2}} km² (GMW on the same grid: {{nisar_pixel.classes.agreement.gmw_mangrove_km2}} km²).",
+      "caveat": "Trained on GMW, so it inherits GMW's own errors. Mixed creek-edge pixels, the hard ones, are left out of the test. Works day or night and through cloud, which optical maps cannot.",
       "legend": {
         "type": "gradient",
         "colors": [
@@ -202,21 +202,21 @@
       "id": "nisar_hv_trend_2025_26",
       "group": "analysis",
       "title": "NISAR forest watch: weakening vs strengthening, 2025–26",
-      "sensor": "NASA-ISRO NISAR L-band SAR (L2 GCOV, provisional), track 164 descending, frame 76",
+      "sensor": "NASA-ISRO NISAR L-band SAR (L2 GCOV: {{nisar_pixel.passes.provisional}} provisional passes and {{nisar_pixel.passes.validated}} validated), track 164 descending, frame 76",
       "resolution": "20 m",
       "source": "NASA/JPL/ISRO via ASF DAAC; per-pixel analysis by CoastLens (scripts/nisar/nisar_pixel_products.py)",
       "maxNativeZoom": 14,
       "status": "ready",
       "mode": "explore",
       "dates": "27 passes, Nov 2025 – Oct 2026",
-      "explain": "Each mangrove pixel's HV radar trend over the year, compared with the forest as a whole on every pass (so season, tide and calibration shifts cancel out). Red: weakening relative to the rest of the forest (possible thinning or cutting). Green: strengthening. White: keeping pace. 10.5% of the forest (20.41 km²) is weakening by more than 1 dB per year; 16.3% is strengthening. The NGO alerts are built from clusters of red.",
-      "caveat": "One year of data: this ranks patches against the rest of the forest, and season-dependent effects (tidal flooding, leaf flush, soil moisture) can differ between patches. It is not yet a multi-year trend. Isolated red pixels are often speckle; look for clusters.",
+      "explain": "Each mangrove pixel's HV radar trend over the year, compared with the forest as a whole on every pass, so shifts that affect the whole forest equally (such as calibration) cancel out. Patches that respond differently to season or tide do not cancel. Red: weakening relative to the rest of the forest. Blue: strengthening. White: keeping pace. {{nisar_pixel.trend.pct_weakening}}% of the forest ({{nisar_pixel.trend.weakening_km2}} km²) is weakening by more than 1 dB per year and {{nisar_pixel.trend.pct_strengthening}}% is strengthening. With the order of the passes shuffled, noise alone flags about {{nisar_pixel.trend.by_chance.pct_weakening}}% each way, so most of this is a real pattern in the data. This differs from the structural layer, which only counts changes of 2 dB or more between two short windows: the alerts flag smaller, steady declines of about 1.5 dB per year relative to the forest. The alerts are built from clusters of red.",
+      "caveat": "A real pattern, but not proven to be canopy change. One year of data cannot separate a trend from a seasonal curve, and more of the forest strengthens than weakens, which a measure relative to the forest itself should not show. Predicted tide height at each pass is included in the fit and changes little ({{nisar_pixel.trend.tide.without_tide_term.pct_weakening}}% weakening without it), but it comes from a global tide model, not a local gauge. A same-season comparison has to wait for the Nov–Dec 2026 passes. Forest here means Global Mangrove Watch 2025 mangrove. Isolated red pixels are often speckle; look for clusters.",
       "legend": {
         "type": "gradient",
         "colors": [
           "#c82828",
           "#f5f5f0",
-          "#1e9646"
+          "#1e64c8"
         ],
         "min": "-3 dB/yr",
         "max": "+3 dB/yr"
@@ -226,14 +226,14 @@
       "id": "nisar_change_type_2025_26",
       "group": "analysis",
       "title": "NISAR: structural vs moisture change, 2025 → 2026",
-      "sensor": "NASA-ISRO NISAR L-band SAR (L2 GCOV, provisional), track 164 descending, frame 76",
+      "sensor": "NASA-ISRO NISAR L-band SAR (L2 GCOV, provisional; quad-pol passes only), track 164 descending, frame 76",
       "resolution": "20 m (60 m smoothed)",
       "source": "NASA/JPL/ISRO via ASF DAAC; per-pixel analysis by CoastLens (scripts/nisar/nisar_pixel_products.py)",
       "status": "ready",
       "mode": "explore",
-      "dates": "Nov–Dec 2025 vs Sep–Oct 2026",
-      "explain": "Uses the two polarizations to tell what kind of change happened. Wetter ground or tidal flooding changes HH and HV together; a canopy that thins or grows changes the cross-polarized HV echo much more than HH. Red: canopy loss. Green: canopy gain. Blue: wetter/flooded. Orange: drier. Inside the mangrove forest almost nothing changed structurally this year (0.03% canopy loss); most changes are moisture on mudflats and land.",
-      "caveat": "The two windows are ~10 months apart and not the same season, so moisture changes are expected. Open water is left blank. Structural pixels are leads for field checks.",
+      "dates": "Nov–Dec 2025 vs Aug–Oct 2026 (3 passes each)",
+      "explain": "Uses the two polarizations to tell what kind of change happened. Wetter ground or tidal flooding changes HH and HV together; a canopy that thins or grows changes the cross-polarized HV echo much more than HH. Red: canopy loss. Green: canopy gain. Blue: wetter/flooded. Orange: drier. Inside the mangrove forest almost nothing changed structurally this year ({{nisar_pixel.change_type.pct_of_forest.Canopy loss (structural)}}% canopy loss); most changes are moisture on mudflats and land. Only changes of 2 dB or more count here, so the smaller, steady declines behind the alerts do not show up in this layer.",
+      "caveat": "The two windows are 8 to 11 months apart and not the same season, so moisture changes are expected. Tide height differed between passes. Open water is left blank. Structural pixels are leads for field checks.",
       "legend": {
         "type": "classes",
         "items": [
@@ -291,9 +291,9 @@
       "maxNativeZoom": 14,
       "status": "ready",
       "mode": "explore",
-      "dates": "27 passes, Nov 2025 – Oct 2026",
-      "explain": "Made from NISAR radar alone with simple, explainable rules: a year of HV and HH averaged per 20 m pixel. Mangrove canopy gives a medium, smooth HV echo; water and mud are dark; buildings bounce HH back very strongly. The rules map 169.85 km² of mangrove (GMW 2025: 184.36 km²), 86.8% agreement with GMW. The AI map does better.",
-      "caveat": "Simple thresholds tuned on Rehri Goth; creek-edge pixels are mixed and some scrub near the city can look like mangrove.",
+      "dates": "17 quad-pol passes, Nov 2025 – Oct 2026",
+      "explain": "Made from NISAR radar alone with simple, explainable rules: a year of HV and HH averaged per 20 m pixel. Mangrove canopy gives a medium, smooth HV echo; water and mud are dark; buildings bounce HH back very strongly. The rules map {{nisar_pixel.classes.area_km2.Mangrove}} km² of mangrove (GMW 2025 on the same grid: {{nisar_pixel.classes.agreement.gmw_mangrove_km2}} km²; {{gmw_timeseries.summary.last.km2}} km² on GMW's own grid, which covers a slightly smaller rectangle), {{nisar_pixel.classes.agreement.overall_accuracy_pct}}% agreement with GMW on pixels where GMW is sure. The AI map does better.",
+      "caveat": "Simple thresholds set by eye on the Rehri Goth sub-area (about 2% of the box); agreement measured over the whole box. Creek-edge pixels are mixed and some scrub near the city can look like mangrove.",
       "legend": {
         "type": "classes",
         "items": [
@@ -327,7 +327,7 @@
       "source": "Global Mangrove Watch v4.1.12 (Aberystwyth University / JAXA, July 2026), zenodo.org/records/21346457",
       "maxNativeZoom": 14,
       "dates": "2025",
-      "explain": "Where mangroves were mapped in 2025: 180.9 km² inside the study box.",
+      "explain": "Where mangroves were mapped in 2025: {{gmw_timeseries.summary.last.km2}} km² inside the study box.",
       "caveat": "External product, not our own classification.",
       "legend": {
         "type": "classes",
@@ -349,7 +349,7 @@
       "status": "ready",
       "mode": "explore",
       "dates": "1985–2025 (yearly)",
-      "explain": "Every pixel that was mangrove for at least 3 years and is gone in 2025, coloured by the year it disappeared. 5.78 km² was lost this way while far more was gained. The red dashed outlines are decline zones: places where the losses kept coming year after year.",
+      "explain": "Every pixel that was mangrove for at least 3 years and is gone in 2025, coloured by the year it disappeared. 5.78 km² was lost this way while far more was gained. The red dashed outlines are decline zones: places where the losses kept coming year after year, mostly between about 2011 and 2020.",
       "caveat": "Single-year flips at creek edges are often mapping noise; look for solid patches.",
       "legend": {
         "type": "gradient",
@@ -373,7 +373,7 @@
       "source": "Global Mangrove Watch v4.1.12 (Aberystwyth University / JAXA, July 2026), zenodo.org/records/21346457",
       "maxNativeZoom": 14,
       "dates": "1985 vs 2025",
-      "explain": "Blue: new mangrove since 1985. Red: mangrove in 1985 but not in 2025. Overall the forest in the box grew from 67.22 to 180.9 km² (+169.1%), much of it planted. But a few places lost their forest year after year: see the loss-year layer and the red dashed decline zones.",
+      "explain": "Blue: new mangrove since 1985. Red: mangrove in 1985 but not in 2025. Overall the forest in the box grew from {{gmw_timeseries.summary.first.km2}} to {{gmw_timeseries.summary.last.km2}} km² (+{{gmw_timeseries.summary.net_change_pct}}%). Planting programmes have expanded mangroves in the wider Indus Delta (Ahmed et al. 2025, Ecological Indicators); how much of the gain here was planted is not measured. A few places lost their forest year after year: see the loss-year layer and the red dashed decline zones.",
       "caveat": "Differences between two maps also include mapping errors, not only real change.",
       "legend": {
         "type": "classes",
@@ -400,7 +400,7 @@
       "source": "Global Mangrove Watch v4.1.12 (Aberystwyth University / JAXA, July 2026), zenodo.org/records/21346457",
       "maxNativeZoom": 14,
       "dates": "1985",
-      "explain": "Where mangroves were mapped in 1985: 67.22 km² inside the study box.",
+      "explain": "Where mangroves were mapped in 1985: {{gmw_timeseries.summary.first.km2}} km² inside the study box.",
       "caveat": "External product. Early Landsat years are less reliable than recent ones.",
       "legend": {
         "type": "classes",
@@ -615,14 +615,14 @@
       "dates": "Nov 2015 – Feb 2016 vs Nov 2024 – Feb 2025",
       "resolution": "30 m",
       "source": "Derived by CoastLens (NDVI difference)",
-      "explain": "Red: less green than before. Green: greener than before.",
+      "explain": "Red: less green than before. Blue: greener than before.",
       "caveat": "Tides, water on the surface and seasonal differences also change NDVI. Open water is left transparent (no meaningful greenness value).",
       "legend": {
         "type": "gradient",
         "colors": [
           "#ff0000",
           "#ffffff",
-          "#008000"
+          "#0000ff"
         ],
         "min": "-0.4",
         "max": "+0.4"
@@ -698,7 +698,7 @@
       "status": "ready",
       "mode": "explore",
       "dates": "2024 (yearly mosaic)",
-      "explain": "The older L-band satellite. In decline zone C it showed the forest thinning from 2016, two years before optical satellites saw it, but it gives only one picture a year. NISAR gives one every 12 days.",
+      "explain": "The older L-band satellite. In decline zone C its signal dropped against stable forest from 2017, about a year before the greenness drop, but it gives only one picture a year. NISAR gives one every 12 days.",
       "caveat": "Not NISAR. One mosaic per year, stitched from different dates.",
       "legend": {
         "type": "gradient",

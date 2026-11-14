@@ -91,7 +91,7 @@ function mangrove(year) {
 var STYLE = {
   truecolor: {bands: ['red', 'green', 'blue'], min: 0, max: 0.25},
   ndvi: {min: 0, max: 0.8, palette: ['8b4513', 'ffff00', '008000']},
-  ndviChange: {min: -0.4, max: 0.4, palette: ['ff0000', 'ffffff', '008000']},
+  ndviChange: {min: -0.4, max: 0.4, palette: ['ff0000', 'ffffff', '0000ff']},
   s1: {min: -25, max: -5, palette: ['000000', 'ffffff']},
   mangrove: {min: 1, max: 1, palette: ['00aa00']},
   lossGain: {min: 1, max: 2, palette: ['e63946', '1d6fe0']}

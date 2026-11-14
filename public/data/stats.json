@@ -615,19 +615,135 @@
   },
   "nisar_pixel": {
     "source": "NISAR L2 GCOV track 164, 27 dates 20251121-20261023 (QC-suspect dates removed), HV and HH per pixel on a 20 m grid after a 3x3 speckle filter",
+    "passes": {
+      "listed": 28,
+      "used": 27,
+      "removed_by_quality_check": [
+        "20260414"
+      ],
+      "quad_pol": 17,
+      "dual_pol": 10,
+      "provisional": 26,
+      "validated": 1,
+      "validated_dates": [
+        "20261023"
+      ],
+      "quad_pol_dates": [
+        "20251121",
+        "20251215",
+        "20251227",
+        "20260108",
+        "20260120",
+        "20260201",
+        "20260213",
+        "20260225",
+        "20260309",
+        "20260402",
+        "20260426",
+        "20260520",
+        "20260613",
+        "20260707",
+        "20260824",
+        "20260917",
+        "20261011"
+      ],
+      "dual_pol_dates": [
+        "20251203",
+        "20260321",
+        "20260508",
+        "20260601",
+        "20260625",
+        "20260719",
+        "20260812",
+        "20260905",
+        "20260929",
+        "20261023"
+      ],
+      "years_spanned": 0.92,
+      "summary": "27 passes: 26 provisional, 1 validated"
+    },
+    "mode_offset": {
+      "what": "Median over each surface of (a dual-pol pass, dB) minus (the mean of its two quad-pol neighbours, averaged in linear power). quad_control_db is the same measure for quad-pol passes between two quad-pol passes and should be near zero. Measured on the unfiltered 20 m stack.",
+      "surfaces": {
+        "stable land": {
+          "pixels": 26092,
+          "HH": {
+            "dual_minus_quad_db": -0.38,
+            "spread_db": 0.18,
+            "dual_passes_compared": 7,
+            "quad_control_db": -0.0
+          },
+          "HV": {
+            "dual_minus_quad_db": -0.11,
+            "spread_db": 0.22,
+            "dual_passes_compared": 7,
+            "quad_control_db": -0.05
+          }
+        },
+        "mangrove": {
+          "pixels": 433869,
+          "HH": {
+            "dual_minus_quad_db": -0.6,
+            "spread_db": 0.15,
+            "dual_passes_compared": 7,
+            "quad_control_db": 0.01
+          },
+          "HV": {
+            "dual_minus_quad_db": -0.1,
+            "spread_db": 0.37,
+            "dual_passes_compared": 7,
+            "quad_control_db": -0.04
+          }
+        },
+        "open water": {
+          "pixels": 365602,
+          "HH": {
+            "dual_minus_quad_db": 0.84,
+            "spread_db": 0.57,
+            "dual_passes_compared": 7,
+            "quad_control_db": -0.47
+          },
+          "HV": {
+            "dual_minus_quad_db": 1.32,
+            "spread_db": 0.53,
+            "dual_passes_compared": 7,
+            "quad_control_db": -0.19
+          }
+        }
+      },
+      "handling": "Not corrected: the offset differs by surface, so one constant would not fit. Yearly means, the AI features, the land-cover rules and the structural-vs-moisture windows use quad-pol passes only. The HV trend uses every pass, relative to the forest median of the same pass, with the imaging mode as a covariate."
+    },
+    "hh_display": {
+      "date": "20261011",
+      "display_range_db": [
+        -20,
+        0
+      ],
+      "p2_db": -19.6,
+      "p50_db": -9.9,
+      "p98_db": -1.8
+    },
     "classes": {
       "id": "nisar_classes_2025_26",
       "rules_db": "water/mudflat: HV < -20.5; built-up: HH > -3.5 or HV-HH < -10 or HV > -10.5; mangrove: HV >= -19, HV-HH >= -8 and 100 m HV texture < 1.3 dB; other land: the rest",
       "area_km2": {
-        "Water / mudflat": 201.66,
-        "Mangrove": 169.85,
-        "Built-up": 23.69,
-        "Other land": 109.97
+        "Water / mudflat": 204.17,
+        "Mangrove": 156.49,
+        "Built-up": 24.34,
+        "Other land": 120.17
       },
       "agreement": {
-        "gmw_mangrove_found_by_nisar_pct": 78.9,
+        "gmw_mangrove_found_by_nisar_pct": 72.8,
         "nisar_mangrove_confirmed_by_gmw_pct": 83.4,
-        "overall_accuracy_pct": 86.8,
+        "overall_accuracy_pct": 85.0,
+        "f1": 0.78,
+        "confusion_pixels": {
+          "both_mangrove": 320145,
+          "nisar_only": 63810,
+          "gmw_only": 119345,
+          "both_not": 716966
+        },
+        "tested_on": "pixels GMW is sure about (over 90% or under 10% mangrove); mixed edge pixels are left out",
         "reference": "Global Mangrove Watch v4.1, 2025",
         "gmw_mangrove_km2": 184.36
       }
@@ -638,35 +754,35 @@
       "features_by_importance": [
         {
           "feature": "HV low (p10)",
-          "importance": 0.254
+          "importance": 0.256
         },
         {
           "feature": "HV 60 m mean",
-          "importance": 0.208
+          "importance": 0.215
         },
         {
           "feature": "HV mean",
-          "importance": 0.166
-        },
-        {
-          "feature": "HV high (p90)",
-          "importance": 0.108
+          "importance": 0.168
         },
         {
           "feature": "HH mean",
-          "importance": 0.107
+          "importance": 0.108
+        },
+        {
+          "feature": "HV high (p90)",
+          "importance": 0.103
         },
         {
           "feature": "HV texture 100 m",
-          "importance": 0.047
+          "importance": 0.048
         },
         {
           "feature": "HV seasonal spread",
-          "importance": 0.047
+          "importance": 0.04
         },
         {
           "feature": "HH seasonal spread",
-          "importance": 0.033
+          "importance": 0.031
         },
         {
           "feature": "HV-HH",
@@ -680,147 +796,200 @@
       "trained_on": "Global Mangrove Watch v4.1 2025 labels (pixels clearly mangrove or clearly not)",
       "validation": "2 km checkerboard blocks: trained on half the map, tested on the other half, and swapped",
       "held_out_accuracy": {
-        "gmw_mangrove_found_by_nisar_pct": 96.7,
-        "nisar_mangrove_confirmed_by_gmw_pct": 91.8,
-        "overall_accuracy_pct": 95.7
+        "gmw_mangrove_found_by_nisar_pct": 96.6,
+        "nisar_mangrove_confirmed_by_gmw_pct": 91.3,
+        "overall_accuracy_pct": 95.4,
+        "f1": 0.94,
+        "confusion_pixels": {
+          "both_mangrove": 424348,
+          "nisar_only": 40592,
+          "gmw_only": 15142,
+          "both_not": 740184
+        },
+        "tested_on": "pixels GMW is sure about (over 90% or under 10% mangrove); mixed edge pixels are left out"
       },
       "threshold_rules_accuracy_same_pixels": {
-        "gmw_mangrove_found_by_nisar_pct": 78.9,
+        "gmw_mangrove_found_by_nisar_pct": 72.8,
         "nisar_mangrove_confirmed_by_gmw_pct": 83.4,
-        "overall_accuracy_pct": 86.8
+        "overall_accuracy_pct": 85.0,
+        "f1": 0.78,
+        "confusion_pixels": {
+          "both_mangrove": 320145,
+          "nisar_only": 63810,
+          "gmw_only": 119345,
+          "both_not": 716966
+        },
+        "tested_on": "pixels GMW is sure about (over 90% or under 10% mangrove); mixed edge pixels are left out"
       },
-      "mangrove_km2": 194.12
+      "mangrove_km2": 194.48,
+      "published_map": "A second model trained on every sure pixel in the box (not the held-out models), mangrove = probability >= 0.5",
+      "features_from": "quad-pol passes only"
     },
     "trend": {
       "id": "nisar_hv_trend_2025_26",
       "unit": "dB per year, relative to the forest median on each date",
-      "forest_mask": "AI mangrove probability >= 0.5",
+      "forest_mask": "Global Mangrove Watch v4.1 2025, at least half of the 20 m pixel (independent of the tested year)",
+      "forest_km2": 184.38,
       "weakening_threshold": -1.0,
       "dates_used": 27,
-      "median": 0.13,
-      "rule": "weakening = slope <= -1 dB/yr AND |t| >= 2 (slope/standard error); strengthening likewise; else steady",
-      "median_standard_error": 0.37,
-      "pct_weakening": 10.5,
-      "pct_strengthening": 16.3,
-      "pct_stable": 73.1,
-      "weakening_km2": 20.41,
-      "pct_weakening_edge": 10.0,
-      "pct_weakening_interior": 12.5,
+      "model": "per pixel: relative HV = a + b*time + m*(dual-pol pass) + c*tide",
+      "median": 0.14,
+      "rule": "weakening = slope <= -1 dB/yr AND |t| >= 2; strengthening likewise; else steady. t = slope / standard error, deflated for lag-1 autocorrelation of the residuals (n_eff = n(1-r)/(1+r)). Not corrected for season or for testing many pixels.",
+      "median_standard_error": 0.36,
+      "pct_weakening": 8.5,
+      "pct_strengthening": 13.4,
+      "pct_stable": 78.1,
+      "weakening_km2": 15.67,
+      "pct_weakening_edge": 8.3,
+      "pct_weakening_interior": 9.8,
+      "by_chance": {
+        "method": "20 runs with the order of the passes shuffled (same shuffle for all pixels), refitted, same rule. Measures random noise only: a shuffle also destroys any seasonal curve.",
+        "pct_weakening": 0.6,
+        "pct_strengthening": 0.7,
+        "pct_weakening_max_run": 1.5,
+        "pct_strengthening_max_run": 2.8
+      },
+      "mask_change": {
+        "old_mask": "AI mangrove probability >= 0.5 (built from the same year of HV)",
+        "pixels_only_in_old_mask": 47746,
+        "pixels_only_in_new_mask": 22514,
+        "pixels_in_both": 438448,
+        "old_mask_pct_weakening": 9.0,
+        "old_mask_pct_strengthening": 13.0,
+        "pct_weakening_in_pixels_the_old_mask_missed": 4.8
+      },
+      "tide": {
+        "source": "docs/tide_at_pass.csv (predicted tide height at each pass)",
+        "tide_range_m": [
+          -1.57,
+          0.99
+        ],
+        "corr_tide_vs_time": 0.03,
+        "quad_passes": {
+          "corr_tide_forest_median_hv": -0.46,
+          "corr_tide_forest_median_hh": -0.4,
+          "corr_tide_forest_median_hv_minus_hh": -0.11
+        },
+        "pct_forest_pixels_abs_corr_over_0_5": 9.1,
+        "without_tide_term": {
+          "pct_weakening": 8.1,
+          "pct_strengthening": 12.3
+        }
+      },
+      "same_season_comparison": "pending: needs Nov-Dec 2026 quad-pol passes to compare with Nov-Dec 2025",
       "caveat": "One year of data: this ranks patches against the rest of the forest, and season-dependent effects (tidal flooding, leaf flush, soil moisture) can differ between patches. It is not yet a multi-year trend."
     },
     "change_type": {
       "id": "nisar_change_type_2025_26",
       "early_dates": [
         "20251121",
-        "20251203",
         "20251215",
         "20251227"
       ],
       "late_dates": [
-        "20260905",
+        "20260824",
         "20260917",
-        "20260929",
-        "20261011",
-        "20261023"
+        "20261011"
       ],
+      "modes": "quad-pol passes only in both windows; averaged and smoothed in linear power",
       "rule": "changed if |dHV| or |dHH| >= 2 dB (60 m smoothed); structural if |dHV - dHH| >= 1.5 dB and |dHV| >= 2 dB (cross-pol volume echo moved much more than co-pol = canopy changed); otherwise moisture (both moved together = wetter/drier ground or tidal flooding)",
       "area_km2": {
-        "Canopy loss (structural)": 1.03,
-        "Canopy gain (structural)": 1.7,
-        "Wetter / flooded (moisture)": 9.62,
-        "Drier (moisture)": 7.76
+        "Canopy loss (structural)": 1.57,
+        "Canopy gain (structural)": 4.03,
+        "Wetter / flooded (moisture)": 10.59,
+        "Drier (moisture)": 6.34
       },
       "pct_of_forest": {
-        "Canopy loss (structural)": 0.03,
-        "Canopy gain (structural)": 0.03,
-        "Wetter / flooded (moisture)": 0.27,
-        "Drier (moisture)": 0.74
+        "Canopy loss (structural)": 0.02,
+        "Canopy gain (structural)": 0.13,
+        "Wetter / flooded (moisture)": 0.63,
+        "Drier (moisture)": 0.38
       },
-      "caveat": "Early and late windows are ~10 months apart and not the same season, so moisture changes are expected. Structural pixels are candidates for field checks, not confirmed loss."
+      "caveat": "Early and late windows are 8 to 11 months apart and not the same season, so moisture changes are expected. Structural pixels are candidates for field checks, not confirmed loss."
     },
     "zones": [
       {
         "id": "A",
-        "nisar_mangrove_km2": 0.199,
+        "nisar_mangrove_km2": 0.198,
         "gmw_2025_km2": 0.159,
-        "pct_forest_weakening": 2.8,
-        "pct_forest_strengthening": 34.3,
-        "median_trend_db_per_year": 0.66,
+        "pct_forest_weakening": 3.7,
+        "pct_forest_strengthening": 23.0,
+        "median_trend_db_per_year": 0.54,
         "pct_canopy_loss_structural": 0.0,
-        "pct_wetter_moisture": 2.2,
-        "box_pct_forest_weakening": 10.5,
+        "pct_wetter_moisture": 3.9,
+        "box_pct_forest_weakening": 8.5,
         "status": "no extra weakening seen by NISAR this year"
       },
       {
         "id": "B",
-        "nisar_mangrove_km2": 0.118,
+        "nisar_mangrove_km2": 0.112,
         "gmw_2025_km2": 0.075,
-        "pct_forest_weakening": 12.2,
-        "pct_forest_strengthening": 12.2,
-        "median_trend_db_per_year": 0.17,
+        "pct_forest_weakening": 17.6,
+        "pct_forest_strengthening": 5.7,
+        "median_trend_db_per_year": -0.01,
         "pct_canopy_loss_structural": 0.0,
-        "pct_wetter_moisture": 0.7,
-        "box_pct_forest_weakening": 10.5,
-        "status": "watch: some weakening"
+        "pct_wetter_moisture": 1.8,
+        "box_pct_forest_weakening": 8.5,
+        "status": "radar weakening well above the forest average this year"
       },
       {
         "id": "C",
-        "nisar_mangrove_km2": 0.113,
+        "nisar_mangrove_km2": 0.118,
         "gmw_2025_km2": 0.086,
-        "pct_forest_weakening": 9.9,
-        "pct_forest_strengthening": 26.6,
-        "median_trend_db_per_year": 0.09,
+        "pct_forest_weakening": 4.7,
+        "pct_forest_strengthening": 26.5,
+        "median_trend_db_per_year": 0.2,
         "pct_canopy_loss_structural": 0.0,
-        "pct_wetter_moisture": 6.4,
-        "box_pct_forest_weakening": 10.5,
+        "pct_wetter_moisture": 9.8,
+        "box_pct_forest_weakening": 8.5,
         "status": "no extra weakening seen by NISAR this year"
       },
       {
         "id": "D",
         "nisar_mangrove_km2": 0.036,
         "gmw_2025_km2": 0.041,
-        "pct_forest_weakening": 4.5,
-        "pct_forest_strengthening": 5.6,
-        "median_trend_db_per_year": 0.2,
+        "pct_forest_weakening": 4.1,
+        "pct_forest_strengthening": 8.2,
+        "median_trend_db_per_year": 0.19,
         "pct_canopy_loss_structural": 0.0,
-        "pct_wetter_moisture": 9.2,
-        "box_pct_forest_weakening": 10.5,
+        "pct_wetter_moisture": 13.2,
+        "box_pct_forest_weakening": 8.5,
         "status": "no extra weakening seen by NISAR this year"
       },
       {
         "id": "E",
-        "nisar_mangrove_km2": 0.062,
+        "nisar_mangrove_km2": 0.066,
         "gmw_2025_km2": 0.045,
-        "pct_forest_weakening": 8.4,
-        "pct_forest_strengthening": 5.2,
-        "median_trend_db_per_year": -0.04,
+        "pct_forest_weakening": 0.9,
+        "pct_forest_strengthening": 8.2,
+        "median_trend_db_per_year": 0.16,
         "pct_canopy_loss_structural": 0.0,
-        "pct_wetter_moisture": 0.9,
-        "box_pct_forest_weakening": 10.5,
+        "pct_wetter_moisture": 0.0,
+        "box_pct_forest_weakening": 8.5,
         "status": "no extra weakening seen by NISAR this year"
       },
       {
         "id": "F",
         "nisar_mangrove_km2": 0.048,
         "gmw_2025_km2": 0.053,
-        "pct_forest_weakening": 7.4,
-        "pct_forest_strengthening": 38.8,
-        "median_trend_db_per_year": 0.93,
-        "pct_canopy_loss_structural": 5.3,
-        "pct_wetter_moisture": 32.2,
-        "box_pct_forest_weakening": 10.5,
+        "pct_forest_weakening": 6.6,
+        "pct_forest_strengthening": 26.2,
+        "median_trend_db_per_year": 0.79,
+        "pct_canopy_loss_structural": 1.4,
+        "pct_wetter_moisture": 26.2,
+        "box_pct_forest_weakening": 8.5,
         "status": "no extra weakening seen by NISAR this year"
       },
       {
         "id": "G",
-        "nisar_mangrove_km2": 0.044,
+        "nisar_mangrove_km2": 0.043,
         "gmw_2025_km2": 0.053,
-        "pct_forest_weakening": 0.9,
+        "pct_forest_weakening": 0.8,
         "pct_forest_strengthening": 17.1,
-        "median_trend_db_per_year": 0.54,
-        "pct_canopy_loss_structural": 10.4,
-        "pct_wetter_moisture": 6.1,
-        "box_pct_forest_weakening": 10.5,
+        "median_trend_db_per_year": 0.46,
+        "pct_canopy_loss_structural": 11.1,
+        "pct_wetter_moisture": 3.7,
+        "box_pct_forest_weakening": 8.5,
         "status": "no extra weakening seen by NISAR this year"
       }
     ],
@@ -849,13 +1018,13 @@
         {
           "sensor": "NISAR HV, year mean (L-band, 2025-26)",
           "kind": "NISAR",
-          "auc": 0.889,
+          "auc": 0.892,
           "pixels": 1220266
         },
         {
           "sensor": "NISAR AI model (10 radar features, held-out blocks)",
           "kind": "NISAR",
-          "auc": 0.993,
+          "auc": 0.992,
           "pixels": 1220266
         }
       ]

@@ -63,7 +63,7 @@ python scripts/nisar/earthdata_auth.py --save      # paste token (hidden), store
 | Zone stats + HV change map | `python scripts/nisar/nisar_stats_and_change.py --scene … --change EARLY_db.tif LATE_db.tif --change-out …` |
 | Year-long time series (full res; `--freq B` = 80 m for big areas) | `python scripts/nisar/nisar_timeseries.py --track 164` → `stats.json › nisar_timeseries` |
 
-**Product versions:** never mix a BETA file with a later one. BETA GCOV files read about 3.5 dB darker than the PROVISIONAL/V1 reprocessing of the same date. The before/after HV layers therefore use **track 164** (21 Nov 2025 and 11 Oct 2026, both PROVISIONAL, same quad-pol 20 m mode), not track 142, which is BETA-only for Nov 2025 – Jan 2026.
+**Product versions:** never mix a BETA file with a later one. BETA GCOV files read several dB darker than the PROVISIONAL/V1 reprocessing of the same date. The before/after HV layers therefore use **track 164** (21 Nov 2025 and 11 Oct 2026, both PROVISIONAL, same quad-pol 20 m mode), not track 142, which is BETA-only for Nov 2025 – Jan 2026.
 
 **Same-season comparison:** when NISAR publishes Nov 2026 scenes on track 164 (check the ASF search), run the GCOV command for that date and `nisar_stats_and_change.py --change` against `nisar_hv_20251121_db.tif`. Use the same imaging mode (`2005_QPDH`) so the grids match.
 
@@ -81,12 +81,17 @@ python scripts/nisar/nisar_pixel_products.py --track 164   # → AI map, land co
 python scripts/tiles/make_tiles.py data_raw/nisar/<id>_rgba.tif public/tiles/<id> --zoom 10-14 --clip 67.155304 24.671376 67.433395 24.828817   # add --categorical for class maps; Sentinel-2: 10-15
 ```
 
-- **AI mangrove map (`nisar_ai_mangrove_2025_26`):** Random Forest on 10 NISAR-only features, trained on GMW v4.1 2025 labels, validated on 2 km checkerboard blocks it never saw (95.7% accuracy on the Karachi box). Needs `scikit-learn`.
-- **Land-cover map from simple rules (`nisar_classes_2025_26`):** thresholds on year-mean HV, HH, HV−HH and 100 m HV texture (86.8% on the same test pixels).
-- **Structural vs moisture change (`nisar_change_type_2025_26`):** Nov–Dec 2025 vs Sep–Oct 2026. Both polarisations moving together = moisture/flooding; HV moving much more than HH = canopy (structure) change.
-- Also writes the single-pass HV/HH layers, the HV change layer, `stats.json › nisar` and NISAR's status inside each decline zone.
-- **Forest watch:** each mangrove pixel's HV slope, *relative to the forest median on every date*, so season, tide and calibration cancel. Pixels with |t| < 2 are faded.
-- With one year of data this ranks patches against each other; it is not yet a multi-year trend.
+- **Imaging modes:** track 164 alternates quad-pol (`2005_QPDH`, 20 m) and dual-pol (`4005_DHDH`, 10 m) passes. On the same 20 m grid a dual-pol pass reads differently from its quad-pol neighbours, and by a different amount on each surface (`stats.json › nisar_pixel.mode_offset`), so there is no single correction. Yearly means, the AI features, the land-cover rules and the structural-vs-moisture windows use **quad-pol passes only**. The HV trend uses every pass with the mode as a covariate.
+- **AI mangrove map (`nisar_ai_mangrove_2025_26`):** Random Forest on 10 NISAR-only features, trained on GMW v4.1 2025 labels, validated on 2 km checkerboard blocks it never saw, on pixels GMW is sure about. Accuracy, precision, recall, F1 and the confusion matrix are in `stats.json › nisar_pixel.ai.held_out_accuracy`. The published map is a second model trained on the whole box. Needs `scikit-learn`.
+- **Land-cover map from simple rules (`nisar_classes_2025_26`):** thresholds on year-mean HV, HH, HV−HH and 100 m HV texture, set by eye on the Rehri Goth sub-area (about 2% of the box) and not re-tuned against GMW; agreement is measured over the whole box.
+- **Structural vs moisture change (`nisar_change_type_2025_26`):** Nov–Dec 2025 vs Aug–Oct 2026, three quad-pol passes each, averaged and smoothed in linear power. Both polarisations moving together = moisture/flooding; HV moving much more than HH = canopy (structure) change.
+- Also writes the single-pass HV/HH layers (HH on its own −20 to 0 dB grey scale), the HV change layer, `stats.json › nisar` and NISAR's status inside each decline zone.
+- **Forest watch:** each mangrove pixel's HV slope, *relative to the forest median on every date*. Only shifts common to the whole forest cancel (such as calibration); a patch whose seasonal or tidal response differs from the forest's still gets a slope. The forest mask is GMW 2025, not the AI map (which is built from the same year of data). Pixels with |t| < 2 (adjusted for autocorrelation) are faded.
+- **How much is noise:** the script refits the trend 20 times with the order of the passes shuffled and writes the flagged share to `stats.json › nisar_pixel.trend.by_chance`. The shuffled flags go to `data_raw/nisar/trend_aux_2025_26.npz`, which the monitor uses to count alerts expected by chance.
+- **Tide:** `python scripts/nisar/tide_at_pass.py` writes `docs/tide_at_pass.csv` (predicted tide height at each pass, GOT4.10 model via `pyTMD`). If the file is there, tide becomes a covariate in the trend and the correlations are written to `stats.json › nisar_pixel.trend.tide`.
+- With one year of data this ranks patches against each other; it is not yet a multi-year trend. A same-season comparison (Nov–Dec 2025 vs Nov–Dec 2026, quad-pol) is the next step once those passes are published.
+- **Colours:** every change layer uses red for a decrease and blue for an increase. Green is kept for vegetation classes.
+- **Numbers in the layer text:** write them in `layers.json` as `{{path.in.stats.json}}`; the map page fills them in, so text and statistics cannot drift apart.
 
 ## Older satellites on the NISAR grid (comparison + long-term evidence)
 
@@ -104,7 +109,7 @@ python scripts/monitor/coastlens_monitor.py            # refresh scene list (asf
 python scripts/monitor/coastlens_monitor.py --alerts   # only re-rank alerts from existing products
 ```
 
-Writes `public/data/places.geojson` (alert pins), `public/data/alerts.json` (feed) and `docs/alerts/latest.md` (bulletin for NGOs). An alert is a ≥ 0.5 ha patch of mangrove where ≥ 40% of pixels weaken by ≥ 1 dB/yr relative to the whole forest (|t| ≥ 2). It is ranked by how many of 4 independent signals agree: NISAR now; GMW decline zone or GMW loss 2015–2025 nearby; ALOS-2 L-band drop 2015–2024; Sentinel-1 drop 2018–2026 or NISAR structural change. Alerts are leads for field visits, never proof.
+Writes `public/data/places.geojson` (alert pins), `public/data/alerts.json` (feed) and `docs/alerts/latest.md` (bulletin for NGOs). **Entry condition:** a patch of 100 m cells where ≥ 40% of the mangrove pixels weaken by ≥ 1 dB/yr relative to the whole forest (|t| ≥ 2). The smallest patch kept is set from the date-shuffled trend maps so that noise alone raises fewer than one alert. Each patch is then checked against four **supporting records**: the long-term L-band record (GMW decline zone, GMW loss 2015–2025 nearby, or an ALOS-2 drop; GMW is partly built from JAXA L-band radar, so these count once), Landsat NDVI drop, Sentinel-1 drop, and NISAR structural change. The feed publishes the number of candidates, how many random noise would raise, and how common each supporting record is across the whole forest (a record that half the forest meets is weak evidence). The eight largest candidates are shown. An alert says "the radar signal weakened here", never "thinning": alerts are leads for field visits, never proof.
 
 ## Global Mangrove Watch v4.1 (1985–2025)
 
