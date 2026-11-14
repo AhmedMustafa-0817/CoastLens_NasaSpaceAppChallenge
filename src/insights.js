@@ -80,11 +80,11 @@ loadStats().then(async (S) => {
 
   // NISAR alerts (written by scripts/monitor/coastlens_monitor.py)
   const alerts = await fetch(import.meta.env.BASE_URL + 'data/alerts.json').then((r) => r.json());
-  $('#flags').innerHTML = alerts.alerts.map((f) => `<article class="flag"><div><span class="mono">${f.title.split(':')[0]} · ${f.priority} priority</span><h3><em class="pink">${f.area_ha.toFixed(1)}</em> ha thinning</h3><span class="mono where">${f.lat.toFixed(3)}°N ${f.lon.toFixed(3)}°E${f.zone ? ` · decline zone ${f.zone}` : ''} · <a href="${f.maps_url}" target="_blank" rel="noopener">map ↗</a></span></div>
+  $('#flags').innerHTML = alerts.alerts.map((f) => `<article class="flag"><div><span class="mono">${f.title.split(':')[0]} · ${f.priority}</span><h3><em class="pink">${f.area_ha.toFixed(1)}</em> ha, radar signal weakening</h3><span class="mono where">${f.lat.toFixed(3)}°N ${f.lon.toFixed(3)}°E${f.zone ? ` · decline zone ${f.zone}` : ''} · <a href="${f.maps_url}" target="_blank" rel="noopener">map ↗</a></span></div>
     ${finding({
       measured: `NISAR: ${f.observed} ${f.evidence}`,
       maybe: f.possible_causes.replace('To verify on the ground: ', ''),
-      confidence: f.priority, why: `${f.confidence.replace(`${f.priority} (`, "").replace(").", ".")} NISAR checks again around ${alerts.next_nisar_pass}.`,
+      confidence: 'Low', why: `${f.confidence} One year of data cannot tell a trend from season. ${f.tide_check ?? ''} NISAR's next pass is around ${alerts.next_nisar_pass}.`,
     })}</article>`).join('');
 
   compare(alerts.alerts);
@@ -113,7 +113,7 @@ const LAYERS = [
 ];
 const NOTES = {
   nisar_ai: 'Mangrove mapped from NISAR radar alone by our AI model (Random Forest), tested on areas it never saw. Darker green means more certain.',
-  nisar_hv_trend: 'Each mangrove pixel compared with the whole forest over 27 passes. Red: weakening. Green: strengthening. One year of data only.',
+  nisar_hv_trend: 'Each mangrove pixel compared with the whole forest over 27 passes. Red: radar signal weakening. Blue: strengthening. One year of data only, so season and real change cannot be told apart yet.',
   alos: 'ALOS-2 is the older L-band radar: same kind of image as NISAR, but one picture a year instead of every 12 days.',
   gmw4_lossyear: 'Each lost patch is coloured by the year it disappeared: yellow long ago, red recently.',
   nisar_hv: 'Radar: brighter means a stronger echo. Brightness also depends on tide and moisture, so a change is not proof of loss.',
@@ -147,7 +147,7 @@ function compare(flags) {
     set();
   });
   flags.forEach((f) => L.circleMarker([f.lat, f.lon], { radius: 7, color: '#f4ede0', weight: 2, fillColor: '#f0566f', fillOpacity: 1 })
-    .bindTooltip(`${f.title} · ${f.area_ha.toFixed(1)} ha · ${f.priority} priority`).addTo(map));
+    .bindTooltip(`${f.title} · ${f.area_ha.toFixed(1)} ha · ${f.priority.toLowerCase()}`).addTo(map));
   let fx = 0.5;
   const clip = () => {
     const nw = map.containerPointToLayerPoint([0, 0]), se = map.containerPointToLayerPoint(map.getSize()), cx = nw.x + fx * map.getSize().x;
