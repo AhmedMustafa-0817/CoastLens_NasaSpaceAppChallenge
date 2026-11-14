@@ -1,0 +1,611 @@
+{
+ "_readme": "Copied from the CoastLens analysis site (stats.json generated 2026-11-07). Replace this file to update every number and chart on the site.",
+ "generated": "2026-11-07",
+ "aoi": "Keti Bandar pilot area (working rectangle 67.2–67.8°E, 23.8–24.3°N)",
+ "bbox": [
+  67.2,
+  23.8,
+  67.8,
+  24.3
+ ],
+ "mangrove_area": {
+  "source": "Global Mangrove Watch v3 extent; area computed by CoastLens within the AOI at 25 m",
+  "years": [
+   {
+    "year": 1996,
+    "km2": 183.56
+   },
+   {
+    "year": 2007,
+    "km2": 156.77
+   },
+   {
+    "year": 2010,
+    "km2": 146.06
+   },
+   {
+    "year": 2020,
+    "km2": 140.78
+   }
+  ]
+ },
+ "mangrove_change": {
+  "from": 1996,
+  "to": 2020,
+  "source": "Global Mangrove Watch v3, 1996 vs 2020 map differencing (includes mapping error)",
+  "gain_km2": 8.41,
+  "loss_km2": 51.19,
+  "stable_km2": 132.37
+ },
+ "ndvi_in_mangroves": {
+  "source": "Landsat 8 C2 L2, Nov–Feb cloud-masked median; mean NDVI inside GMW 2020 mangrove extent",
+  "series": [
+   {
+    "season": "2015–16",
+    "mean": 0.32
+   },
+   {
+    "season": "2018–19",
+    "mean": 0.361
+   },
+   {
+    "season": "2021–22",
+    "mean": 0.39
+   },
+   {
+    "season": "2024–25",
+    "mean": 0.374
+   }
+  ]
+ },
+ "s1_vh_in_mangroves": {
+  "source": "Sentinel-1 GRD VH (descending), Nov–Feb median; mean dB inside GMW 2020 mangrove extent",
+  "series": [
+   {
+    "season": "2017–18",
+    "mean_db": -14.94
+   },
+   {
+    "season": "2025–26",
+    "mean_db": -14.96
+   }
+  ]
+ },
+ "nisar": {
+  "source": "NISAR L2 GCOV (provisional), track 142 ascending, frame 14; 20 m; mean inside GMW 2020 mangroves",
+  "series": [
+   {
+    "date": "2025-11-20",
+    "pol": "HV",
+    "mean_db": -16.18,
+    "water_db": -25.41
+   },
+   {
+    "date": "2026-10-10",
+    "pol": "HV",
+    "mean_db": -14.98,
+    "water_db": -24.52
+   },
+   {
+    "date": "2026-10-10",
+    "pol": "HH",
+    "mean_db": -7.17,
+    "water_db": -17.61
+   }
+  ]
+ },
+ "nisar_timeseries": {
+  "track": 164,
+  "zones": "mangrove = GMW 2020 (>50% of cell); water = Landsat NDVI-masked water (>90%); land = other land",
+  "qc_suspect_dates": [
+   "2026-04-14"
+  ],
+  "backscatter": {
+   "source": "NISAR L2 GCOV (provisional), track 164, 80 m grid; zone mean, dB",
+   "series": [
+    {
+     "date": "2025-11-21",
+     "mangrove_hv": -15.83,
+     "water_hv": -26.5,
+     "land_hv": -20.63,
+     "mangrove_hh": -7.03,
+     "water_hh": -17.15,
+     "land_hh": -10.81
+    },
+    {
+     "date": "2025-12-03",
+     "mangrove_hv": -14.21,
+     "water_hv": -24.24,
+     "land_hv": -18.03,
+     "mangrove_hh": -8.11,
+     "water_hh": -17.07,
+     "land_hh": -11.34
+    },
+    {
+     "date": "2025-12-15",
+     "mangrove_hv": -16.04,
+     "water_hv": -26.7,
+     "land_hv": -20.84,
+     "mangrove_hh": -7.42,
+     "water_hh": -15.88,
+     "land_hh": -11.23
+    },
+    {
+     "date": "2025-12-27",
+     "mangrove_hv": -14.96,
+     "water_hv": -26.75,
+     "land_hv": -19.7,
+     "mangrove_hh": -7.03,
+     "water_hh": -18.34,
+     "land_hh": -10.85
+    },
+    {
+     "date": "2026-01-08",
+     "mangrove_hv": -14.75,
+     "water_hv": -25.45,
+     "land_hv": -19.48,
+     "mangrove_hh": -6.67,
+     "water_hh": -15.49,
+     "land_hh": -10.55
+    },
+    {
+     "date": "2026-01-20",
+     "mangrove_hv": -15.0,
+     "water_hv": -24.72,
+     "land_hv": -19.41,
+     "mangrove_hh": -7.26,
+     "water_hh": -17.43,
+     "land_hh": -11.18
+    },
+    {
+     "date": "2026-02-01",
+     "mangrove_hv": -14.78,
+     "water_hv": -25.82,
+     "land_hv": -19.58,
+     "mangrove_hh": -6.68,
+     "water_hh": -16.93,
+     "land_hh": -10.65
+    },
+    {
+     "date": "2026-02-13",
+     "mangrove_hv": -14.96,
+     "water_hv": -26.14,
+     "land_hv": -19.61,
+     "mangrove_hh": -6.94,
+     "water_hh": -16.71,
+     "land_hh": -10.51
+    },
+    {
+     "date": "2026-02-25",
+     "mangrove_hv": -15.05,
+     "water_hv": -25.78,
+     "land_hv": -19.65,
+     "mangrove_hh": -7.26,
+     "water_hh": -16.79,
+     "land_hh": -10.91
+    },
+    {
+     "date": "2026-03-09",
+     "mangrove_hv": -14.57,
+     "water_hv": -25.5,
+     "land_hv": -19.15,
+     "mangrove_hh": -7.43,
+     "water_hh": -17.07,
+     "land_hh": -10.92
+    },
+    {
+     "date": "2026-03-21",
+     "mangrove_hv": -14.78,
+     "water_hv": -24.45,
+     "land_hv": -18.32,
+     "mangrove_hh": -7.39,
+     "water_hh": -16.88,
+     "land_hh": -9.68
+    },
+    {
+     "date": "2026-04-02",
+     "mangrove_hv": -14.38,
+     "water_hv": -23.69,
+     "land_hv": -18.63,
+     "mangrove_hh": -7.66,
+     "water_hh": -15.62,
+     "land_hh": -10.98
+    },
+    {
+     "date": "2026-04-14",
+     "mangrove_hv": null,
+     "water_hv": null,
+     "land_hv": null,
+     "mangrove_hh": null,
+     "water_hh": null,
+     "land_hh": null,
+     "qc": "suspect acquisition: uniform near-zero coherence in all zones (sensor/processing issue, not landscape change)"
+    },
+    {
+     "date": "2026-04-26",
+     "mangrove_hv": -15.48,
+     "water_hv": -24.92,
+     "land_hv": -19.7,
+     "mangrove_hh": -7.65,
+     "water_hh": -16.63,
+     "land_hh": -11.49
+    },
+    {
+     "date": "2026-05-08",
+     "mangrove_hv": -15.3,
+     "water_hv": -25.09,
+     "land_hv": -19.25,
+     "mangrove_hh": -7.43,
+     "water_hh": -16.25,
+     "land_hh": -10.24
+    },
+    {
+     "date": "2026-05-20",
+     "mangrove_hv": -15.29,
+     "water_hv": -25.44,
+     "land_hv": -20.02,
+     "mangrove_hh": -7.54,
+     "water_hh": -16.03,
+     "land_hh": -11.37
+    },
+    {
+     "date": "2026-06-01",
+     "mangrove_hv": -15.35,
+     "water_hv": -24.66,
+     "land_hv": -19.1,
+     "mangrove_hh": -7.72,
+     "water_hh": -16.56,
+     "land_hh": -10.43
+    },
+    {
+     "date": "2026-06-13",
+     "mangrove_hv": -15.99,
+     "water_hv": -25.08,
+     "land_hv": -20.22,
+     "mangrove_hh": -8.01,
+     "water_hh": -15.85,
+     "land_hh": -11.75
+    },
+    {
+     "date": "2026-06-25",
+     "mangrove_hv": -15.78,
+     "water_hv": -25.05,
+     "land_hv": -19.49,
+     "mangrove_hh": -7.7,
+     "water_hh": -16.29,
+     "land_hh": -10.59
+    },
+    {
+     "date": "2026-07-07",
+     "mangrove_hv": -15.3,
+     "water_hv": -25.46,
+     "land_hv": -20.05,
+     "mangrove_hh": -7.71,
+     "water_hh": -16.23,
+     "land_hh": -11.63
+    },
+    {
+     "date": "2026-07-19",
+     "mangrove_hv": -15.55,
+     "water_hv": -25.23,
+     "land_hv": -19.6,
+     "mangrove_hh": -7.67,
+     "water_hh": -16.5,
+     "land_hh": -10.7
+    },
+    {
+     "date": "2026-08-12",
+     "mangrove_hv": -15.2,
+     "water_hv": -25.27,
+     "land_hv": -19.4,
+     "mangrove_hh": -7.34,
+     "water_hh": -16.71,
+     "land_hh": -10.25
+    },
+    {
+     "date": "2026-08-24",
+     "mangrove_hv": -14.47,
+     "water_hv": -25.02,
+     "land_hv": -19.31,
+     "mangrove_hh": -6.89,
+     "water_hh": -16.28,
+     "land_hh": -10.75
+    },
+    {
+     "date": "2026-09-05",
+     "mangrove_hv": -14.33,
+     "water_hv": -24.79,
+     "land_hv": -18.68,
+     "mangrove_hh": -6.67,
+     "water_hh": -16.1,
+     "land_hh": -9.72
+    },
+    {
+     "date": "2026-09-17",
+     "mangrove_hv": -14.27,
+     "water_hv": -25.29,
+     "land_hv": -19.13,
+     "mangrove_hh": -6.3,
+     "water_hh": -16.01,
+     "land_hh": -10.04
+    },
+    {
+     "date": "2026-09-29",
+     "mangrove_hv": -14.16,
+     "water_hv": -25.14,
+     "land_hv": -18.49,
+     "mangrove_hh": -6.46,
+     "water_hh": -17.32,
+     "land_hh": -9.53
+    },
+    {
+     "date": "2026-10-11",
+     "mangrove_hv": -14.63,
+     "water_hv": -25.33,
+     "land_hv": -19.29,
+     "mangrove_hh": -6.48,
+     "water_hh": -15.88,
+     "land_hh": -10.07
+    }
+   ]
+  },
+  "coherence": {
+   "source": "NISAR L2 GUNW (provisional), track 164, HH coherence magnitude, 80 m grid; zone mean",
+   "series": [
+    {
+     "mid": "2025-11-27",
+     "days": 12,
+     "mangrove": 0.812,
+     "water": 0.121,
+     "land": 0.594
+    },
+    {
+     "mid": "2025-12-03",
+     "days": 24,
+     "mangrove": 0.812,
+     "water": 0.128,
+     "land": 0.606
+    },
+    {
+     "mid": "2025-12-09",
+     "days": 12,
+     "mangrove": 0.723,
+     "water": 0.119,
+     "land": 0.539
+    },
+    {
+     "mid": "2025-12-21",
+     "days": 12,
+     "mangrove": 0.846,
+     "water": 0.131,
+     "land": 0.654
+    },
+    {
+     "mid": "2026-01-02",
+     "days": 36,
+     "mangrove": 0.79,
+     "water": 0.128,
+     "land": 0.577
+    },
+    {
+     "mid": "2026-01-02",
+     "days": 12,
+     "mangrove": 0.91,
+     "water": 0.148,
+     "land": 0.721
+    },
+    {
+     "mid": "2026-01-14",
+     "days": 12,
+     "mangrove": 0.912,
+     "water": 0.16,
+     "land": 0.726
+    },
+    {
+     "mid": "2026-01-26",
+     "days": 12,
+     "mangrove": 0.926,
+     "water": 0.164,
+     "land": 0.732
+    },
+    {
+     "mid": "2026-02-07",
+     "days": 12,
+     "mangrove": 0.847,
+     "water": 0.133,
+     "land": 0.648
+    },
+    {
+     "mid": "2026-02-19",
+     "days": 12,
+     "mangrove": 0.796,
+     "water": 0.126,
+     "land": 0.596
+    },
+    {
+     "mid": "2026-03-03",
+     "days": 12,
+     "mangrove": 0.801,
+     "water": 0.126,
+     "land": 0.596
+    },
+    {
+     "mid": "2026-03-15",
+     "days": 12,
+     "mangrove": 0.752,
+     "water": 0.123,
+     "land": 0.503
+    },
+    {
+     "mid": "2026-03-27",
+     "days": 12,
+     "mangrove": 0.717,
+     "water": 0.122,
+     "land": 0.522
+    },
+    {
+     "mid": "2026-04-08",
+     "days": 12,
+     "mangrove": null,
+     "water": null,
+     "land": null,
+     "qc": "suspect"
+    },
+    {
+     "mid": "2026-04-20",
+     "days": 12,
+     "mangrove": null,
+     "water": null,
+     "land": null,
+     "qc": "suspect"
+    },
+    {
+     "mid": "2026-05-02",
+     "days": 12,
+     "mangrove": 0.324,
+     "water": 0.112,
+     "land": 0.396
+    },
+    {
+     "mid": "2026-05-14",
+     "days": 12,
+     "mangrove": 0.611,
+     "water": 0.114,
+     "land": 0.437
+    },
+    {
+     "mid": "2026-05-26",
+     "days": 12,
+     "mangrove": 0.443,
+     "water": 0.112,
+     "land": 0.349
+    },
+    {
+     "mid": "2026-06-07",
+     "days": 12,
+     "mangrove": 0.359,
+     "water": 0.11,
+     "land": 0.372
+    },
+    {
+     "mid": "2026-06-19",
+     "days": 12,
+     "mangrove": 0.473,
+     "water": 0.112,
+     "land": 0.442
+    },
+    {
+     "mid": "2026-07-13",
+     "days": 12,
+     "mangrove": 0.725,
+     "water": 0.115,
+     "land": 0.492
+    },
+    {
+     "mid": "2026-07-31",
+     "days": 24,
+     "mangrove": 0.779,
+     "water": 0.088,
+     "land": 0.512
+    },
+    {
+     "mid": "2026-08-18",
+     "days": 12,
+     "mangrove": 0.718,
+     "water": 0.113,
+     "land": 0.491
+    },
+    {
+     "mid": "2026-08-30",
+     "days": 12,
+     "mangrove": 0.746,
+     "water": 0.115,
+     "land": 0.514
+    },
+    {
+     "mid": "2026-09-11",
+     "days": 12,
+     "mangrove": 0.728,
+     "water": 0.114,
+     "land": 0.506
+    },
+    {
+     "mid": "2026-09-23",
+     "days": 12,
+     "mangrove": 0.781,
+     "water": 0.123,
+     "land": 0.532
+    },
+    {
+     "mid": "2026-10-05",
+     "days": 12,
+     "mangrove": 0.795,
+     "water": 0.125,
+     "land": 0.563
+    }
+   ]
+  }
+ },
+ "flags": [
+  {
+   "kind": "loss",
+   "lon": 67.36241,
+   "lat": 24.28766,
+   "gmw_loss": 0.63,
+   "gmw_gain": 0.0,
+   "ndvi": 0.055,
+   "hv": 0.9,
+   "coh": 0.54,
+   "confidence": "Low",
+   "agree": "1 of 3"
+  },
+  {
+   "kind": "loss",
+   "lon": 67.38241,
+   "lat": 24.24766,
+   "gmw_loss": 0.57,
+   "gmw_gain": 0.0,
+   "ndvi": 0.088,
+   "hv": 0.1,
+   "coh": 0.5,
+   "confidence": "Low",
+   "agree": "1 of 3"
+  },
+  {
+   "kind": "loss",
+   "lon": 67.44241,
+   "lat": 24.22766,
+   "gmw_loss": 0.57,
+   "gmw_gain": 0.0,
+   "ndvi": 0.069,
+   "hv": 1.0,
+   "coh": 0.38,
+   "confidence": "Low",
+   "agree": "1 of 3"
+  },
+  {
+   "kind": "gain",
+   "lon": 67.62241,
+   "lat": 23.87766,
+   "gmw_loss": 0.03,
+   "gmw_gain": 0.26,
+   "ndvi": 0.01,
+   "hv": 0.2,
+   "coh": 0.41,
+   "confidence": "Low",
+   "agree": "1 of 3"
+  },
+  {
+   "kind": "gain",
+   "lon": 67.72241,
+   "lat": 23.95766,
+   "gmw_loss": 0.1,
+   "gmw_gain": 0.22,
+   "ndvi": 0.024,
+   "hv": 0.0,
+   "coh": 0.6,
+   "confidence": "Medium",
+   "agree": "2 of 3"
+  }
+ ]
+}

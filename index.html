@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoastLens · Watching the Indus Delta's mangroves from space</title>
+<meta name="description" content="CoastLens uses NASA-ISRO NISAR radar and other satellites to show where the mangroves of Keti Bandar, in Pakistan's Indus Delta, are changing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body>
+<main>
+
+<!-- 1 · ARRIVAL -->
+<section id="hero" class="screen speckle scan" data-cursor="Radar">
+  <canvas id="cHero" class="fill" role="img" aria-label="Satellite view of the Keti Bandar coast under drifting cloud. A circular radar lens shows the NISAR radar image of the same place, seen through the cloud."></canvas>
+  <div class="veil"></div>
+  <div class="hud tl"><b>Keti Bandar</b> · Indus Delta<br>Sindh, Pakistan</div>
+  <div class="hud tr">Lens <b id="hudPos" class="num">24.050°N 67.500°E</b><br>NISAR L-band · HV · <b>10 Oct 2026</b><br>Orbit 747 km · repeat 12 days</div>
+  <div class="title">
+    <h1 class="t-hero" data-split>CoastLens</h1>
+    <p data-reveal="0.5">Move across the clouds. The circle shows what radar sees underneath.</p>
+  </div>
+  <div class="scrollcue mono" aria-hidden="true"><span>Scroll</span><i></i></div>
+  <p class="credit">Image: Sentinel-2, Nov 2025 to Feb 2026 · Radar: NISAR L-band HV, 10 Oct 2026 (provisional), processed by CoastLens · Clouds illustrated</p>
+</section>
+
+<!-- 2 · ONE LINE -->
+<section id="oneline" class="screen center light">
+  <h2 class="t-xl" id="line">We watch the mangroves of the Indus Delta from space, and show where they are changing.</h2>
+</section>
+
+<!-- 3 · WHAT IS A MANGROVE -->
+<section id="tree" class="screen" data-cursor="Drag">
+  <canvas id="cTree" class="fill" role="img" aria-label="A 3D illustration of a grey mangrove standing in shallow tidal water. Drag to turn it."></canvas>
+  <div class="copy">
+    <span class="label">What is a mangrove?</span>
+    <h2 class="t-l" data-split>A tree that grows in the sea.</h2>
+    <p class="lede" data-reveal style="margin-top:18px">It is more like you than you think. Open the four marked parts.</p>
+  </div>
+  <div id="hots"></div>
+  <div class="acard" id="acard" hidden></div>
+  <div class="counter"><b id="foundN" class="num">0</b><span class="mono">of 4 found · drag to turn the tree</span></div>
+  <p class="credit">Stylised illustration of a grey mangrove (Avicennia marina)</p>
+</section>
+
+<!-- 4 · WHY IT MATTERS -->
+<section id="fish" class="screen dark">
+  <div class="wrap">
+    <span class="label">Why it matters to you</span>
+    <h2 class="t-xl ask" data-split>Do you know someone who eats fish?</h2>
+    <div class="row" style="margin-top:34px" data-reveal>
+      <button class="btn" data-fish>Yes</button>
+      <button class="btn" data-fish>That's me</button>
+    </div>
+    <div class="chain" id="chain" aria-live="polite">
+      <div class="trail"></div>
+      <svg class="fishy" viewBox="0 0 54 28" aria-hidden="true"><path d="M2 14c8-10 24-12 36-4l12-8v24l-12-8C26 26 10 24 2 14z" fill="#f0566f"/><circle cx="12" cy="12" r="2" fill="#3a2c24"/></svg>
+      <div class="step"><svg viewBox="0 0 108 108" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="54" cy="54" r="52"/><path d="M26 70h56M34 70V50M44 70V44M54 70V40M64 70V46M74 70V52"/><circle cx="54" cy="30" r="14" fill="#4a5d3a" stroke="none"/><circle cx="40" cy="36" r="9" fill="#4a5d3a" stroke="none"/><circle cx="68" cy="36" r="9" fill="#4a5d3a" stroke="none"/></svg><b>Mangrove roots</b><small>Young fish, shrimp and crabs shelter here.</small></div>
+      <div class="step"><svg viewBox="0 0 108 108" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="54" cy="54" r="52"/><path d="M22 44c10-8 22 8 32 0s22 8 32 0M22 58c10-8 22 8 32 0s22 8 32 0M22 72c10-8 22 8 32 0s22 8 32 0"/></svg><b>Tidal creek</b><small>They grow, then move out with the tide.</small></div>
+      <div class="step"><svg viewBox="0 0 108 108" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="54" cy="54" r="52"/><path d="M24 60h60l-10 14H34zM54 60V28M54 30l18 22H54"/></svg><b>Fishing boat</b><small>A fisherman from the delta brings them in.</small></div>
+      <div class="step"><svg viewBox="0 0 108 108" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="54" cy="54" r="52"/><path d="M28 46h52v28H28zM24 46l6-14h48l6 14M42 46v28M66 46v28"/></svg><b>Market</b><small>Sold in Karachi and far beyond.</small></div>
+      <div class="step"><svg viewBox="0 0 108 108" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="54" cy="54" r="52"/><ellipse cx="54" cy="58" rx="30" ry="12"/><ellipse cx="54" cy="58" rx="18" ry="6"/></svg><b>Your plate</b><small>Start here. Follow it back.</small></div>
+    </div>
+    <div class="trio">
+      <div data-reveal><h3 class="t-m">A nursery</h3><p>Many of the fish, shrimp and crabs caught off this coast spend their early life among mangrove roots.</p></div>
+      <div data-reveal="0.12"><h3 class="t-m">A buffer</h3><p>Dense roots and trunks slow waves and hold mud in place before the sea reaches the villages behind them.</p></div>
+      <div data-reveal="0.24"><h3 class="t-m">A carbon store</h3><p>Mangroves bury carbon in the waterlogged mud beneath them, where it can stay locked away for a very long time.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · THE BLIND SPOT (image expands on scroll) -->
+<section id="blind" class="scan">
+  <h2 class="t-xl intro" data-split>Then the clouds come.</h2>
+  <div class="frame"><canvas id="cBlind" class="fill" role="img" aria-label="The Keti Bandar coast from space. Cloud covers it, then a radar sweep reveals the NISAR radar image."></canvas></div>
+  <div class="hud"><span id="bStage">01 / 03 · Optical</span></div>
+  <div class="copy">
+    <h3 class="t-m" id="bH">A camera in space needs clear sky.</h3>
+    <p id="bD" style="margin-top:10px;font-size:.98rem">In the monsoon, cloud can hide this coast from ordinary satellite cameras. No picture, no answer.</p>
+  </div>
+  <p class="credit" style="background:var(--sand-light);padding:4px 8px">Sentinel-2, 2025 to 26 · NISAR L-band HV, 10 Oct 2026 · Clouds illustrated</p>
+</section>
+
+<!-- 6 · GLOBAL VS LOCAL -->
+<section id="paradox" class="screen">
+  <div class="wrap">
+    <span class="label">Global vs local</span>
+    <h2 class="t-xl" data-split style="max-width:16ch">If the big picture looks fine, why are we here?</h2>
+    <div class="scales">
+      <div class="scale" data-reveal>
+        <span class="mono">The world</span>
+        <h3 class="t-m">Shrinking, but slowly.</h3>
+        <svg id="gWorld" viewBox="0 0 300 120" role="img" aria-label="Global mangrove area fell from 152,604 square kilometres in 1996 to 147,359 in 2020."></svg>
+        <div class="big num">&minus;3.4%</div>
+        <small>Global mangrove area, 1996 to 2020.<br>Source: Global Mangrove Watch v3 (Bunting et al., 2022).</small>
+      </div>
+      <div class="scale" data-reveal="0.12">
+        <span class="mono">The Indus Delta</span>
+        <h3 class="t-m">Reported to be growing.</h3>
+        <svg id="gDelta" viewBox="0 0 300 120" role="img" aria-label="A published study reports Indus Delta mangroves rising from 50,973 hectares in 1990 to 101,446 in 2023."></svg>
+        <div class="big num">&times;2</div>
+        <small>50,973 ha (1990) to 101,446 ha (2023), whole delta.<br>Source: Ahmed et al., <i>Ecological Indicators</i>, 2025. Not our data, not our study area.</small>
+      </div>
+      <div class="scale local" data-reveal="0.24">
+        <span class="mono">Keti Bandar · our study area</span>
+        <h3 class="t-m">Mapped forest fell by almost a quarter.</h3>
+        <svg id="gLocal" viewBox="0 0 300 120" role="img" aria-label="Mapped mangrove area in the Keti Bandar study box: 183.6 square kilometres in 1996, 156.8 in 2007, 146.1 in 2010 and 140.8 in 2020."></svg>
+        <div class="big num"><em class="pink">&minus;23%</em></div>
+        <small>183.6 km² (1996) to 140.8 km² (2020) inside our fixed box, 67.2 to 67.8°E, 23.8 to 24.3°N.<br>Source: Global Mangrove Watch v3, area computed by CoastLens. Includes mapping error.</small>
+      </div>
+    </div>
+    <div class="verdict">
+      <h3 class="t-l" data-split>Both can be true. A total can rise while one creek empties.</h3>
+      <div data-reveal>
+        <p class="lede" style="max-width:none">So we look at one place, with one method, again and again. And the newer satellites add a twist: since 2015 the forest that remains here has become greener, not thinner.</p>
+        <div class="row" style="margin-top:26px"><a class="btn solid" href="insights.html">See what we found</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · CLOSING -->
+<section id="end" class="screen center dark">
+  <div>
+    <span class="label">Keep watching</span>
+    <p class="display t-xl" data-split style="max-width:17ch;margin:0 auto">Kharo Chan has reportedly lost 28 of its 42 villages to the sea.</p>
+    <p class="display t-xl" data-split style="max-width:17ch;margin:.12em auto 0"><em class="pink">Don't let Rehri Goth be next.</em></p>
+    <p class="lede note" data-reveal>Nobody has measured Rehri Goth's mangroves the way we measured Keti Bandar's. That is the point. NISAR looks again every 12 days, and the data is open.</p>
+    <div class="row" style="justify-content:center;margin-top:36px" data-reveal>
+      <a class="btn solid" href="nisar.html">How the radar works</a>
+      <a class="btn" href="insights.html">Our findings</a>
+    </div>
+    <p class="mono" style="margin-top:44px;opacity:.55" data-reveal>Kharo Chan figure as reported by The News on Sunday. Verify before reuse. See About.</p>
+  </div>
+</section>
+
+</main>
+<script type="module" src="/src/home.js"></script>
+</body>
+</html>

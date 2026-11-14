@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insights · CoastLens</title>
+<meta name="description" content="What the satellites show about the mangroves of Keti Bandar: measured findings, possible explanations and confidence.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body>
+<main>
+<section class="screen phero">
+  <div class="wrap">
+    <span class="label">Insights · Keti Bandar, 67.2 to 67.8°E, 23.8 to 24.3°N</span>
+    <h1 class="t-hero" data-split style="font-size:clamp(3.4rem,10vw,10rem)">What the satellites show.</h1>
+    <p class="lede" data-reveal="0.4">Every number here was computed by our team over one fixed box, with one method. Each finding separates what was measured from what might explain it.</p>
+    <div class="stats4" id="stats4"></div>
+  </div>
+</section>
+
+<section class="light"><div class="wrap block" style="padding-inline:var(--pad)">
+  <span class="label">Finding 01</span>
+  <h2 class="t-l" data-split>Between 1996 and 2020, the mapped forest shrank.</h2>
+  <p class="lede" data-reveal>Area mapped as mangrove inside our box, in square kilometres.</p>
+  <svg class="chart" id="chArea" viewBox="0 0 900 300" role="img" data-reveal></svg>
+  <div id="f1" style="margin-top:34px"></div>
+</div></section>
+
+<section><div class="wrap block" style="padding-inline:var(--pad)">
+  <span class="label">Finding 02</span>
+  <h2 class="t-l" data-split>Since 2015, the forest that remains has grown <em class="green">greener</em>.</h2>
+  <p class="lede" data-reveal>Average greenness (NDVI) inside the 2020 mangrove area, each dry season. Higher means more leaf.</p>
+  <svg class="chart" id="chNdvi" viewBox="0 0 900 260" role="img" data-reveal></svg>
+  <div id="f2" style="margin-top:34px"></div>
+</div></section>
+
+<section class="dark"><div class="wrap block" style="padding-inline:var(--pad)">
+  <span class="label">Finding 03 · NISAR</span>
+  <h2 class="t-l" data-split>A year of radar: a steady echo, a restless surface.</h2>
+  <p class="lede" data-reveal>NISAR passed every 12 days. Top: how bright each kind of surface looked. If the forest were dying, the mangrove line would sink toward the land line. It did not.</p>
+  <div class="legend"><span><i style="background:#9fb07f"></i>Mangrove</span><span><i style="background:#cdbfa3"></i>Other land</span><span><i style="background:#8fa39c"></i>Open water</span></div>
+  <svg class="chart" id="chHv" viewBox="0 0 900 300" role="img" data-reveal></svg>
+  <p class="lede" style="margin-top:50px" data-reveal>Bottom: coherence, or how alike two passes 12 days apart were. 1 means nothing moved. The mangrove surface was very stable in winter, unsettled in May and June, then steady again.</p>
+  <svg class="chart" id="chCoh" viewBox="0 0 900 300" role="img" data-reveal></svg>
+  <p class="mono" style="margin-top:14px;opacity:.6" id="qcNote"></p>
+  <div id="f3" style="margin-top:34px"></div>
+</div></section>
+
+<section><div class="wrap block" style="padding-inline:var(--pad)">
+  <span class="label">Compare the real layers</span>
+  <h2 class="t-l" data-split>See it for yourself.</h2>
+  <p class="lede" data-reveal>Pick two satellite layers and drag the handle. Pink dots mark mapped loss, green dots mapped gain.</p>
+  <div class="pick" data-reveal>
+    <label><span class="mono">Left</span><select id="selL"></select></label>
+    <label><span class="mono">Right</span><select id="selR"></select></label>
+  </div>
+  <div class="cmp" id="cmp" data-lenis-prevent>
+    <div id="map" class="fill"></div>
+    <span class="lab l mono" id="labL"></span><span class="lab r mono" id="labR"></span>
+    <div class="handle" id="handle" role="slider" aria-label="Comparison position" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><i>⇆</i></div>
+  </div>
+  <p class="mono" id="mapNote" style="margin-top:12px;color:var(--mocha-soft)"></p>
+</div></section>
+
+<section class="light"><div class="wrap block" style="padding-inline:var(--pad)">
+  <span class="label">Places to check on the ground</span>
+  <h2 class="t-l" data-split>Five flags. None is a verdict.</h2>
+  <p class="lede" data-reveal>These are the 1 km squares with the largest mapped change. Each is a question for a field visit, not an answer.</p>
+  <div id="flags"></div>
+  <div class="placeholder" style="margin-top:40px">Pending: our own land-cover classification (Random Forest) · a 2025 mangrove map · restoration-site records · field verification</div>
+</div></section>
+</main>
+<script type="module" src="/src/insights.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NISAR, explained simply · CoastLens</title>
+<meta name="description" content="How the NASA-ISRO NISAR radar satellite sees a mangrove forest through cloud, explained with simple animations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body data-nav="dark">
+<main>
+
+<section class="screen phero dark speckle">
+  <div class="wrap">
+    <span class="label">NISAR · NASA-ISRO Synthetic Aperture Radar</span>
+    <h1 class="t-hero" data-split style="font-size:clamp(3.6rem,11vw,11rem)">A torch in orbit.</h1>
+    <p class="lede" data-reveal="0.4">NISAR is a satellite that does not take photographs. It shines its own invisible light at the Earth and listens for what comes back. Six short steps, no jargon.</p>
+    <div class="facts">
+      <div data-reveal><b class="num">30 Jul 2025</b><span>launched from Sriharikota, India</span></div>
+      <div data-reveal="0.1"><b class="num">747 km</b><span>above the Earth</span></div>
+      <div data-reveal="0.2"><b class="num">12 m</b><span>wide radar antenna, like a giant umbrella</span></div>
+      <div data-reveal="0.3"><b class="num">12 days</b><span>until it passes the same place again</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="screen light">
+  <div class="wrap nstep">
+    <div>
+      <span class="n">01</span>
+      <h2 class="t-l" data-split>A camera waits for sunlight. Radar brings its own.</h2>
+      <p class="lede" data-reveal>A normal satellite is a camera. It needs daylight and a clear sky. NISAR sends out a pulse of radio waves, like a torch beam you cannot see, so night and cloud do not matter.</p>
+      <div class="row" style="margin-top:26px" data-reveal>
+        <button class="btn" data-sky="day" aria-pressed="true">Day</button>
+        <button class="btn" data-sky="night" aria-pressed="false">Night</button>
+        <button class="btn" data-sky="cloud" aria-pressed="false">Cloud</button>
+      </div>
+    </div>
+    <div class="stage" data-reveal><canvas id="cPulse" role="img" aria-label="Animation: a camera satellite and a radar satellite above a coast. At night or under cloud the camera sees nothing, while the radar keeps sending pulses and receiving echoes."></canvas></div>
+  </div>
+</section>
+
+<section class="screen dark">
+  <div class="wrap nstep">
+    <div>
+      <span class="n">02</span>
+      <h2 class="t-l" data-split>It measures how much comes back.</h2>
+      <p class="lede" data-reveal>Flat water acts like a mirror and sends the pulse away, so it looks dark. A forest is a tangle of trunks and branches that scatters the pulse back, so it looks bright. That difference is the whole trick.</p>
+      <p class="mono" style="margin-top:22px;opacity:.6" data-reveal>Bars: our measured NISAR echo (HV) over Keti Bandar, 11 Oct 2026. Closer to zero is brighter.</p>
+    </div>
+    <div class="stage" data-reveal><canvas id="cEcho" role="img" aria-label="Animation: radar pulses hit water, bare land and mangrove forest. Water returns the weakest echo and mangrove the strongest."></canvas></div>
+  </div>
+</section>
+
+<section id="radar-tree" class="screen" data-cursor="Drag">
+  <canvas id="cRadar" class="fill" role="img" aria-label="3D mangrove with radar waves. Long L-band waves pass the leaves and reach trunks and water."></canvas>
+  <div class="copy">
+    <span class="n" style="font-family:var(--font-display);font-size:5rem;opacity:.16;line-height:.8;display:block">03</span>
+    <h2 class="t-l" data-split>Long waves reach the wood.</h2>
+    <p class="lede" data-reveal style="margin-top:16px">Try the three controls. Watch where the waves go and how strong the echo is.</p>
+  </div>
+  <div class="rpanel">
+    <div><span class="k">1 · Wavelength</span><div class="seg"><button class="btn" data-b="L" aria-pressed="true">L-band · long</button><button class="btn" data-b="S" aria-pressed="false">S-band · short</button></div></div>
+    <div><span class="k">2 · What it listens for</span><div class="seg"><button class="btn" data-p="HV" aria-pressed="true">HV · wood</button><button class="btn" data-p="HH" aria-pressed="false">HH · water</button></div></div>
+    <div><label class="k" for="tide">3 · Tide</label><input id="tide" type="range" min="0" max="100" value="70"></div>
+    <div><span class="k">Echo back to the satellite (illustrative)</span><div class="meter"><i id="echo"></i></div></div>
+    <p class="rtext" id="rtext"></p>
+    <p class="concept" id="sNote" hidden>Concept only. CoastLens has no S-band data yet; every map on this site is L-band.</p>
+  </div>
+</section>
+
+<section class="screen dark">
+  <div class="wrap nstep">
+    <div>
+      <span class="n">04</span>
+      <h2 class="t-l" data-split>This is what it actually sees.</h2>
+      <p class="lede" data-reveal>Drag across the picture. On one side, a normal satellite photo of Keti Bandar. On the other, NISAR's radar image of the same place. Bright is mangrove. Black is water.</p>
+      <p class="mono" style="margin-top:22px;opacity:.6" data-reveal>Sentinel-2, Nov 2025 to Feb 2026 · NISAR L-band HV, 10 Oct 2026, 20 m, provisional data</p>
+    </div>
+    <div class="stage" data-reveal data-cursor="Drag"><canvas id="cReal" style="touch-action:pan-y;cursor:ew-resize" role="img" aria-label="Side by side: Sentinel-2 photo and NISAR radar image of Keti Bandar. In radar, mangrove forest is bright and open water is black."></canvas></div>
+  </div>
+</section>
+
+<section class="screen light">
+  <div class="wrap nstep">
+    <div>
+      <span class="n">05</span>
+      <h2 class="t-l" data-split>Then it comes back. Every 12 days.</h2>
+      <p class="lede" data-reveal>One picture is a snapshot. A picture every 12 days is a heartbeat. If the forest thins, the echo fades. If nothing changes, two passes match.</p>
+      <div class="passes" id="passes" role="img"></div>
+      <p class="mono" style="margin-top:14px;color:var(--mocha-soft)" id="passNote"></p>
+    </div>
+    <div class="stage" data-reveal><canvas id="cOrbit" role="img" aria-label="Animation: the satellite circling the Earth pole to pole while the Earth turns beneath it, returning over the Indus Delta every 12 days."></canvas></div>
+  </div>
+</section>
+
+<section class="screen">
+  <div class="wrap">
+    <span class="n" style="font-family:var(--font-display);font-size:clamp(4rem,9vw,8rem);opacity:.16;line-height:.8;display:block;margin-bottom:10px">06</span>
+    <h2 class="t-xl" data-split style="max-width:15ch">Radar is honest. It is not a mind reader.</h2>
+    <div class="cant">
+      <div data-reveal>
+        <span class="tag meas">What it can tell us</span>
+        <ul>
+          <li>Where there is standing forest, and where there is open water.</li>
+          <li>Whether the echo from a place got stronger or weaker between passes.</li>
+          <li>Whether the surface stayed the same over 12 days.</li>
+        </ul>
+      </div>
+      <div data-reveal="0.15">
+        <span class="tag maybe">What it cannot tell us alone</span>
+        <ul>
+          <li>Why something changed. Tide, rain and wet mud change the echo too.</li>
+          <li>Whether a tree is healthy, or how many trees there are.</li>
+          <li>Anything about fish, income or people. That needs people on the ground.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row" style="margin-top:50px" data-reveal><a class="btn solid" href="insights.html">See what we measured</a></div>
+  </div>
+</section>
+
+</main>
+<script type="module" src="/src/nisar.js"></script>
+</body>
+</html>
