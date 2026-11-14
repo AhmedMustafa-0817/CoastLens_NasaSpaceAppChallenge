@@ -116,7 +116,7 @@ Promise.all([get('layers.json'), get('zones.geojson'), get('alerts.json'), get('
       key: 'Both radars: bright = forest, black = water.' },
   ];
   const box = $('#stories');
-  box.innerHTML = STORIES.map((st, i) => `<button class="mapx-story${i < 3 ? ' top' : ''}" data-i="${i}"><span class="mono">${String(st.n).padStart(2, '0')}</span>${esc(st.title)}</button>`).join('')
+  box.innerHTML = STORIES.map((st, i) => `<button class="mapx-story${i < 3 ? ' top' : ''}" data-i="${i}"><span class="mono">${String(i + 1).padStart(2, '0')}</span>${esc(st.title)}</button>`).join('')
     + `<div class="mapx-story-text" id="storyText" hidden></div>`;
   const show = (i) => {
     const st = STORIES[i];
