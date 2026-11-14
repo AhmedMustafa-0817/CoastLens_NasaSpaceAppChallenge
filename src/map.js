@@ -103,8 +103,8 @@ Promise.all([get('layers.json'), get('zones.geojson'), get('alerts.json'), get('
       text: `Inside a growing coast, some patches lost forest year after year (pink dashed outlines). Zone ${zA.id} fell from ${zA.peak_km2.toFixed(2)} km² in ${zA.peak_year} to ${zA.km2_2025.toFixed(2)} km² in 2025: −${Math.round(zA.lost_pct)}%.`,
       key: 'Yellow = lost long ago, red = lost recently.' },
     { n: 5, title: 'Seeing through clouds', layers: [['nisar_hv_20261011', 1]], go: rehri,
-      text: 'The photo underneath needs clear skies. NISAR sends its own radar signal, so it sees the forest day or night, in any weather. Drag the NISAR slider in the list below to fade between radar and photo.',
-      key: 'Radar: bright = forest and buildings, black = water.' },
+      text: 'The photo underneath needs clear skies. NISAR sends its own radar signal, so it sees the forest day or night, in any weather. Use the slider below to fade between radar and photo.',
+      key: 'Radar: bright = forest and buildings, black = water.', fade: ['nisar_hv_20261011', 'Photo', 'NISAR radar'] },
     { n: 2, title: '40 years of change', layers: ['gmw4_change_1985_2025'], go: bounds,
       text: `The mapped forest grew from ${gt.first.km2.toFixed(0)} km² in ${gt.first.year} to ${gt.last.km2.toFixed(0)} km² in ${gt.last.year} (+${Math.round(gt.net_change_pct)}%), much of it planted.`,
       key: 'Blue = new mangrove since 1985, red = mangrove lost since 1985.' },
@@ -112,8 +112,8 @@ Promise.all([get('layers.json'), get('zones.geojson'), get('alerts.json'), get('
       text: `NISAR sees ${alerts.alerts.length} patches of mangrove thinning this year, each backed by at least ${Math.min(...alerts.alerts.map((a) => Object.values(a.signals ?? {}).filter(Boolean).length))} of 4 independent signals (pink dots). Click a dot for the evidence and directions. Next NISAR check: about ${alerts.next_nisar_pass}.`,
       key: 'Red = weakening compared with the rest of the forest, green = strengthening.' },
     { n: 6, title: 'Old satellite vs NISAR', layers: [['alos_hv_2024', 1], ['nisar_hv_20261011', 1]], go: zoneBounds('C'),
-      text: 'Underneath: ALOS-2, the older L-band radar, which gives one picture a year. In zone C it showed the forest thinning in 2016, two years before ordinary photos did. On top: NISAR, every 12 days. Drag the NISAR slider to compare.',
-      key: 'Both radars: bright = forest, black = water.' },
+      text: 'Underneath: ALOS-2, the older L-band radar, which gives one picture a year. In zone C it showed the forest thinning in 2016, two years before ordinary photos did. On top: NISAR, every 12 days. Use the slider below to fade between them.',
+      key: 'Both radars: bright = forest, black = water.', fade: ['nisar_hv_20261011', 'ALOS-2 (2024)', 'NISAR (2026)'] },
   ];
   const box = $('#stories');
   box.innerHTML = STORIES.map((st, i) => `<button class="mapx-story${i < 3 ? ' top' : ''}" data-i="${i}"><span class="mono">${String(i + 1).padStart(2, '0')}</span>${esc(st.title)}</button>`).join('')
@@ -126,7 +126,19 @@ Promise.all([get('layers.json'), get('zones.geojson'), get('alerts.json'), get('
     box.querySelectorAll('.mapx-story').forEach((b) => b.setAttribute('aria-pressed', b.dataset.i == i));
     const t = $('#storyText');
     t.hidden = false;
-    t.innerHTML = `<p>${esc(st.text)}</p><p class="mono mapx-meta">${esc(st.key)}</p><button class="mapx-reset mono">Reset map</button>`;
+    const ids = st.layers.map((x) => (Array.isArray(x) ? x[0] : x));
+    const legends = ids.map((id) => cfg.layers.find((l) => l.id === id)).filter(Boolean)
+      .map((l) => `<div class="mapx-story-legend"><span class="mono">${esc(l.title)}</span>${legend(l.legend)}</div>`).join('');
+    const fade = st.fade ? `<label class="mapx-fade"><span class="mono">${esc(st.fade[1])}</span><input type="range" min="0" max="1" step="0.05" value="1" aria-label="Fade between ${esc(st.fade[1])} and ${esc(st.fade[2])}"><span class="mono">${esc(st.fade[2])}</span></label>` : '';
+    t.innerHTML = `<p>${esc(st.text)}</p>${fade}<div class="mapx-key"><span class="mono">Legend</span><p>${esc(st.key)}</p>${legends}
+      <ul class="mapx-classes"><li><i class="mapx-sym-zone"></i>Decline zone: mangrove kept shrinking for years</li><li><i class="mapx-sym-alert"></i>NISAR alert: thinning now (click for details)</li></ul></div>
+      <button class="mapx-reset mono">Reset map</button>`;
+    const panel = $('.mapx-panel');
+    panel.scrollTo({ top: Math.max(0, t.offsetTop - panel.offsetTop - 120), behavior: 'smooth' });
+    if (st.fade) {
+      const rowRange = rows.get(st.fade[0]).querySelector('input[type=range]');
+      t.querySelector('.mapx-fade input').oninput = (ev) => { on.get(st.fade[0])?.setOpacity(+ev.target.value); rowRange.value = ev.target.value; };
+    }
     t.querySelector('.mapx-reset').onclick = () => {
       [...on.keys()].forEach((id) => setLayer(id, false));
       box.querySelectorAll('.mapx-story').forEach((b) => b.setAttribute('aria-pressed', 'false'));
