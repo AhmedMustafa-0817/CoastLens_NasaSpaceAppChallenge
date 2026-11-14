@@ -340,3 +340,36 @@ footer nav a { text-decoration: none; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   #blind .frame { clip-path: none; }
 }
+
+/* full map page (map.html) */
+.mapx { display: grid; grid-template-columns: minmax(300px, 380px) 1fr; height: 100vh; height: 100dvh; padding-top: 72px; background: var(--sand-light); }
+.mapx-panel { overflow-y: auto; padding: 28px 24px 40px; border-right: 1px solid var(--line); }
+.mapx-panel h1 { margin-bottom: 14px; }
+.mapx-intro { font-size: 0.92rem; color: var(--mocha-soft); }
+.mapx-base { display: grid; gap: 6px; margin: 22px 0 6px; }
+.mapx-base select { font: inherit; font-size: 0.9rem; padding: 8px 10px; background: var(--sand); color: var(--mocha); border: 1px solid var(--line); }
+.mapx-group { margin-top: 26px; }
+.mapx-group h2 { color: var(--mocha-soft); margin-bottom: 6px; }
+.mapx-row { border-top: 1px solid var(--line); padding: 10px 0; }
+.mapx-row label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; font-size: 0.93rem; line-height: 1.35; }
+.mapx-row input[type='checkbox'] { accent-color: var(--mocha); margin-top: 3px; }
+.mapx-info { padding: 8px 0 4px 24px; font-size: 0.86rem; }
+.mapx-info p { margin-top: 8px; }
+.mapx-info input[type='range'] { width: 100%; accent-color: var(--lband); }
+.mapx-caveat { color: var(--loss); }
+.mapx-meta { color: var(--mocha-soft); font-size: 0.62rem; line-height: 1.6; }
+.mapx-bar { height: 10px; margin-top: 8px; }
+.mapx-ends { display: flex; justify-content: space-between; color: var(--mocha-soft); font-size: 0.62rem; margin-top: 4px; }
+.mapx-classes { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 4px; }
+.mapx-classes li { display: flex; gap: 8px; align-items: center; }
+.mapx-classes i { width: 12px; height: 12px; display: inline-block; }
+.mapx-map { position: relative; }
+.mapx-pop h3 { font-size: 1.3rem; margin: 6px 0 8px; }
+.mapx-pop dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; margin: 0 0 8px; font-size: 0.8rem; }
+.mapx-pop dt { color: var(--mocha-soft); }
+.mapx-pop dd { margin: 0; }
+@media (max-width: 860px) {
+  .mapx { grid-template-columns: 1fr; grid-template-rows: 60vh auto; height: auto; }
+  .mapx-map { order: -1; min-height: 60vh; }
+  .mapx-panel { border-right: 0; }
+}

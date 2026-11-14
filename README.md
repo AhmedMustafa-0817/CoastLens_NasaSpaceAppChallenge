@@ -1,7 +1,7 @@
 # CoastLens
 
 Scroll-driven site for the NASA Space Apps Challenge 2026 ("Dancing with the SARs").
-Five pages: Home, NISAR, Insights, Collaborators, About us.
+Six pages: Home, NISAR, Insights, Map, Collaborators, About us. The data pipeline that makes every number and map layer lives in `scripts/` (Python).
 
 ## Run
 
@@ -21,17 +21,22 @@ Deploy on Vercel: import the repo, framework preset **Vite**. No other settings.
 | Nav, footer, smooth scroll, reveals, cursor, the Finding component | `src/core.js` |
 | Home page sections | `index.html` + `src/home.js` |
 | NISAR explainer animations | `nisar.html` + `src/nisar.js` |
-| Findings, charts, compare map | `insights.html` + `src/insights.js` |
+| Findings, charts, compare map, NISAR alerts | `insights.html` + `src/insights.js` |
+| Full map: every layer, decline zones, alerts | `map.html` + `src/map.js` (layers from `public/data/layers.json`) |
 | 3D mangrove (home and NISAR) | `src/tree3d.js` |
 | Real imagery loader | `src/tiles.js` |
 | Every number on the site | `public/data/stats.json` |
+| Map layers, decline zones, alerts | `public/data/layers.json`, `zones.geojson`, `alerts.json`; tiles in `public/tiles/` |
+| Data pipeline (NISAR, GMW, Earth Engine, AI model, NGO monitor) | `scripts/` (see `scripts/README.md`) |
 | Team and collaborators | `about.html`, `collaborators.html` (search for `TEAM:` and `COLLABORATORS:`) |
 
 ## Updating data
 
-- **Numbers and charts:** replace `public/data/stats.json` (same shape as the analysis site's file, plus a `flags` array taken from `places.geojson`). Finding text on Insights is built from these values.
-- **Map and hero imagery:** tiles load from the analysis site. Change `TILE_BASE` in `src/tiles.js` if they move. To self-host, copy the `tiles/` folder into `public/` and set `TILE_BASE = '/tiles'`.
-- **Layers in the compare map:** edit the `LAYERS` list in `src/insights.js`.
+- **Numbers and charts:** the scripts in `scripts/` write `public/data/stats.json` directly. Finding text on Insights is built from these values.
+- **Alerts:** after each NISAR pass (every 12 days) run `python scripts/monitor/coastlens_monitor.py`; it updates `public/data/alerts.json` and `places.geojson`.
+- **Map and hero imagery:** tiles are self-hosted in `public/tiles/` (made by `scripts/tiles/make_tiles.py`). `TILE_BASE` in `src/tiles.js` points there.
+- **Raw data** (`data_raw/`) and Python environments are not in git; `scripts/README.md` explains how to regenerate them.
+- **Layers in the compare map:** edit the `LAYERS` list in `src/insights.js`. The full map reads every `ready` layer from `public/data/layers.json`.
 - **Hero / reveal layers:** `OPTICAL` and `RADAR` at the top of `src/home.js`.
 
 ## Rules the site follows

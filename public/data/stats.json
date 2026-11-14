@@ -1,611 +1,1991 @@
 {
- "_readme": "Copied from the CoastLens analysis site (stats.json generated 2026-11-07). Replace this file to update every number and chart on the site.",
- "generated": "2026-11-07",
- "aoi": "Keti Bandar pilot area (working rectangle 67.2–67.8°E, 23.8–24.3°N)",
- "bbox": [
-  67.2,
-  23.8,
-  67.8,
-  24.3
- ],
- "mangrove_area": {
-  "source": "Global Mangrove Watch v3 extent; area computed by CoastLens within the AOI at 25 m",
-  "years": [
-   {
-    "year": 1996,
-    "km2": 183.56
-   },
-   {
-    "year": 2007,
-    "km2": 156.77
-   },
-   {
-    "year": 2010,
-    "km2": 146.06
-   },
-   {
-    "year": 2020,
-    "km2": 140.78
-   }
-  ]
- },
- "mangrove_change": {
-  "from": 1996,
-  "to": 2020,
-  "source": "Global Mangrove Watch v3, 1996 vs 2020 map differencing (includes mapping error)",
-  "gain_km2": 8.41,
-  "loss_km2": 51.19,
-  "stable_km2": 132.37
- },
- "ndvi_in_mangroves": {
-  "source": "Landsat 8 C2 L2, Nov–Feb cloud-masked median; mean NDVI inside GMW 2020 mangrove extent",
-  "series": [
-   {
-    "season": "2015–16",
-    "mean": 0.32
-   },
-   {
-    "season": "2018–19",
-    "mean": 0.361
-   },
-   {
-    "season": "2021–22",
-    "mean": 0.39
-   },
-   {
-    "season": "2024–25",
-    "mean": 0.374
-   }
-  ]
- },
- "s1_vh_in_mangroves": {
-  "source": "Sentinel-1 GRD VH (descending), Nov–Feb median; mean dB inside GMW 2020 mangrove extent",
-  "series": [
-   {
-    "season": "2017–18",
-    "mean_db": -14.94
-   },
-   {
-    "season": "2025–26",
-    "mean_db": -14.96
-   }
-  ]
- },
- "nisar": {
-  "source": "NISAR L2 GCOV (provisional), track 142 ascending, frame 14; 20 m; mean inside GMW 2020 mangroves",
-  "series": [
-   {
-    "date": "2025-11-20",
-    "pol": "HV",
-    "mean_db": -16.18,
-    "water_db": -25.41
-   },
-   {
-    "date": "2026-10-10",
-    "pol": "HV",
-    "mean_db": -14.98,
-    "water_db": -24.52
-   },
-   {
-    "date": "2026-10-10",
-    "pol": "HH",
-    "mean_db": -7.17,
-    "water_db": -17.61
-   }
-  ]
- },
- "nisar_timeseries": {
-  "track": 164,
-  "zones": "mangrove = GMW 2020 (>50% of cell); water = Landsat NDVI-masked water (>90%); land = other land",
-  "qc_suspect_dates": [
-   "2026-04-14"
+  "_readme": "Every number on the site. Written by the scripts in scripts/ (see scripts/README.md); do not edit by hand. Map pins and NGO alerts: alerts.json and places.geojson (written by scripts/monitor/coastlens_monitor.py).",
+  "bbox": [
+    67.155304,
+    24.671376,
+    67.433395,
+    24.828817
   ],
-  "backscatter": {
-   "source": "NISAR L2 GCOV (provisional), track 164, 80 m grid; zone mean, dB",
-   "series": [
-    {
-     "date": "2025-11-21",
-     "mangrove_hv": -15.83,
-     "water_hv": -26.5,
-     "land_hv": -20.63,
-     "mangrove_hh": -7.03,
-     "water_hh": -17.15,
-     "land_hh": -10.81
+  "status": "ready",
+  "generated": "2026-11-14",
+  "aoi": "Karachi mangrove coast, Rehri Goth to Port Qasim (67.155304–67.433395°E, 24.671376–24.828817°N, about 28 × 17.5 km)",
+  "mangrove_area": {
+    "source": "Global Mangrove Watch v3 extent; area computed by CoastLens within the AOI at 25 m",
+    "unit": "km2",
+    "years": [
+      {
+        "year": 1996,
+        "km2": 184.13
+      },
+      {
+        "year": 2007,
+        "km2": 177.84
+      },
+      {
+        "year": 2010,
+        "km2": 175.77
+      },
+      {
+        "year": 2020,
+        "km2": 177.39
+      }
+    ]
+  },
+  "mangrove_change": {
+    "from": 1996,
+    "to": 2020,
+    "source": "Global Mangrove Watch v3, 1996 vs 2020 map differencing (includes mapping error)",
+    "gain_km2": 8.26,
+    "loss_km2": 15.0,
+    "stable_km2": 169.13
+  },
+  "ndvi_in_mangroves": {
+    "source": "Landsat 8 C2 L2, Nov–Feb cloud-masked median; mean NDVI inside GMW 2020 mangrove extent",
+    "series": [
+      {
+        "season": "2015–16",
+        "mean": 0.479
+      },
+      {
+        "season": "2018–19",
+        "mean": 0.494
+      },
+      {
+        "season": "2021–22",
+        "mean": 0.558
+      },
+      {
+        "season": "2024–25",
+        "mean": 0.513
+      }
+    ]
+  },
+  "s1_vh_in_mangroves": {
+    "source": "Sentinel-1 GRD VH (DESCENDING), Nov–Feb median, 30 m focal median; mean dB inside GMW 2020 mangrove extent",
+    "series": [
+      {
+        "season": "2017–18",
+        "mean_db": -14.88
+      },
+      {
+        "season": "2025–26",
+        "mean_db": -15.23
+      }
+    ]
+  },
+  "nisar": {
+    "source": "NISAR L2 GCOV track 164 descending, frame 76, on a 20 m grid (provisional products). Mean of linear power inside Global Mangrove Watch v4.1 2025 mangroves; water = Sentinel-2 MNDWI mask.",
+    "series": [
+      {
+        "date": "2025-11-21 HV",
+        "pol": "HV",
+        "mean_db": -13.69,
+        "water_db": -23.64,
+        "n": 439490
+      },
+      {
+        "date": "2026-10-11 HV",
+        "pol": "HV",
+        "mean_db": -13.84,
+        "water_db": -21.19,
+        "n": 439490
+      },
+      {
+        "date": "2026-10-11 HH",
+        "pol": "HH",
+        "mean_db": -6.34,
+        "water_db": -13.75,
+        "n": 439490
+      }
+    ]
+  },
+  "nisar_timeseries": {
+    "track": 164,
+    "backscatter": {
+      "source": "NISAR L2 GCOV, track 164, frequencyB grid (80 m); zone mean of linear power, in dB",
+      "series": [
+        {
+          "date": "2025-11-21",
+          "mangrove_hv": -13.91,
+          "water_hv": -23.88,
+          "land_hv": -13.43,
+          "mangrove_hh": -5.53,
+          "water_hh": -16.07,
+          "land_hh": -4.35
+        },
+        {
+          "date": "2025-12-03",
+          "mangrove_hv": -13.64,
+          "water_hv": -21.85,
+          "land_hv": -13.28,
+          "mangrove_hh": -6.98,
+          "water_hh": -14.67,
+          "land_hh": -5.63
+        },
+        {
+          "date": "2025-12-15",
+          "mangrove_hv": -13.96,
+          "water_hv": -23.82,
+          "land_hv": -13.62,
+          "mangrove_hh": -5.94,
+          "water_hh": -14.95,
+          "land_hh": -4.76
+        },
+        {
+          "date": "2025-12-27",
+          "mangrove_hv": -13.86,
+          "water_hv": -23.93,
+          "land_hv": -13.43,
+          "mangrove_hh": -5.81,
+          "water_hh": -16.38,
+          "land_hh": -4.51
+        },
+        {
+          "date": "2026-01-08",
+          "mangrove_hv": -13.35,
+          "water_hv": -21.26,
+          "land_hv": -13.14,
+          "mangrove_hh": -5.18,
+          "water_hh": -12.78,
+          "land_hh": -4.15
+        },
+        {
+          "date": "2026-01-20",
+          "mangrove_hv": -12.97,
+          "water_hv": -22.58,
+          "land_hv": -12.8,
+          "mangrove_hh": -5.7,
+          "water_hh": -15.64,
+          "land_hh": -4.55
+        },
+        {
+          "date": "2026-02-01",
+          "mangrove_hv": -13.58,
+          "water_hv": -23.67,
+          "land_hv": -13.27,
+          "mangrove_hh": -5.57,
+          "water_hh": -15.8,
+          "land_hh": -4.38
+        },
+        {
+          "date": "2026-02-13",
+          "mangrove_hv": -13.74,
+          "water_hv": -23.62,
+          "land_hv": -13.33,
+          "mangrove_hh": -5.7,
+          "water_hh": -14.34,
+          "land_hh": -4.39
+        },
+        {
+          "date": "2026-02-25",
+          "mangrove_hv": -13.82,
+          "water_hv": -23.14,
+          "land_hv": -13.27,
+          "mangrove_hh": -5.95,
+          "water_hh": -13.62,
+          "land_hh": -4.47
+        },
+        {
+          "date": "2026-03-09",
+          "mangrove_hv": -13.66,
+          "water_hv": -21.0,
+          "land_hv": -13.2,
+          "mangrove_hh": -6.29,
+          "water_hh": -13.48,
+          "land_hh": -4.95
+        },
+        {
+          "date": "2026-03-21",
+          "mangrove_hv": -13.99,
+          "water_hv": -20.49,
+          "land_hv": -13.32,
+          "mangrove_hh": -7.43,
+          "water_hh": -13.45,
+          "land_hh": -5.21
+        },
+        {
+          "date": "2026-04-02",
+          "mangrove_hv": -13.28,
+          "water_hv": -21.73,
+          "land_hv": -12.33,
+          "mangrove_hh": -6.41,
+          "water_hh": -13.68,
+          "land_hh": -3.58
+        },
+        {
+          "date": "2026-04-14",
+          "mangrove_hv": null,
+          "water_hv": null,
+          "land_hv": null,
+          "mangrove_hh": null,
+          "water_hh": null,
+          "land_hh": null,
+          "raw": {
+            "mangrove_hv": -15.61,
+            "water_hv": -17.79,
+            "land_hv": -14.71,
+            "mangrove_hh": -8.81,
+            "water_hh": -10.65,
+            "land_hh": -7.02
+          },
+          "qc": "suspect acquisition: uniform near-zero coherence in all zones (sensor/processing issue, not landscape change)"
+        },
+        {
+          "date": "2026-04-26",
+          "mangrove_hv": -13.93,
+          "water_hv": -22.48,
+          "land_hv": -13.15,
+          "mangrove_hh": -5.97,
+          "water_hh": -14.22,
+          "land_hh": -4.67
+        },
+        {
+          "date": "2026-05-08",
+          "mangrove_hv": -14.72,
+          "water_hv": -21.41,
+          "land_hv": -13.89,
+          "mangrove_hh": -7.81,
+          "water_hh": -13.72,
+          "land_hh": -5.73
+        },
+        {
+          "date": "2026-05-20",
+          "mangrove_hv": -14.49,
+          "water_hv": -22.98,
+          "land_hv": -13.61,
+          "mangrove_hh": -6.59,
+          "water_hh": -13.89,
+          "land_hh": -4.73
+        },
+        {
+          "date": "2026-06-01",
+          "mangrove_hv": -14.77,
+          "water_hv": -22.04,
+          "land_hv": -13.85,
+          "mangrove_hh": -7.96,
+          "water_hh": -14.12,
+          "land_hh": -5.73
+        },
+        {
+          "date": "2026-06-13",
+          "mangrove_hv": -14.7,
+          "water_hv": -22.72,
+          "land_hv": -13.47,
+          "mangrove_hh": -6.6,
+          "water_hh": -13.78,
+          "land_hh": -4.84
+        },
+        {
+          "date": "2026-06-25",
+          "mangrove_hv": -15.28,
+          "water_hv": -22.08,
+          "land_hv": -14.04,
+          "mangrove_hh": -8.12,
+          "water_hh": -13.81,
+          "land_hh": -5.87
+        },
+        {
+          "date": "2026-07-07",
+          "mangrove_hv": -14.66,
+          "water_hv": -22.68,
+          "land_hv": -13.6,
+          "mangrove_hh": -6.87,
+          "water_hh": -13.55,
+          "land_hh": -4.81
+        },
+        {
+          "date": "2026-07-19",
+          "mangrove_hv": -14.78,
+          "water_hv": -21.62,
+          "land_hv": -14.02,
+          "mangrove_hh": -7.88,
+          "water_hh": -13.58,
+          "land_hh": -5.92
+        },
+        {
+          "date": "2026-08-12",
+          "mangrove_hv": -14.73,
+          "water_hv": -22.26,
+          "land_hv": -13.85,
+          "mangrove_hh": -7.64,
+          "water_hh": -13.37,
+          "land_hh": -5.46
+        },
+        {
+          "date": "2026-08-24",
+          "mangrove_hv": -13.73,
+          "water_hv": -22.17,
+          "land_hv": -13.27,
+          "mangrove_hh": -5.86,
+          "water_hh": -13.09,
+          "land_hh": -4.32
+        },
+        {
+          "date": "2026-09-05",
+          "mangrove_hv": -14.17,
+          "water_hv": -21.77,
+          "land_hv": -13.54,
+          "mangrove_hh": -7.22,
+          "water_hh": -13.36,
+          "land_hh": -5.26
+        },
+        {
+          "date": "2026-09-17",
+          "mangrove_hv": -13.8,
+          "water_hv": -22.12,
+          "land_hv": -13.35,
+          "mangrove_hh": -5.72,
+          "water_hh": -13.51,
+          "land_hh": -4.16
+        },
+        {
+          "date": "2026-09-29",
+          "mangrove_hv": -14.05,
+          "water_hv": -22.09,
+          "land_hv": -13.6,
+          "mangrove_hh": -7.14,
+          "water_hh": -14.43,
+          "land_hh": -5.46
+        },
+        {
+          "date": "2026-10-11",
+          "mangrove_hv": -14.1,
+          "water_hv": -22.91,
+          "land_hv": -13.33,
+          "mangrove_hh": -5.93,
+          "water_hh": -13.58,
+          "land_hh": -4.24
+        },
+        {
+          "date": "2026-10-23",
+          "mangrove_hv": -13.57,
+          "water_hv": -21.98,
+          "land_hv": -13.16,
+          "mangrove_hh": -7.47,
+          "water_hh": -14.19,
+          "land_hh": -5.89
+        }
+      ]
     },
-    {
-     "date": "2025-12-03",
-     "mangrove_hv": -14.21,
-     "water_hv": -24.24,
-     "land_hv": -18.03,
-     "mangrove_hh": -8.11,
-     "water_hh": -17.07,
-     "land_hh": -11.34
+    "coherence": {
+      "source": "NISAR L2 GUNW, track 164, HH coherence magnitude, 80 m grid; zone mean",
+      "series": [
+        {
+          "pair": "2025-11-21 to 2025-12-03",
+          "mid": "2025-11-27",
+          "days": 12,
+          "mangrove": 0.84,
+          "water": 0.147,
+          "land": 0.634
+        },
+        {
+          "pair": "2025-11-21 to 2025-12-15",
+          "mid": "2025-12-03",
+          "days": 24,
+          "mangrove": 0.821,
+          "water": 0.181,
+          "land": 0.651
+        },
+        {
+          "pair": "2025-12-03 to 2025-12-15",
+          "mid": "2025-12-09",
+          "days": 12,
+          "mangrove": 0.823,
+          "water": 0.133,
+          "land": 0.651
+        },
+        {
+          "pair": "2025-12-15 to 2025-12-27",
+          "mid": "2025-12-21",
+          "days": 12,
+          "mangrove": 0.819,
+          "water": 0.181,
+          "land": 0.685
+        },
+        {
+          "pair": "2025-12-15 to 2026-01-20",
+          "mid": "2026-01-02",
+          "days": 36,
+          "mangrove": 0.738,
+          "water": 0.166,
+          "land": 0.586
+        },
+        {
+          "pair": "2025-12-27 to 2026-01-08",
+          "mid": "2026-01-02",
+          "days": 12,
+          "mangrove": 0.887,
+          "water": 0.247,
+          "land": 0.728
+        },
+        {
+          "pair": "2026-01-08 to 2026-01-20",
+          "mid": "2026-01-14",
+          "days": 12,
+          "mangrove": 0.872,
+          "water": 0.304,
+          "land": 0.72
+        },
+        {
+          "pair": "2026-01-20 to 2026-02-01",
+          "mid": "2026-01-26",
+          "days": 12,
+          "mangrove": 0.9,
+          "water": 0.327,
+          "land": 0.716
+        },
+        {
+          "pair": "2026-02-01 to 2026-02-13",
+          "mid": "2026-02-07",
+          "days": 12,
+          "mangrove": 0.815,
+          "water": 0.177,
+          "land": 0.668
+        },
+        {
+          "pair": "2026-02-13 to 2026-02-25",
+          "mid": "2026-02-19",
+          "days": 12,
+          "mangrove": 0.792,
+          "water": 0.153,
+          "land": 0.673
+        },
+        {
+          "pair": "2026-02-25 to 2026-03-09",
+          "mid": "2026-03-03",
+          "days": 12,
+          "mangrove": 0.771,
+          "water": 0.154,
+          "land": 0.667
+        },
+        {
+          "pair": "2026-03-09 to 2026-03-21",
+          "mid": "2026-03-15",
+          "days": 12,
+          "mangrove": 0.667,
+          "water": 0.135,
+          "land": 0.459
+        },
+        {
+          "pair": "2026-03-21 to 2026-04-02",
+          "mid": "2026-03-27",
+          "days": 12,
+          "mangrove": 0.614,
+          "water": 0.132,
+          "land": 0.486
+        },
+        {
+          "pair": "2026-04-02 to 2026-04-14",
+          "mid": "2026-04-08",
+          "days": 12,
+          "mangrove": null,
+          "water": null,
+          "land": null,
+          "raw": {
+            "mangrove": 0.104,
+            "land": 0.105,
+            "water": 0.101
+          },
+          "qc": "suspect acquisition: uniform near-zero coherence in all zones (sensor/processing issue, not landscape change)"
+        },
+        {
+          "pair": "2026-04-14 to 2026-04-26",
+          "mid": "2026-04-20",
+          "days": 12,
+          "mangrove": null,
+          "water": null,
+          "land": null,
+          "raw": {
+            "mangrove": 0.103,
+            "land": 0.105,
+            "water": 0.101
+          },
+          "qc": "suspect acquisition: uniform near-zero coherence in all zones (sensor/processing issue, not landscape change)"
+        },
+        {
+          "pair": "2026-04-26 to 2026-05-08",
+          "mid": "2026-05-02",
+          "days": 12,
+          "mangrove": 0.335,
+          "water": 0.111,
+          "land": 0.527
+        },
+        {
+          "pair": "2026-05-08 to 2026-05-20",
+          "mid": "2026-05-14",
+          "days": 12,
+          "mangrove": 0.588,
+          "water": 0.122,
+          "land": 0.532
+        },
+        {
+          "pair": "2026-05-20 to 2026-06-01",
+          "mid": "2026-05-26",
+          "days": 12,
+          "mangrove": 0.689,
+          "water": 0.133,
+          "land": 0.601
+        },
+        {
+          "pair": "2026-06-01 to 2026-06-13",
+          "mid": "2026-06-07",
+          "days": 12,
+          "mangrove": 0.31,
+          "water": 0.111,
+          "land": 0.574
+        },
+        {
+          "pair": "2026-06-13 to 2026-06-25",
+          "mid": "2026-06-19",
+          "days": 12,
+          "mangrove": 0.312,
+          "water": 0.111,
+          "land": 0.535
+        },
+        {
+          "pair": "2026-06-25 to 2026-07-07",
+          "mid": "2026-07-01",
+          "days": 12,
+          "mangrove": 0.547,
+          "water": 0.116,
+          "land": 0.557
+        },
+        {
+          "pair": "2026-07-07 to 2026-07-19",
+          "mid": "2026-07-13",
+          "days": 12,
+          "mangrove": 0.718,
+          "water": 0.131,
+          "land": 0.568
+        },
+        {
+          "pair": "2026-07-19 to 2026-08-12",
+          "mid": "2026-07-31",
+          "days": 24,
+          "mangrove": 0.681,
+          "water": 0.108,
+          "land": 0.539
+        },
+        {
+          "pair": "2026-08-12 to 2026-08-24",
+          "mid": "2026-08-18",
+          "days": 12,
+          "mangrove": 0.702,
+          "water": 0.124,
+          "land": 0.617
+        },
+        {
+          "pair": "2026-08-24 to 2026-09-05",
+          "mid": "2026-08-30",
+          "days": 12,
+          "mangrove": 0.716,
+          "water": 0.128,
+          "land": 0.624
+        },
+        {
+          "pair": "2026-09-05 to 2026-09-17",
+          "mid": "2026-09-11",
+          "days": 12,
+          "mangrove": 0.711,
+          "water": 0.134,
+          "land": 0.607
+        },
+        {
+          "pair": "2026-09-17 to 2026-09-29",
+          "mid": "2026-09-23",
+          "days": 12,
+          "mangrove": 0.788,
+          "water": 0.176,
+          "land": 0.63
+        },
+        {
+          "pair": "2026-09-29 to 2026-10-11",
+          "mid": "2026-10-05",
+          "days": 12,
+          "mangrove": 0.799,
+          "water": 0.168,
+          "land": 0.637
+        }
+      ]
     },
-    {
-     "date": "2025-12-15",
-     "mangrove_hv": -16.04,
-     "water_hv": -26.7,
-     "land_hv": -20.84,
-     "mangrove_hh": -7.42,
-     "water_hh": -15.88,
-     "land_hh": -11.23
+    "zones": "mangrove = GMW 2020 (>50% of cell); water = Sentinel-2 MNDWI water (>90%); land = neither (<10% of each)",
+    "qc_suspect_dates": [
+      "2026-04-14"
+    ]
+  },
+  "nisar_pixel": {
+    "source": "NISAR L2 GCOV track 164, 27 dates 20251121-20261023 (QC-suspect dates removed), HV and HH per pixel on a 20 m grid after a 3x3 speckle filter",
+    "classes": {
+      "id": "nisar_classes_2025_26",
+      "rules_db": "water/mudflat: HV < -20.5; built-up: HH > -3.5 or HV-HH < -10 or HV > -10.5; mangrove: HV >= -19, HV-HH >= -8 and 100 m HV texture < 1.3 dB; other land: the rest",
+      "area_km2": {
+        "Water / mudflat": 201.66,
+        "Mangrove": 169.85,
+        "Built-up": 23.69,
+        "Other land": 109.97
+      },
+      "agreement": {
+        "gmw_mangrove_found_by_nisar_pct": 78.9,
+        "nisar_mangrove_confirmed_by_gmw_pct": 83.4,
+        "overall_accuracy_pct": 86.8,
+        "reference": "Global Mangrove Watch v4.1, 2025",
+        "gmw_mangrove_km2": 184.36
+      }
     },
-    {
-     "date": "2025-12-27",
-     "mangrove_hv": -14.96,
-     "water_hv": -26.75,
-     "land_hv": -19.7,
-     "mangrove_hh": -7.03,
-     "water_hh": -18.34,
-     "land_hh": -10.85
+    "ai": {
+      "id": "nisar_ai_mangrove_2025_26",
+      "model": "Random Forest (150 trees) on 10 NISAR-only features per 20 m pixel",
+      "features_by_importance": [
+        {
+          "feature": "HV low (p10)",
+          "importance": 0.254
+        },
+        {
+          "feature": "HV 60 m mean",
+          "importance": 0.208
+        },
+        {
+          "feature": "HV mean",
+          "importance": 0.166
+        },
+        {
+          "feature": "HV high (p90)",
+          "importance": 0.108
+        },
+        {
+          "feature": "HH mean",
+          "importance": 0.107
+        },
+        {
+          "feature": "HV texture 100 m",
+          "importance": 0.047
+        },
+        {
+          "feature": "HV seasonal spread",
+          "importance": 0.047
+        },
+        {
+          "feature": "HH seasonal spread",
+          "importance": 0.033
+        },
+        {
+          "feature": "HV-HH",
+          "importance": 0.026
+        },
+        {
+          "feature": "HV-HH correlation",
+          "importance": 0.005
+        }
+      ],
+      "trained_on": "Global Mangrove Watch v4.1 2025 labels (pixels clearly mangrove or clearly not)",
+      "validation": "2 km checkerboard blocks: trained on half the map, tested on the other half, and swapped",
+      "held_out_accuracy": {
+        "gmw_mangrove_found_by_nisar_pct": 96.7,
+        "nisar_mangrove_confirmed_by_gmw_pct": 91.8,
+        "overall_accuracy_pct": 95.7
+      },
+      "threshold_rules_accuracy_same_pixels": {
+        "gmw_mangrove_found_by_nisar_pct": 78.9,
+        "nisar_mangrove_confirmed_by_gmw_pct": 83.4,
+        "overall_accuracy_pct": 86.8
+      },
+      "mangrove_km2": 194.12
     },
-    {
-     "date": "2026-01-08",
-     "mangrove_hv": -14.75,
-     "water_hv": -25.45,
-     "land_hv": -19.48,
-     "mangrove_hh": -6.67,
-     "water_hh": -15.49,
-     "land_hh": -10.55
+    "trend": {
+      "id": "nisar_hv_trend_2025_26",
+      "unit": "dB per year, relative to the forest median on each date",
+      "forest_mask": "AI mangrove probability >= 0.5",
+      "weakening_threshold": -1.0,
+      "dates_used": 27,
+      "median": 0.13,
+      "rule": "weakening = slope <= -1 dB/yr AND |t| >= 2 (slope/standard error); strengthening likewise; else steady",
+      "median_standard_error": 0.37,
+      "pct_weakening": 10.5,
+      "pct_strengthening": 16.3,
+      "pct_stable": 73.1,
+      "weakening_km2": 20.41,
+      "pct_weakening_edge": 10.0,
+      "pct_weakening_interior": 12.5,
+      "caveat": "One year of data: this ranks patches against the rest of the forest, and season-dependent effects (tidal flooding, leaf flush, soil moisture) can differ between patches. It is not yet a multi-year trend."
     },
-    {
-     "date": "2026-01-20",
-     "mangrove_hv": -15.0,
-     "water_hv": -24.72,
-     "land_hv": -19.41,
-     "mangrove_hh": -7.26,
-     "water_hh": -17.43,
-     "land_hh": -11.18
+    "change_type": {
+      "id": "nisar_change_type_2025_26",
+      "early_dates": [
+        "20251121",
+        "20251203",
+        "20251215",
+        "20251227"
+      ],
+      "late_dates": [
+        "20260905",
+        "20260917",
+        "20260929",
+        "20261011",
+        "20261023"
+      ],
+      "rule": "changed if |dHV| or |dHH| >= 2 dB (60 m smoothed); structural if |dHV - dHH| >= 1.5 dB and |dHV| >= 2 dB (cross-pol volume echo moved much more than co-pol = canopy changed); otherwise moisture (both moved together = wetter/drier ground or tidal flooding)",
+      "area_km2": {
+        "Canopy loss (structural)": 1.03,
+        "Canopy gain (structural)": 1.7,
+        "Wetter / flooded (moisture)": 9.62,
+        "Drier (moisture)": 7.76
+      },
+      "pct_of_forest": {
+        "Canopy loss (structural)": 0.03,
+        "Canopy gain (structural)": 0.03,
+        "Wetter / flooded (moisture)": 0.27,
+        "Drier (moisture)": 0.74
+      },
+      "caveat": "Early and late windows are ~10 months apart and not the same season, so moisture changes are expected. Structural pixels are candidates for field checks, not confirmed loss."
     },
-    {
-     "date": "2026-02-01",
-     "mangrove_hv": -14.78,
-     "water_hv": -25.82,
-     "land_hv": -19.58,
-     "mangrove_hh": -6.68,
-     "water_hh": -16.93,
-     "land_hh": -10.65
-    },
-    {
-     "date": "2026-02-13",
-     "mangrove_hv": -14.96,
-     "water_hv": -26.14,
-     "land_hv": -19.61,
-     "mangrove_hh": -6.94,
-     "water_hh": -16.71,
-     "land_hh": -10.51
-    },
-    {
-     "date": "2026-02-25",
-     "mangrove_hv": -15.05,
-     "water_hv": -25.78,
-     "land_hv": -19.65,
-     "mangrove_hh": -7.26,
-     "water_hh": -16.79,
-     "land_hh": -10.91
-    },
-    {
-     "date": "2026-03-09",
-     "mangrove_hv": -14.57,
-     "water_hv": -25.5,
-     "land_hv": -19.15,
-     "mangrove_hh": -7.43,
-     "water_hh": -17.07,
-     "land_hh": -10.92
-    },
-    {
-     "date": "2026-03-21",
-     "mangrove_hv": -14.78,
-     "water_hv": -24.45,
-     "land_hv": -18.32,
-     "mangrove_hh": -7.39,
-     "water_hh": -16.88,
-     "land_hh": -9.68
-    },
-    {
-     "date": "2026-04-02",
-     "mangrove_hv": -14.38,
-     "water_hv": -23.69,
-     "land_hv": -18.63,
-     "mangrove_hh": -7.66,
-     "water_hh": -15.62,
-     "land_hh": -10.98
-    },
-    {
-     "date": "2026-04-14",
-     "mangrove_hv": null,
-     "water_hv": null,
-     "land_hv": null,
-     "mangrove_hh": null,
-     "water_hh": null,
-     "land_hh": null,
-     "qc": "suspect acquisition: uniform near-zero coherence in all zones (sensor/processing issue, not landscape change)"
-    },
-    {
-     "date": "2026-04-26",
-     "mangrove_hv": -15.48,
-     "water_hv": -24.92,
-     "land_hv": -19.7,
-     "mangrove_hh": -7.65,
-     "water_hh": -16.63,
-     "land_hh": -11.49
-    },
-    {
-     "date": "2026-05-08",
-     "mangrove_hv": -15.3,
-     "water_hv": -25.09,
-     "land_hv": -19.25,
-     "mangrove_hh": -7.43,
-     "water_hh": -16.25,
-     "land_hh": -10.24
-    },
-    {
-     "date": "2026-05-20",
-     "mangrove_hv": -15.29,
-     "water_hv": -25.44,
-     "land_hv": -20.02,
-     "mangrove_hh": -7.54,
-     "water_hh": -16.03,
-     "land_hh": -11.37
-    },
-    {
-     "date": "2026-06-01",
-     "mangrove_hv": -15.35,
-     "water_hv": -24.66,
-     "land_hv": -19.1,
-     "mangrove_hh": -7.72,
-     "water_hh": -16.56,
-     "land_hh": -10.43
-    },
-    {
-     "date": "2026-06-13",
-     "mangrove_hv": -15.99,
-     "water_hv": -25.08,
-     "land_hv": -20.22,
-     "mangrove_hh": -8.01,
-     "water_hh": -15.85,
-     "land_hh": -11.75
-    },
-    {
-     "date": "2026-06-25",
-     "mangrove_hv": -15.78,
-     "water_hv": -25.05,
-     "land_hv": -19.49,
-     "mangrove_hh": -7.7,
-     "water_hh": -16.29,
-     "land_hh": -10.59
-    },
-    {
-     "date": "2026-07-07",
-     "mangrove_hv": -15.3,
-     "water_hv": -25.46,
-     "land_hv": -20.05,
-     "mangrove_hh": -7.71,
-     "water_hh": -16.23,
-     "land_hh": -11.63
-    },
-    {
-     "date": "2026-07-19",
-     "mangrove_hv": -15.55,
-     "water_hv": -25.23,
-     "land_hv": -19.6,
-     "mangrove_hh": -7.67,
-     "water_hh": -16.5,
-     "land_hh": -10.7
-    },
-    {
-     "date": "2026-08-12",
-     "mangrove_hv": -15.2,
-     "water_hv": -25.27,
-     "land_hv": -19.4,
-     "mangrove_hh": -7.34,
-     "water_hh": -16.71,
-     "land_hh": -10.25
-    },
-    {
-     "date": "2026-08-24",
-     "mangrove_hv": -14.47,
-     "water_hv": -25.02,
-     "land_hv": -19.31,
-     "mangrove_hh": -6.89,
-     "water_hh": -16.28,
-     "land_hh": -10.75
-    },
-    {
-     "date": "2026-09-05",
-     "mangrove_hv": -14.33,
-     "water_hv": -24.79,
-     "land_hv": -18.68,
-     "mangrove_hh": -6.67,
-     "water_hh": -16.1,
-     "land_hh": -9.72
-    },
-    {
-     "date": "2026-09-17",
-     "mangrove_hv": -14.27,
-     "water_hv": -25.29,
-     "land_hv": -19.13,
-     "mangrove_hh": -6.3,
-     "water_hh": -16.01,
-     "land_hh": -10.04
-    },
-    {
-     "date": "2026-09-29",
-     "mangrove_hv": -14.16,
-     "water_hv": -25.14,
-     "land_hv": -18.49,
-     "mangrove_hh": -6.46,
-     "water_hh": -17.32,
-     "land_hh": -9.53
-    },
-    {
-     "date": "2026-10-11",
-     "mangrove_hv": -14.63,
-     "water_hv": -25.33,
-     "land_hv": -19.29,
-     "mangrove_hh": -6.48,
-     "water_hh": -15.88,
-     "land_hh": -10.07
+    "zones": [
+      {
+        "id": "A",
+        "nisar_mangrove_km2": 0.199,
+        "gmw_2025_km2": 0.159,
+        "pct_forest_weakening": 2.8,
+        "pct_forest_strengthening": 34.3,
+        "median_trend_db_per_year": 0.66,
+        "pct_canopy_loss_structural": 0.0,
+        "pct_wetter_moisture": 2.2,
+        "box_pct_forest_weakening": 10.5,
+        "status": "no extra weakening seen by NISAR this year"
+      },
+      {
+        "id": "B",
+        "nisar_mangrove_km2": 0.118,
+        "gmw_2025_km2": 0.075,
+        "pct_forest_weakening": 12.2,
+        "pct_forest_strengthening": 12.2,
+        "median_trend_db_per_year": 0.17,
+        "pct_canopy_loss_structural": 0.0,
+        "pct_wetter_moisture": 0.7,
+        "box_pct_forest_weakening": 10.5,
+        "status": "watch: some weakening"
+      },
+      {
+        "id": "C",
+        "nisar_mangrove_km2": 0.113,
+        "gmw_2025_km2": 0.086,
+        "pct_forest_weakening": 9.9,
+        "pct_forest_strengthening": 26.6,
+        "median_trend_db_per_year": 0.09,
+        "pct_canopy_loss_structural": 0.0,
+        "pct_wetter_moisture": 6.4,
+        "box_pct_forest_weakening": 10.5,
+        "status": "no extra weakening seen by NISAR this year"
+      },
+      {
+        "id": "D",
+        "nisar_mangrove_km2": 0.036,
+        "gmw_2025_km2": 0.041,
+        "pct_forest_weakening": 4.5,
+        "pct_forest_strengthening": 5.6,
+        "median_trend_db_per_year": 0.2,
+        "pct_canopy_loss_structural": 0.0,
+        "pct_wetter_moisture": 9.2,
+        "box_pct_forest_weakening": 10.5,
+        "status": "no extra weakening seen by NISAR this year"
+      },
+      {
+        "id": "E",
+        "nisar_mangrove_km2": 0.062,
+        "gmw_2025_km2": 0.045,
+        "pct_forest_weakening": 8.4,
+        "pct_forest_strengthening": 5.2,
+        "median_trend_db_per_year": -0.04,
+        "pct_canopy_loss_structural": 0.0,
+        "pct_wetter_moisture": 0.9,
+        "box_pct_forest_weakening": 10.5,
+        "status": "no extra weakening seen by NISAR this year"
+      },
+      {
+        "id": "F",
+        "nisar_mangrove_km2": 0.048,
+        "gmw_2025_km2": 0.053,
+        "pct_forest_weakening": 7.4,
+        "pct_forest_strengthening": 38.8,
+        "median_trend_db_per_year": 0.93,
+        "pct_canopy_loss_structural": 5.3,
+        "pct_wetter_moisture": 32.2,
+        "box_pct_forest_weakening": 10.5,
+        "status": "no extra weakening seen by NISAR this year"
+      },
+      {
+        "id": "G",
+        "nisar_mangrove_km2": 0.044,
+        "gmw_2025_km2": 0.053,
+        "pct_forest_weakening": 0.9,
+        "pct_forest_strengthening": 17.1,
+        "median_trend_db_per_year": 0.54,
+        "pct_canopy_loss_structural": 10.4,
+        "pct_wetter_moisture": 6.1,
+        "box_pct_forest_weakening": 10.5,
+        "status": "no extra weakening seen by NISAR this year"
+      }
+    ],
+    "sensor_comparison": {
+      "what": "How well each sensor alone separates mangrove from non-mangrove on the same 20 m pixels (AUC: 0.5 = coin flip, 1.0 = perfect). Labels: pixels that GMW v4.1 2025 calls clearly mangrove (>90%) or clearly not (<10%).",
+      "caveat": "GMW is itself built from Landsat and ALOS, so this comparison is tilted in favour of the older sensors. NISAR still has to match it without any optical input.",
+      "results": [
+        {
+          "sensor": "Landsat 8/9 NDVI (optical, 30 m, 2025-26)",
+          "kind": "optical",
+          "auc": 0.991,
+          "pixels": 1187028
+        },
+        {
+          "sensor": "Sentinel-1 VH (C-band radar, 2025-26)",
+          "kind": "C-band",
+          "auc": 0.918,
+          "pixels": 1220266
+        },
+        {
+          "sensor": "ALOS-2 PALSAR-2 HV (L-band, 2024 mosaic)",
+          "kind": "L-band (old)",
+          "auc": 0.869,
+          "pixels": 1220266
+        },
+        {
+          "sensor": "NISAR HV, year mean (L-band, 2025-26)",
+          "kind": "NISAR",
+          "auc": 0.889,
+          "pixels": 1220266
+        },
+        {
+          "sensor": "NISAR AI model (10 radar features, held-out blocks)",
+          "kind": "NISAR",
+          "auc": 0.993,
+          "pixels": 1220266
+        }
+      ]
     }
-   ]
   },
-  "coherence": {
-   "source": "NISAR L2 GUNW (provisional), track 164, HH coherence magnitude, 80 m grid; zone mean",
-   "series": [
-    {
-     "mid": "2025-11-27",
-     "days": 12,
-     "mangrove": 0.812,
-     "water": 0.121,
-     "land": 0.594
-    },
-    {
-     "mid": "2025-12-03",
-     "days": 24,
-     "mangrove": 0.812,
-     "water": 0.128,
-     "land": 0.606
-    },
-    {
-     "mid": "2025-12-09",
-     "days": 12,
-     "mangrove": 0.723,
-     "water": 0.119,
-     "land": 0.539
-    },
-    {
-     "mid": "2025-12-21",
-     "days": 12,
-     "mangrove": 0.846,
-     "water": 0.131,
-     "land": 0.654
-    },
-    {
-     "mid": "2026-01-02",
-     "days": 36,
-     "mangrove": 0.79,
-     "water": 0.128,
-     "land": 0.577
-    },
-    {
-     "mid": "2026-01-02",
-     "days": 12,
-     "mangrove": 0.91,
-     "water": 0.148,
-     "land": 0.721
-    },
-    {
-     "mid": "2026-01-14",
-     "days": 12,
-     "mangrove": 0.912,
-     "water": 0.16,
-     "land": 0.726
-    },
-    {
-     "mid": "2026-01-26",
-     "days": 12,
-     "mangrove": 0.926,
-     "water": 0.164,
-     "land": 0.732
-    },
-    {
-     "mid": "2026-02-07",
-     "days": 12,
-     "mangrove": 0.847,
-     "water": 0.133,
-     "land": 0.648
-    },
-    {
-     "mid": "2026-02-19",
-     "days": 12,
-     "mangrove": 0.796,
-     "water": 0.126,
-     "land": 0.596
-    },
-    {
-     "mid": "2026-03-03",
-     "days": 12,
-     "mangrove": 0.801,
-     "water": 0.126,
-     "land": 0.596
-    },
-    {
-     "mid": "2026-03-15",
-     "days": 12,
-     "mangrove": 0.752,
-     "water": 0.123,
-     "land": 0.503
-    },
-    {
-     "mid": "2026-03-27",
-     "days": 12,
-     "mangrove": 0.717,
-     "water": 0.122,
-     "land": 0.522
-    },
-    {
-     "mid": "2026-04-08",
-     "days": 12,
-     "mangrove": null,
-     "water": null,
-     "land": null,
-     "qc": "suspect"
-    },
-    {
-     "mid": "2026-04-20",
-     "days": 12,
-     "mangrove": null,
-     "water": null,
-     "land": null,
-     "qc": "suspect"
-    },
-    {
-     "mid": "2026-05-02",
-     "days": 12,
-     "mangrove": 0.324,
-     "water": 0.112,
-     "land": 0.396
-    },
-    {
-     "mid": "2026-05-14",
-     "days": 12,
-     "mangrove": 0.611,
-     "water": 0.114,
-     "land": 0.437
-    },
-    {
-     "mid": "2026-05-26",
-     "days": 12,
-     "mangrove": 0.443,
-     "water": 0.112,
-     "land": 0.349
-    },
-    {
-     "mid": "2026-06-07",
-     "days": 12,
-     "mangrove": 0.359,
-     "water": 0.11,
-     "land": 0.372
-    },
-    {
-     "mid": "2026-06-19",
-     "days": 12,
-     "mangrove": 0.473,
-     "water": 0.112,
-     "land": 0.442
-    },
-    {
-     "mid": "2026-07-13",
-     "days": 12,
-     "mangrove": 0.725,
-     "water": 0.115,
-     "land": 0.492
-    },
-    {
-     "mid": "2026-07-31",
-     "days": 24,
-     "mangrove": 0.779,
-     "water": 0.088,
-     "land": 0.512
-    },
-    {
-     "mid": "2026-08-18",
-     "days": 12,
-     "mangrove": 0.718,
-     "water": 0.113,
-     "land": 0.491
-    },
-    {
-     "mid": "2026-08-30",
-     "days": 12,
-     "mangrove": 0.746,
-     "water": 0.115,
-     "land": 0.514
-    },
-    {
-     "mid": "2026-09-11",
-     "days": 12,
-     "mangrove": 0.728,
-     "water": 0.114,
-     "land": 0.506
-    },
-    {
-     "mid": "2026-09-23",
-     "days": 12,
-     "mangrove": 0.781,
-     "water": 0.123,
-     "land": 0.532
-    },
-    {
-     "mid": "2026-10-05",
-     "days": 12,
-     "mangrove": 0.795,
-     "water": 0.125,
-     "land": 0.563
+  "gmw_timeseries": {
+    "source": "Global Mangrove Watch v4.1.12 (Aberystwyth University / JAXA, July 2026), annual extent from Landsat, Sentinel-2 and JAXA L-band; area computed by CoastLens within the AOI",
+    "url": "https://zenodo.org/records/21346457",
+    "unit": "km2",
+    "pixel_deg": 0.00026946914578280785,
+    "correction_factor": 0.9775,
+    "note": "km2 is the plain mapped area (matches the GMW website's custom-area widget within ~1%); km2_corrected applies GMW's global accuracy correction (x0.9775) used in their country totals. GMW reports ~93% accuracy globally; local accuracy varies.",
+    "years": [
+      {
+        "year": 1985,
+        "km2": 67.22,
+        "km2_corrected": 65.7
+      },
+      {
+        "year": 1986,
+        "km2": 67.27,
+        "km2_corrected": 65.76
+      },
+      {
+        "year": 1987,
+        "km2": 67.66,
+        "km2_corrected": 66.14
+      },
+      {
+        "year": 1988,
+        "km2": 68.05,
+        "km2_corrected": 66.52
+      },
+      {
+        "year": 1989,
+        "km2": 68.79,
+        "km2_corrected": 67.24
+      },
+      {
+        "year": 1990,
+        "km2": 69.49,
+        "km2_corrected": 67.93
+      },
+      {
+        "year": 1991,
+        "km2": 70.77,
+        "km2_corrected": 69.18
+      },
+      {
+        "year": 1992,
+        "km2": 72.98,
+        "km2_corrected": 71.34
+      },
+      {
+        "year": 1993,
+        "km2": 75.21,
+        "km2_corrected": 73.51
+      },
+      {
+        "year": 1994,
+        "km2": 79.6,
+        "km2_corrected": 77.81
+      },
+      {
+        "year": 1995,
+        "km2": 80.74,
+        "km2_corrected": 78.92
+      },
+      {
+        "year": 1996,
+        "km2": 83.64,
+        "km2_corrected": 81.76
+      },
+      {
+        "year": 1997,
+        "km2": 88.56,
+        "km2_corrected": 86.57
+      },
+      {
+        "year": 1998,
+        "km2": 92.11,
+        "km2_corrected": 90.03
+      },
+      {
+        "year": 1999,
+        "km2": 99.09,
+        "km2_corrected": 96.86
+      },
+      {
+        "year": 2000,
+        "km2": 100.19,
+        "km2_corrected": 97.94
+      },
+      {
+        "year": 2001,
+        "km2": 102.75,
+        "km2_corrected": 100.44
+      },
+      {
+        "year": 2002,
+        "km2": 107.33,
+        "km2_corrected": 104.91
+      },
+      {
+        "year": 2003,
+        "km2": 110.17,
+        "km2_corrected": 107.7
+      },
+      {
+        "year": 2004,
+        "km2": 116.45,
+        "km2_corrected": 113.83
+      },
+      {
+        "year": 2005,
+        "km2": 119.42,
+        "km2_corrected": 116.73
+      },
+      {
+        "year": 2006,
+        "km2": 120.62,
+        "km2_corrected": 117.91
+      },
+      {
+        "year": 2007,
+        "km2": 126.78,
+        "km2_corrected": 123.92
+      },
+      {
+        "year": 2008,
+        "km2": 129.85,
+        "km2_corrected": 126.93
+      },
+      {
+        "year": 2009,
+        "km2": 145.84,
+        "km2_corrected": 142.55
+      },
+      {
+        "year": 2010,
+        "km2": 148.91,
+        "km2_corrected": 145.56
+      },
+      {
+        "year": 2011,
+        "km2": 151.0,
+        "km2_corrected": 147.61
+      },
+      {
+        "year": 2012,
+        "km2": 158.0,
+        "km2_corrected": 154.45
+      },
+      {
+        "year": 2013,
+        "km2": 162.0,
+        "km2_corrected": 158.35
+      },
+      {
+        "year": 2014,
+        "km2": 166.65,
+        "km2_corrected": 162.9
+      },
+      {
+        "year": 2015,
+        "km2": 168.4,
+        "km2_corrected": 164.61
+      },
+      {
+        "year": 2016,
+        "km2": 171.51,
+        "km2_corrected": 167.65
+      },
+      {
+        "year": 2017,
+        "km2": 172.29,
+        "km2_corrected": 168.41
+      },
+      {
+        "year": 2018,
+        "km2": 173.33,
+        "km2_corrected": 169.43
+      },
+      {
+        "year": 2019,
+        "km2": 175.13,
+        "km2_corrected": 171.19
+      },
+      {
+        "year": 2020,
+        "km2": 176.33,
+        "km2_corrected": 172.36
+      },
+      {
+        "year": 2021,
+        "km2": 177.59,
+        "km2_corrected": 173.59
+      },
+      {
+        "year": 2022,
+        "km2": 179.61,
+        "km2_corrected": 175.57
+      },
+      {
+        "year": 2023,
+        "km2": 180.25,
+        "km2_corrected": 176.2
+      },
+      {
+        "year": 2024,
+        "km2": 180.76,
+        "km2_corrected": 176.69
+      },
+      {
+        "year": 2025,
+        "km2": 180.9,
+        "km2_corrected": 176.83
+      }
+    ],
+    "summary": {
+      "first": {
+        "year": 1985,
+        "km2": 67.22,
+        "km2_corrected": 65.7
+      },
+      "last": {
+        "year": 2025,
+        "km2": 180.9,
+        "km2_corrected": 176.83
+      },
+      "peak": {
+        "year": 2025,
+        "km2": 180.9,
+        "km2_corrected": 176.83
+      },
+      "lowest": {
+        "year": 1985,
+        "km2": 67.22,
+        "km2_corrected": 65.7
+      },
+      "net_change_km2": 113.68,
+      "net_change_pct": 169.1
     }
-   ]
+  },
+  "decline_zones": {
+    "source": "Global Mangrove Watch v4.1.12 annual extent 1985-2025 (Zenodo 21346457); zones found by CoastLens",
+    "method": "~245 m cells; a cell is 'steadily declining' if after its peak year (<= 2018) it lost >= 40% of its peak mangrove, its yearly area mostly falls (Kendall tau <= -0.5) and it has not recovered in the last 5 years. Touching cells are joined into zones; zones that lost < 0.1 km2 are dropped.",
+    "unit": "km2",
+    "box_lost_pixels_km2": 5.78,
+    "zones": [
+      {
+        "id": "A",
+        "name": "Decline zone A",
+        "centroid": [
+          67.31843,
+          24.75455
+        ],
+        "peak_year": 2008,
+        "peak_km2": 0.782,
+        "km2_2025": 0.159,
+        "lost_km2": 0.623,
+        "lost_pct": 79.6,
+        "trend_km2_per_year": -0.042,
+        "cells": 20
+      },
+      {
+        "id": "B",
+        "name": "Decline zone B",
+        "centroid": [
+          67.33192,
+          24.78424
+        ],
+        "peak_year": 1998,
+        "peak_km2": 0.449,
+        "km2_2025": 0.075,
+        "lost_km2": 0.373,
+        "lost_pct": 83.2,
+        "trend_km2_per_year": -0.0185,
+        "cells": 11
+      },
+      {
+        "id": "C",
+        "name": "Decline zone C",
+        "centroid": [
+          67.30356,
+          24.75532
+        ],
+        "peak_year": 2015,
+        "peak_km2": 0.235,
+        "km2_2025": 0.086,
+        "lost_km2": 0.149,
+        "lost_pct": 63.3,
+        "trend_km2_per_year": -0.0166,
+        "cells": 6
+      },
+      {
+        "id": "D",
+        "name": "Decline zone D",
+        "centroid": [
+          67.19232,
+          24.7651
+        ],
+        "peak_year": 2004,
+        "peak_km2": 0.162,
+        "km2_2025": 0.041,
+        "lost_km2": 0.122,
+        "lost_pct": 75.0,
+        "trend_km2_per_year": -0.0073,
+        "cells": 5
+      },
+      {
+        "id": "E",
+        "name": "Decline zone E",
+        "centroid": [
+          67.23355,
+          24.72096
+        ],
+        "peak_year": 1989,
+        "peak_km2": 0.163,
+        "km2_2025": 0.045,
+        "lost_km2": 0.119,
+        "lost_pct": 72.6,
+        "trend_km2_per_year": -0.0037,
+        "cells": 5
+      },
+      {
+        "id": "F",
+        "name": "Decline zone F",
+        "centroid": [
+          67.26556,
+          24.7913
+        ],
+        "peak_year": 1995,
+        "peak_km2": 0.162,
+        "km2_2025": 0.053,
+        "lost_km2": 0.11,
+        "lost_pct": 67.5,
+        "trend_km2_per_year": -0.0046,
+        "cells": 5
+      },
+      {
+        "id": "G",
+        "name": "Decline zone G",
+        "centroid": [
+          67.28933,
+          24.77723
+        ],
+        "peak_year": 1994,
+        "peak_km2": 0.16,
+        "km2_2025": 0.053,
+        "lost_km2": 0.107,
+        "lost_pct": 67.0,
+        "trend_km2_per_year": -0.0041,
+        "cells": 5
+      }
+    ]
+  },
+  "zone_history": {
+    "note": "Mean value inside each GMW decline zone and inside stable reference forest (GMW v3 mangrove in both 1996 and 2020). 'year' = the year the dry season ends (Nov-Feb). NDVI: Landsat 5/7/8/9; ALOS HV: JAXA PALSAR/PALSAR-2 yearly mosaics (dB); S1 VH: Sentinel-1 GRD descending (dB).",
+    "ids": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "reference"
+    ],
+    "ndvi": [
+      {
+        "year": 1989,
+        "scenes": 5,
+        "A": 0.135,
+        "B": 0.168,
+        "C": 0.067,
+        "D": 0.113,
+        "E": 0.084,
+        "F": 0.168,
+        "G": 0.087,
+        "reference": 0.177
+      },
+      {
+        "year": 1990,
+        "scenes": 5,
+        "A": 0.158,
+        "B": 0.289,
+        "C": 0.078,
+        "D": 0.266,
+        "E": 0.088,
+        "F": 0.248,
+        "G": 0.107,
+        "reference": 0.221
+      },
+      {
+        "year": 1991,
+        "scenes": 5,
+        "A": 0.175,
+        "B": 0.275,
+        "C": 0.083,
+        "D": 0.239,
+        "E": 0.073,
+        "F": 0.211,
+        "G": 0.11,
+        "reference": 0.228
+      },
+      {
+        "year": 1992,
+        "scenes": 7,
+        "A": 0.127,
+        "B": 0.189,
+        "C": 0.056,
+        "D": 0.158,
+        "E": 0.061,
+        "F": 0.175,
+        "G": 0.105,
+        "reference": 0.157
+      },
+      {
+        "year": 1993,
+        "scenes": 7,
+        "A": 0.175,
+        "B": 0.264,
+        "C": 0.087,
+        "D": 0.212,
+        "E": 0.074,
+        "F": 0.222,
+        "G": 0.139,
+        "reference": 0.197
+      },
+      {
+        "year": 1994,
+        "scenes": 8,
+        "A": 0.186,
+        "B": 0.244,
+        "C": 0.081,
+        "D": 0.249,
+        "E": 0.072,
+        "F": 0.239,
+        "G": 0.14,
+        "reference": 0.214
+      },
+      {
+        "year": 1995,
+        "scenes": 5,
+        "A": 0.27,
+        "B": 0.369,
+        "C": 0.142,
+        "D": 0.35,
+        "E": 0.106,
+        "F": 0.321,
+        "G": 0.215,
+        "reference": 0.3
+      },
+      {
+        "year": 1996,
+        "scenes": 5,
+        "A": 0.226,
+        "B": 0.257,
+        "C": 0.11,
+        "D": 0.281,
+        "E": 0.09,
+        "F": 0.261,
+        "G": 0.164,
+        "reference": 0.267
+      },
+      {
+        "year": 1997,
+        "scenes": 5,
+        "A": 0.247,
+        "B": 0.335,
+        "C": 0.139,
+        "D": 0.326,
+        "E": 0.079,
+        "F": 0.264,
+        "G": 0.159,
+        "reference": 0.283
+      },
+      {
+        "year": 1998,
+        "scenes": 7,
+        "A": 0.283,
+        "B": 0.367,
+        "C": 0.14,
+        "D": 0.362,
+        "E": 0.08,
+        "F": 0.302,
+        "G": 0.164,
+        "reference": 0.309
+      },
+      {
+        "year": 1999,
+        "scenes": 7,
+        "A": 0.295,
+        "B": 0.392,
+        "C": 0.153,
+        "D": 0.372,
+        "E": 0.069,
+        "F": 0.304,
+        "G": 0.135,
+        "reference": 0.31
+      },
+      {
+        "year": 2000,
+        "scenes": 10,
+        "A": 0.298,
+        "B": 0.382,
+        "C": 0.162,
+        "D": 0.293,
+        "E": 0.025,
+        "F": 0.273,
+        "G": 0.136,
+        "reference": 0.297
+      },
+      {
+        "year": 2001,
+        "scenes": 8,
+        "A": 0.305,
+        "B": 0.352,
+        "C": 0.15,
+        "D": 0.339,
+        "E": 0.025,
+        "F": 0.271,
+        "G": 0.16,
+        "reference": 0.296
+      },
+      {
+        "year": 2002,
+        "scenes": 8,
+        "A": 0.304,
+        "B": 0.317,
+        "C": 0.168,
+        "D": 0.274,
+        "E": 0.014,
+        "F": 0.233,
+        "G": 0.104,
+        "reference": 0.308
+      },
+      {
+        "year": 2003,
+        "scenes": 2,
+        "A": 0.324,
+        "B": 0.365,
+        "C": 0.189,
+        "D": 0.387,
+        "E": 0.079,
+        "F": 0.318,
+        "G": 0.201,
+        "reference": 0.335
+      },
+      {
+        "year": 2004,
+        "scenes": 2,
+        "A": 0.441,
+        "B": 0.364,
+        "C": 0.239,
+        "D": 0.39,
+        "E": 0.133,
+        "F": 0.299,
+        "G": 0.263,
+        "reference": 0.414
+      },
+      {
+        "year": 2005,
+        "scenes": 7,
+        "A": 0.361,
+        "B": 0.417,
+        "C": 0.229,
+        "D": 0.41,
+        "E": 0.019,
+        "F": 0.28,
+        "G": 0.097,
+        "reference": 0.382
+      },
+      {
+        "year": 2006,
+        "scenes": 8,
+        "A": 0.375,
+        "B": 0.403,
+        "C": 0.222,
+        "D": 0.298,
+        "E": 0.003,
+        "F": 0.218,
+        "G": 0.102,
+        "reference": 0.34
+      },
+      {
+        "year": 2007,
+        "scenes": 7,
+        "A": 0.404,
+        "B": 0.423,
+        "C": 0.257,
+        "D": 0.315,
+        "E": 0.004,
+        "F": 0.248,
+        "G": 0.119,
+        "reference": 0.396
+      },
+      {
+        "year": 2008,
+        "scenes": 8,
+        "A": 0.422,
+        "B": 0.413,
+        "C": 0.28,
+        "D": 0.309,
+        "E": -0.005,
+        "F": 0.231,
+        "G": 0.089,
+        "reference": 0.416
+      },
+      {
+        "year": 2009,
+        "scenes": 13,
+        "A": 0.411,
+        "B": 0.379,
+        "C": 0.288,
+        "D": 0.312,
+        "E": 0.044,
+        "F": 0.211,
+        "G": 0.104,
+        "reference": 0.415
+      },
+      {
+        "year": 2010,
+        "scenes": 10,
+        "A": 0.407,
+        "B": 0.381,
+        "C": 0.29,
+        "D": 0.282,
+        "E": -0.021,
+        "F": 0.164,
+        "G": 0.044,
+        "reference": 0.408
+      },
+      {
+        "year": 2011,
+        "scenes": 11,
+        "A": 0.407,
+        "B": 0.401,
+        "C": 0.313,
+        "D": 0.297,
+        "E": 0.007,
+        "F": 0.133,
+        "G": 0.043,
+        "reference": 0.432
+      },
+      {
+        "year": 2012,
+        "scenes": 7,
+        "A": 0.254,
+        "B": 0.486,
+        "C": 0.36,
+        "D": 0.338,
+        "E": 0.053,
+        "F": 0.205,
+        "G": 0.109,
+        "reference": 0.467
+      },
+      {
+        "year": 2013,
+        "scenes": 8,
+        "A": 0.175,
+        "B": 0.43,
+        "C": 0.348,
+        "D": 0.327,
+        "E": 0.054,
+        "F": 0.147,
+        "G": 0.106,
+        "reference": 0.456
+      },
+      {
+        "year": 2014,
+        "scenes": 15,
+        "A": 0.161,
+        "B": 0.437,
+        "C": 0.36,
+        "D": 0.233,
+        "E": -0.01,
+        "F": -0.027,
+        "G": -0.054,
+        "reference": 0.457
+      },
+      {
+        "year": 2015,
+        "scenes": 15,
+        "A": 0.166,
+        "B": 0.108,
+        "C": 0.358,
+        "D": 0.231,
+        "E": -0.059,
+        "F": 0.024,
+        "G": -0.004,
+        "reference": 0.449
+      },
+      {
+        "year": 2016,
+        "scenes": 15,
+        "A": 0.18,
+        "B": 0.111,
+        "C": 0.398,
+        "D": 0.146,
+        "E": -0.047,
+        "F": -0.009,
+        "G": -0.024,
+        "reference": 0.469
+      },
+      {
+        "year": 2017,
+        "scenes": 15,
+        "A": 0.192,
+        "B": 0.11,
+        "C": 0.406,
+        "D": 0.15,
+        "E": -0.033,
+        "F": 0.024,
+        "G": -0.006,
+        "reference": 0.47
+      },
+      {
+        "year": 2018,
+        "scenes": 15,
+        "A": 0.148,
+        "B": 0.12,
+        "C": 0.26,
+        "D": 0.132,
+        "E": -0.028,
+        "F": 0.027,
+        "G": 0.002,
+        "reference": 0.491
+      },
+      {
+        "year": 2019,
+        "scenes": 15,
+        "A": 0.126,
+        "B": 0.117,
+        "C": 0.19,
+        "D": 0.109,
+        "E": -0.042,
+        "F": 0.043,
+        "G": 0.012,
+        "reference": 0.468
+      },
+      {
+        "year": 2020,
+        "scenes": 15,
+        "A": 0.138,
+        "B": 0.119,
+        "C": 0.197,
+        "D": 0.081,
+        "E": 0.016,
+        "F": 0.032,
+        "G": 0.01,
+        "reference": 0.512
+      },
+      {
+        "year": 2021,
+        "scenes": 14,
+        "A": 0.128,
+        "B": 0.116,
+        "C": 0.187,
+        "D": 0.052,
+        "E": -0.125,
+        "F": 0.027,
+        "G": -0.05,
+        "reference": 0.478
+      },
+      {
+        "year": 2022,
+        "scenes": 21,
+        "A": 0.132,
+        "B": 0.147,
+        "C": 0.166,
+        "D": 0.062,
+        "E": -0.057,
+        "F": 0.037,
+        "G": -0.006,
+        "reference": 0.563
+      },
+      {
+        "year": 2023,
+        "scenes": 25,
+        "A": 0.127,
+        "B": 0.168,
+        "C": 0.165,
+        "D": 0.015,
+        "E": -0.103,
+        "F": 0.027,
+        "G": -0.048,
+        "reference": 0.519
+      },
+      {
+        "year": 2024,
+        "scenes": 19,
+        "A": 0.126,
+        "B": 0.18,
+        "C": 0.176,
+        "D": 0.106,
+        "E": -0.074,
+        "F": 0.027,
+        "G": -0.028,
+        "reference": 0.545
+      },
+      {
+        "year": 2025,
+        "scenes": 15,
+        "A": 0.115,
+        "B": 0.178,
+        "C": 0.162,
+        "D": 0.032,
+        "E": -0.208,
+        "F": -0.104,
+        "G": -0.117,
+        "reference": 0.527
+      },
+      {
+        "year": 2026,
+        "scenes": 15,
+        "A": 0.135,
+        "B": 0.199,
+        "C": 0.176,
+        "D": 0.062,
+        "E": -0.121,
+        "F": 0.004,
+        "G": -0.044,
+        "reference": 0.571
+      }
+    ],
+    "alos_hv": [
+      {
+        "year": 2007,
+        "scenes": 1,
+        "A": -18.978,
+        "B": -18.364,
+        "C": -19.861,
+        "D": -18.144,
+        "E": -27.661,
+        "F": -22.178,
+        "G": -22.401,
+        "reference": -17.884
+      },
+      {
+        "year": 2008,
+        "scenes": 1,
+        "A": -19.048,
+        "B": -18.402,
+        "C": -19.918,
+        "D": -18.124,
+        "E": -27.346,
+        "F": -21.463,
+        "G": -22.467,
+        "reference": -17.905
+      },
+      {
+        "year": 2009,
+        "scenes": 1,
+        "A": -18.753,
+        "B": -18.055,
+        "C": -19.596,
+        "D": -17.981,
+        "E": -27.296,
+        "F": -21.369,
+        "G": -22.146,
+        "reference": -17.625
+      },
+      {
+        "year": 2010,
+        "scenes": 1,
+        "A": -18.782,
+        "B": -18.093,
+        "C": -19.73,
+        "D": -17.878,
+        "E": -27.265,
+        "F": -21.559,
+        "G": -22.241,
+        "reference": -17.623
+      },
+      {
+        "year": 2015,
+        "scenes": 1,
+        "A": -23.908,
+        "B": -24.81,
+        "C": -19.433,
+        "D": -22.831,
+        "E": -24.735,
+        "F": -26.197,
+        "G": -26.693,
+        "reference": -18.295
+      },
+      {
+        "year": 2016,
+        "scenes": 1,
+        "A": -24.48,
+        "B": -23.384,
+        "C": -20.575,
+        "D": -23.634,
+        "E": -25.523,
+        "F": -27.087,
+        "G": -28.474,
+        "reference": -19.178
+      },
+      {
+        "year": 2017,
+        "scenes": 1,
+        "A": -23.092,
+        "B": -21.162,
+        "C": -20.151,
+        "D": -23.652,
+        "E": -24.765,
+        "F": -24.601,
+        "G": -25.69,
+        "reference": -17.197
+      },
+      {
+        "year": 2018,
+        "scenes": 1,
+        "A": -24.195,
+        "B": -22.579,
+        "C": -21.034,
+        "D": -26.132,
+        "E": -24.52,
+        "F": -23.63,
+        "G": -24.605,
+        "reference": -18.266
+      },
+      {
+        "year": 2019,
+        "scenes": 1,
+        "A": -24.672,
+        "B": -23.291,
+        "C": -21.417,
+        "D": -25.284,
+        "E": -25.511,
+        "F": -24.206,
+        "G": -25.515,
+        "reference": -16.786
+      },
+      {
+        "year": 2020,
+        "scenes": 1,
+        "A": -24.515,
+        "B": -22.431,
+        "C": -22.972,
+        "D": -25.877,
+        "E": -26.487,
+        "F": -25.719,
+        "G": -26.074,
+        "reference": -18.052
+      },
+      {
+        "year": 2021,
+        "scenes": 1,
+        "A": -24.449,
+        "B": -22.625,
+        "C": -22.303,
+        "D": -27.622,
+        "E": -25.393,
+        "F": -24.387,
+        "G": -26.361,
+        "reference": -18.064
+      },
+      {
+        "year": 2022,
+        "scenes": 1,
+        "A": -24.76,
+        "B": -21.756,
+        "C": -21.709,
+        "D": -26.956,
+        "E": -25.63,
+        "F": -23.696,
+        "G": -24.538,
+        "reference": -17.39
+      },
+      {
+        "year": 2023,
+        "scenes": 1,
+        "A": -23.815,
+        "B": -21.853,
+        "C": -22.1,
+        "D": -27.023,
+        "E": -24.51,
+        "F": -24.236,
+        "G": -24.39,
+        "reference": -17.381
+      },
+      {
+        "year": 2024,
+        "scenes": 1,
+        "A": -26.073,
+        "B": -22.631,
+        "C": -24.605,
+        "D": -27.239,
+        "E": -26.414,
+        "F": -25.915,
+        "G": -26.711,
+        "reference": -17.482
+      }
+    ],
+    "s1_vh": [
+      {
+        "year": 2016,
+        "scenes": 1,
+        "A": -20.241,
+        "B": -21.597,
+        "C": -15.271,
+        "D": -21.166,
+        "E": -23.467,
+        "F": -22.526,
+        "G": -24.37,
+        "reference": -14.648
+      },
+      {
+        "year": 2017,
+        "scenes": 1,
+        "A": -20.605,
+        "B": -21.39,
+        "C": -15.969,
+        "D": -23.085,
+        "E": -23.901,
+        "F": -22.358,
+        "G": -22.578,
+        "reference": -15.131
+      },
+      {
+        "year": 2018,
+        "scenes": 10,
+        "A": -21.222,
+        "B": -20.841,
+        "C": -17.91,
+        "D": -22.829,
+        "E": -23.907,
+        "F": -22.433,
+        "G": -21.931,
+        "reference": -14.837
+      },
+      {
+        "year": 2019,
+        "scenes": 10,
+        "A": -22.031,
+        "B": -22.729,
+        "C": -18.485,
+        "D": -24.973,
+        "E": -25.444,
+        "F": -23.489,
+        "G": -23.672,
+        "reference": -14.768
+      },
+      {
+        "year": 2020,
+        "scenes": 10,
+        "A": -21.938,
+        "B": -21.324,
+        "C": -19.541,
+        "D": -25.02,
+        "E": -25.293,
+        "F": -23.431,
+        "G": -23.199,
+        "reference": -15.216
+      },
+      {
+        "year": 2021,
+        "scenes": 10,
+        "A": -21.813,
+        "B": -21.391,
+        "C": -19.34,
+        "D": -24.771,
+        "E": -24.566,
+        "F": -22.784,
+        "G": -22.391,
+        "reference": -15.234
+      },
+      {
+        "year": 2022,
+        "scenes": 10,
+        "A": -22.143,
+        "B": -20.936,
+        "C": -19.551,
+        "D": -24.905,
+        "E": -24.679,
+        "F": -23.12,
+        "G": -22.792,
+        "reference": -15.46
+      },
+      {
+        "year": 2023,
+        "scenes": 10,
+        "A": -22.215,
+        "B": -21.234,
+        "C": -19.789,
+        "D": -24.769,
+        "E": -24.711,
+        "F": -23.548,
+        "G": -22.62,
+        "reference": -15.005
+      },
+      {
+        "year": 2024,
+        "scenes": 9,
+        "A": -23.115,
+        "B": -21.386,
+        "C": -20.754,
+        "D": -27.785,
+        "E": -27.076,
+        "F": -24.936,
+        "G": -25.033,
+        "reference": -15.19
+      },
+      {
+        "year": 2025,
+        "scenes": 11,
+        "A": -22.877,
+        "B": -21.23,
+        "C": -20.75,
+        "D": -27.55,
+        "E": -26.849,
+        "F": -24.439,
+        "G": -24.359,
+        "reference": -15.045
+      },
+      {
+        "year": 2026,
+        "scenes": 10,
+        "A": -23.163,
+        "B": -20.894,
+        "C": -20.965,
+        "D": -28.212,
+        "E": -27.494,
+        "F": -24.502,
+        "G": -24.979,
+        "reference": -15.211
+      }
+    ]
   }
- },
- "flags": [
-  {
-   "kind": "loss",
-   "lon": 67.36241,
-   "lat": 24.28766,
-   "gmw_loss": 0.63,
-   "gmw_gain": 0.0,
-   "ndvi": 0.055,
-   "hv": 0.9,
-   "coh": 0.54,
-   "confidence": "Low",
-   "agree": "1 of 3"
-  },
-  {
-   "kind": "loss",
-   "lon": 67.38241,
-   "lat": 24.24766,
-   "gmw_loss": 0.57,
-   "gmw_gain": 0.0,
-   "ndvi": 0.088,
-   "hv": 0.1,
-   "coh": 0.5,
-   "confidence": "Low",
-   "agree": "1 of 3"
-  },
-  {
-   "kind": "loss",
-   "lon": 67.44241,
-   "lat": 24.22766,
-   "gmw_loss": 0.57,
-   "gmw_gain": 0.0,
-   "ndvi": 0.069,
-   "hv": 1.0,
-   "coh": 0.38,
-   "confidence": "Low",
-   "agree": "1 of 3"
-  },
-  {
-   "kind": "gain",
-   "lon": 67.62241,
-   "lat": 23.87766,
-   "gmw_loss": 0.03,
-   "gmw_gain": 0.26,
-   "ndvi": 0.01,
-   "hv": 0.2,
-   "coh": 0.41,
-   "confidence": "Low",
-   "agree": "1 of 3"
-  },
-  {
-   "kind": "gain",
-   "lon": 67.72241,
-   "lat": 23.95766,
-   "gmw_loss": 0.1,
-   "gmw_gain": 0.22,
-   "ndvi": 0.024,
-   "hv": 0.0,
-   "coh": 0.6,
-   "confidence": "Medium",
-   "agree": "2 of 3"
-  }
- ]
 }

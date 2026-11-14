@@ -1,0 +1,237 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "kind": "alert",
+    "priority": "High",
+    "title": "Alert 1: mangrove thinning",
+    "observed": "9.0 ha of mangrove here lost radar strength through 2025-26 (-1.5 dB/yr vs the rest of the forest, statistically significant).",
+    "evidence": "Global Mangrove Watch: 3.9 ha of mangrove right next to it disappeared between 2015 and 2025. Older L-band radar (ALOS-2): 27% of this forest already lost ≥2 dB between 2015 and 2024.",
+    "confidence": "High (3 of 4 independent signals agree). Not field-checked.",
+    "possible_causes": "To verify on the ground: wood cutting, camel/livestock browsing, land filling or construction, blocked tidal channels, sewage/industrial discharge, sediment burial.",
+    "next_step": "Field visit with photos at 24.78062 N, 67.25824 E. NISAR checks again around 2026-11-04.",
+    "area_ha": 9.0,
+    "zone": null,
+    "maps_url": "https://www.google.com/maps?q=24.78062,67.25824",
+    "signals": {
+     "nisar_now": true,
+     "gmw_history": true,
+     "lband_longterm": true,
+     "cband_or_structure": false
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     67.25824,
+     24.78062
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "kind": "alert",
+    "priority": "High",
+    "title": "Alert 2: mangrove thinning",
+    "observed": "3.0 ha of mangrove here lost radar strength through 2025-26 (-1.5 dB/yr vs the rest of the forest, statistically significant).",
+    "evidence": "Global Mangrove Watch: 1.0 ha of mangrove right next to it disappeared between 2015 and 2025. Older L-band radar (ALOS-2): 28% of this forest already lost ≥2 dB between 2015 and 2024.",
+    "confidence": "High (3 of 4 independent signals agree). Not field-checked.",
+    "possible_causes": "To verify on the ground: wood cutting, camel/livestock browsing, land filling or construction, blocked tidal channels, sewage/industrial discharge, sediment burial.",
+    "next_step": "Field visit with photos at 24.72981 N, 67.23725 E. NISAR checks again around 2026-11-04.",
+    "area_ha": 3.0,
+    "zone": null,
+    "maps_url": "https://www.google.com/maps?q=24.72981,67.23725",
+    "signals": {
+     "nisar_now": true,
+     "gmw_history": true,
+     "lband_longterm": true,
+     "cband_or_structure": false
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     67.23725,
+     24.72981
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "kind": "alert",
+    "priority": "High",
+    "title": "Alert 3: mangrove thinning",
+    "observed": "2.7 ha of mangrove here lost radar strength through 2025-26 (-1.5 dB/yr vs the rest of the forest, statistically significant).",
+    "evidence": "Global Mangrove Watch: 0.8 ha of mangrove right next to it disappeared between 2015 and 2025. Older L-band radar (ALOS-2): 39% of this forest already lost ≥2 dB between 2015 and 2024.",
+    "confidence": "High (3 of 4 independent signals agree). Not field-checked.",
+    "possible_causes": "To verify on the ground: wood cutting, camel/livestock browsing, land filling or construction, blocked tidal channels, sewage/industrial discharge, sediment burial.",
+    "next_step": "Field visit with photos at 24.77777 N, 67.27188 E. NISAR checks again around 2026-11-04.",
+    "area_ha": 2.7,
+    "zone": null,
+    "maps_url": "https://www.google.com/maps?q=24.77777,67.27188",
+    "signals": {
+     "nisar_now": true,
+     "gmw_history": true,
+     "lband_longterm": true,
+     "cband_or_structure": false
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     67.27188,
+     24.77777
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "kind": "alert",
+    "priority": "High",
+    "title": "Alert 4: mangrove thinning",
+    "observed": "1.5 ha of mangrove here lost radar strength through 2025-26 (-1.9 dB/yr vs the rest of the forest, statistically significant).",
+    "evidence": "Global Mangrove Watch: 1.0 ha of mangrove right next to it disappeared between 2015 and 2025. Older L-band radar (ALOS-2): 35% of this forest already lost ≥2 dB between 2015 and 2024.",
+    "confidence": "High (3 of 4 independent signals agree). Not field-checked.",
+    "possible_causes": "To verify on the ground: wood cutting, camel/livestock browsing, land filling or construction, blocked tidal channels, sewage/industrial discharge, sediment burial.",
+    "next_step": "Field visit with photos at 24.77256 N, 67.28168 E. NISAR checks again around 2026-11-04.",
+    "area_ha": 1.5,
+    "zone": null,
+    "maps_url": "https://www.google.com/maps?q=24.77256,67.28168",
+    "signals": {
+     "nisar_now": true,
+     "gmw_history": true,
+     "lband_longterm": true,
+     "cband_or_structure": false
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     67.28168,
+     24.77256
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "kind": "alert",
+    "priority": "High",
+    "title": "Alert 5: mangrove thinning in decline zone C",
+    "observed": "1.4 ha of mangrove here lost radar strength through 2025-26 (-1.7 dB/yr vs the rest of the forest, statistically significant).",
+    "evidence": "Global Mangrove Watch: inside decline zone C, which lost 63% of its mangrove since 2015 (0.23 → 0.09 km²). Older L-band radar (ALOS-2): 28% of this forest already lost ≥2 dB between 2015 and 2024.",
+    "confidence": "High (3 of 4 independent signals agree). Not field-checked.",
+    "possible_causes": "To verify on the ground: wood cutting, camel/livestock browsing, land filling or construction, blocked tidal channels, sewage/industrial discharge, sediment burial.",
+    "next_step": "Field visit with photos at 24.76035 N, 67.29871 E. NISAR checks again around 2026-11-04.",
+    "area_ha": 1.4,
+    "zone": "C",
+    "maps_url": "https://www.google.com/maps?q=24.76035,67.29871",
+    "signals": {
+     "nisar_now": true,
+     "gmw_history": true,
+     "lband_longterm": true,
+     "cband_or_structure": false
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     67.29871,
+     24.76035
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "kind": "alert",
+    "priority": "High",
+    "title": "Alert 6: mangrove thinning",
+    "observed": "1.2 ha of mangrove here lost radar strength through 2025-26 (-1.5 dB/yr vs the rest of the forest, statistically significant).",
+    "evidence": "Global Mangrove Watch: 0.6 ha of mangrove right next to it disappeared between 2015 and 2025. Older L-band radar (ALOS-2): 29% of this forest already lost ≥2 dB between 2015 and 2024.",
+    "confidence": "High (3 of 4 independent signals agree). Not field-checked.",
+    "possible_causes": "To verify on the ground: wood cutting, camel/livestock browsing, land filling or construction, blocked tidal channels, sewage/industrial discharge, sediment burial.",
+    "next_step": "Field visit with photos at 24.75986 N, 67.39511 E. NISAR checks again around 2026-11-04.",
+    "area_ha": 1.2,
+    "zone": null,
+    "maps_url": "https://www.google.com/maps?q=24.75986,67.39511",
+    "signals": {
+     "nisar_now": true,
+     "gmw_history": true,
+     "lband_longterm": true,
+     "cband_or_structure": false
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     67.39511,
+     24.75986
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "kind": "alert",
+    "priority": "High",
+    "title": "Alert 7: mangrove thinning",
+    "observed": "1.1 ha of mangrove here lost radar strength through 2025-26 (-1.5 dB/yr vs the rest of the forest, statistically significant).",
+    "evidence": "Global Mangrove Watch: 0.9 ha of mangrove right next to it disappeared between 2015 and 2025. Older L-band radar (ALOS-2): 44% of this forest already lost ≥2 dB between 2015 and 2024.",
+    "confidence": "High (3 of 4 independent signals agree). Not field-checked.",
+    "possible_causes": "To verify on the ground: wood cutting, camel/livestock browsing, land filling or construction, blocked tidal channels, sewage/industrial discharge, sediment burial.",
+    "next_step": "Field visit with photos at 24.76047 N, 67.36745 E. NISAR checks again around 2026-11-04.",
+    "area_ha": 1.1,
+    "zone": null,
+    "maps_url": "https://www.google.com/maps?q=24.76047,67.36745",
+    "signals": {
+     "nisar_now": true,
+     "gmw_history": true,
+     "lband_longterm": true,
+     "cband_or_structure": false
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     67.36745,
+     24.76047
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "kind": "alert",
+    "priority": "High",
+    "title": "Alert 8: mangrove thinning",
+    "observed": "1.0 ha of mangrove here lost radar strength through 2025-26 (-1.4 dB/yr vs the rest of the forest, statistically significant).",
+    "evidence": "Global Mangrove Watch: 0.8 ha of mangrove right next to it disappeared between 2015 and 2025. Older L-band radar (ALOS-2): 26% of this forest already lost ≥2 dB between 2015 and 2024.",
+    "confidence": "High (3 of 4 independent signals agree). Not field-checked.",
+    "possible_causes": "To verify on the ground: wood cutting, camel/livestock browsing, land filling or construction, blocked tidal channels, sewage/industrial discharge, sediment burial.",
+    "next_step": "Field visit with photos at 24.79406 N, 67.22550 E. NISAR checks again around 2026-11-04.",
+    "area_ha": 1.0,
+    "zone": null,
+    "maps_url": "https://www.google.com/maps?q=24.79406,67.22550",
+    "signals": {
+     "nisar_now": true,
+     "gmw_history": true,
+     "lband_longterm": true,
+     "cband_or_structure": false
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     67.2255,
+     24.79406
+    ]
+   }
+  }
+ ]
+}

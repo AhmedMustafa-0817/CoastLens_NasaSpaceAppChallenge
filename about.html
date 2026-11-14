@@ -15,7 +15,7 @@
   <div class="wrap">
     <span class="label">About us</span>
     <h1 class="t-hero" data-split style="font-size:clamp(3.4rem,10vw,10rem)">Students, watching a coast.</h1>
-    <p class="lede" data-reveal="0.4">CoastLens is a student project from FAST-NUCES Karachi, built for the NASA Space Apps Challenge 2026, “Dancing with the SARs”. We study one place, Keti Bandar in the Indus Delta, and try to say only what the satellites can support.</p>
+    <p class="lede" data-reveal="0.4">CoastLens is a student project from FAST-NUCES Karachi, built for the NASA Space Apps Challenge 2026, “Dancing with the SARs”. We study one place, Karachi's mangrove coast from Rehri Goth to Port Qasim, and try to say only what the satellites can support.</p>
   </div>
 </section>
 
@@ -53,12 +53,12 @@
   <span class="label">Data and sources</span>
   <h2 class="t-l" data-split>Where every number comes from.</h2>
   <div class="list" style="margin-top:40px;border-color:rgba(244,237,224,.22)">
-    <div style="border-color:rgba(244,237,224,.22)"><h3>NISAR</h3><p style="color:inherit;opacity:.75">NASA-ISRO L-band radar. L2 GCOV and GUNW provisional products from the ASF DAAC. Tracks 142 and 164, Nov 2025 to Oct 2026. Processed by CoastLens.</p><span class="mono">Radar</span></div>
-    <div style="border-color:rgba(244,237,224,.22)"><h3>Global Mangrove Watch v3</h3><p style="color:inherit;opacity:.75">Mangrove extent maps for 1996, 2007, 2010 and 2020 (Bunting et al., 2022). All area, loss and gain figures. An external product, not our own classification.</p><span class="mono">Extent</span></div>
-    <div style="border-color:rgba(244,237,224,.22)"><h3>Landsat 8 · Sentinel-2 · Sentinel-1</h3><p style="color:inherit;opacity:.75">Dry-season (Nov to Feb) cloud-masked composites via Google Earth Engine. Photos, greenness (NDVI) and C-band radar.</p><span class="mono">Optical + radar</span></div>
+    <div style="border-color:rgba(244,237,224,.22)"><h3>NISAR</h3><p style="color:inherit;opacity:.75">NASA-ISRO L-band radar. L2 GCOV and GUNW products from the ASF DAAC. Tracks 142 and 164, Nov 2025 to Oct 2026. Processed by CoastLens, including our own mangrove map from NISAR alone (a Random Forest model tested on areas it never saw).</p><span class="mono">Radar</span></div>
+    <div style="border-color:rgba(244,237,224,.22)"><h3>Global Mangrove Watch v4.1</h3><p style="color:inherit;opacity:.75">Yearly mangrove extent maps, 1985 to 2025 (Zenodo record 21346457). All area, loss and gain figures and the decline zones. The older v3 maps (Bunting et al., 2022) are kept only for comparison. An external product.</p><span class="mono">Extent</span></div>
+    <div style="border-color:rgba(244,237,224,.22)"><h3>Landsat · Sentinel-2 · Sentinel-1 · ALOS</h3><p style="color:inherit;opacity:.75">Dry-season (Nov to Feb) cloud-masked composites via Google Earth Engine. Photos, greenness (NDVI), C-band radar, and JAXA's older L-band radar mosaics (ALOS/ALOS-2, 2007 to 2024) for comparison with NISAR.</p><span class="mono">Optical + radar</span></div>
     <div style="border-color:rgba(244,237,224,.22)"><h3>Outside figures</h3><p style="color:inherit;opacity:.75">Global area: Global Mangrove Watch v3. Indus Delta total: Ahmed et al., <i>Ecological Indicators</i>, 2025. Kharo Chan villages: The News on Sunday, as reported. These are not our measurements and cover different areas.</p><span class="mono">Context</span></div>
   </div>
-  <p class="lede" style="margin-top:36px" data-reveal>Clouds on the home page and the mangrove tree are illustrations. The S-band view on the NISAR page is a concept: we have no S-band data. Basemap imagery on the Insights map is from Esri and is for reference only.</p>
+  <p class="lede" style="margin-top:36px" data-reveal>Clouds on the home page and the mangrove tree are illustrations. The S-band view on the NISAR page is a concept: we have no S-band data. Basemap imagery on the maps is from Esri and is for reference only.</p>
 </div></section>
 </main>
 <script type="module" src="/src/page.js"></script>

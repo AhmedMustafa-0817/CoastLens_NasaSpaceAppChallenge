@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Map · CoastLens</title>
+<meta name="description" content="Every CoastLens map layer for Karachi's mangrove coast, from Rehri Goth to Port Qasim: NISAR radar, mangrove extent, decline zones and NISAR alerts for field teams.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body>
+<main>
+<section class="mapx">
+  <aside class="mapx-panel" data-lenis-prevent>
+    <span class="label">Map · Karachi coast, Rehri Goth to Port Qasim</span>
+    <h1 class="t-m">Every layer, one place.</h1>
+    <p class="mapx-intro">Tick a layer to add it. Pink dashed outlines are decline zones, where mangrove kept shrinking for years. Pink dots are NISAR alerts: patches thinning now. Click one for the evidence.</p>
+    <label class="mapx-base"><span class="mono">Basemap</span>
+      <select id="base"><option value="img">Satellite photo (Esri, reference only)</option><option value="osm">Street map (OpenStreetMap)</option></select>
+    </label>
+    <div id="groups"></div>
+  </aside>
+  <div class="mapx-map" data-lenis-prevent><div id="map" class="fill"></div></div>
+</section>
+</main>
+<script type="module" src="/src/map.js"></script>
+</body>
+</html>

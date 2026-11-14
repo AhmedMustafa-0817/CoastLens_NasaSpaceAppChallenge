@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CoastLens · Watching the Indus Delta's mangroves from space</title>
-<meta name="description" content="CoastLens uses NASA-ISRO NISAR radar and other satellites to show where the mangroves of Keti Bandar, in Pakistan's Indus Delta, are changing.">
+<title>CoastLens · Watching Karachi's mangroves from space</title>
+<meta name="description" content="CoastLens uses NASA-ISRO NISAR radar and other satellites to show where the mangroves of Karachi's coast, from Rehri Goth to Port Qasim, are changing.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -14,21 +14,21 @@
 
 <!-- 1 · ARRIVAL -->
 <section id="hero" class="screen speckle scan" data-cursor="Radar">
-  <canvas id="cHero" class="fill" role="img" aria-label="Satellite view of the Keti Bandar coast under drifting cloud. A circular radar lens shows the NISAR radar image of the same place, seen through the cloud."></canvas>
+  <canvas id="cHero" class="fill" role="img" aria-label="Satellite view of Karachi's mangrove coast under drifting cloud. A circular radar lens shows the NISAR radar image of the same place, seen through the cloud."></canvas>
   <div class="veil"></div>
-  <div class="hud tl"><b>Keti Bandar</b> · Indus Delta<br>Sindh, Pakistan</div>
-  <div class="hud tr">Lens <b id="hudPos" class="num">24.050°N 67.500°E</b><br>NISAR L-band · HV · <b>10 Oct 2026</b><br>Orbit 747 km · repeat 12 days</div>
+  <div class="hud tl"><b>Rehri Goth to Port Qasim</b> · Karachi<br>Sindh, Pakistan</div>
+  <div class="hud tr">Lens <b id="hudPos" class="num">24.750°N 67.294°E</b><br>NISAR L-band · HV · <b>11 Oct 2026</b><br>Orbit 747 km · repeat 12 days</div>
   <div class="title">
     <h1 class="t-hero" data-split>CoastLens</h1>
     <p data-reveal="0.5">Move across the clouds. The circle shows what radar sees underneath.</p>
   </div>
   <div class="scrollcue mono" aria-hidden="true"><span>Scroll</span><i></i></div>
-  <p class="credit">Image: Sentinel-2, Nov 2025 to Feb 2026 · Radar: NISAR L-band HV, 10 Oct 2026 (provisional), processed by CoastLens · Clouds illustrated</p>
+  <p class="credit">Image: Sentinel-2, Nov 2025 to Feb 2026 · Radar: NISAR L-band HV, 11 Oct 2026 (provisional), processed by CoastLens · Clouds illustrated</p>
 </section>
 
 <!-- 2 · ONE LINE -->
 <section id="oneline" class="screen center light">
-  <h2 class="t-xl" id="line">We watch the mangroves of the Indus Delta from space, and show where they are changing.</h2>
+  <h2 class="t-xl" id="line">We watch the mangroves of Karachi's coast from space, and show where they are changing.</h2>
 </section>
 
 <!-- 3 · WHAT IS A MANGROVE -->
@@ -74,13 +74,13 @@
 <!-- 5 · THE BLIND SPOT (image expands on scroll) -->
 <section id="blind" class="scan">
   <h2 class="t-xl intro" data-split>Then the clouds come.</h2>
-  <div class="frame"><canvas id="cBlind" class="fill" role="img" aria-label="The Keti Bandar coast from space. Cloud covers it, then a radar sweep reveals the NISAR radar image."></canvas></div>
+  <div class="frame"><canvas id="cBlind" class="fill" role="img" aria-label="Karachi's mangrove coast from space. Cloud covers it, then a radar sweep reveals the NISAR radar image."></canvas></div>
   <div class="hud"><span id="bStage">01 / 03 · Optical</span></div>
   <div class="copy">
     <h3 class="t-m" id="bH">A camera in space needs clear sky.</h3>
     <p id="bD" style="margin-top:10px;font-size:.98rem">In the monsoon, cloud can hide this coast from ordinary satellite cameras. No picture, no answer.</p>
   </div>
-  <p class="credit" style="background:var(--sand-light);padding:4px 8px">Sentinel-2, 2025 to 26 · NISAR L-band HV, 10 Oct 2026 · Clouds illustrated</p>
+  <p class="credit" style="background:var(--sand-light);padding:4px 8px">Sentinel-2, 2025 to 26 · NISAR L-band HV, 11 Oct 2026 · Clouds illustrated</p>
 </section>
 
 <!-- 6 · GLOBAL VS LOCAL -->
@@ -104,11 +104,11 @@
         <small>50,973 ha (1990) to 101,446 ha (2023), whole delta.<br>Source: Ahmed et al., <i>Ecological Indicators</i>, 2025. Not our data, not our study area.</small>
       </div>
       <div class="scale local" data-reveal="0.24">
-        <span class="mono">Keti Bandar · our study area</span>
-        <h3 class="t-m">Mapped forest fell by almost a quarter.</h3>
-        <svg id="gLocal" viewBox="0 0 300 120" role="img" aria-label="Mapped mangrove area in the Keti Bandar study box: 183.6 square kilometres in 1996, 156.8 in 2007, 146.1 in 2010 and 140.8 in 2020."></svg>
-        <div class="big num"><em class="pink">&minus;23%</em></div>
-        <small>183.6 km² (1996) to 140.8 km² (2020) inside our fixed box, 67.2 to 67.8°E, 23.8 to 24.3°N.<br>Source: Global Mangrove Watch v3, area computed by CoastLens. Includes mapping error.</small>
+        <span class="mono">Karachi coast · our study area</span>
+        <h3 class="t-m">Growing overall, but some pockets keep dying.</h3>
+        <svg id="gLocal" viewBox="0 0 300 120" role="img" aria-label="Mapped mangrove area in the Karachi study box: 67.2 square kilometres in 1985, 80.7 in 1995, 119.4 in 2005, 168.4 in 2015 and 180.9 in 2025."></svg>
+        <div class="big num"><em class="pink">&minus;80%</em></div>
+        <small>The whole box grew from 67.2 km² (1985) to 180.9 km² (2025), 67.16 to 67.43°E, 24.67 to 24.83°N. But in seven small zones the forest kept shrinking; in the largest, 0.78 km² (2008) fell to 0.16 km² (2025).<br>Source: Global Mangrove Watch v4.1, area computed by CoastLens. Includes mapping error.</small>
       </div>
     </div>
     <div class="verdict">
@@ -127,7 +127,7 @@
     <span class="label">Keep watching</span>
     <p class="display t-xl" data-split style="max-width:17ch;margin:0 auto">Kharo Chan has reportedly lost 28 of its 42 villages to the sea.</p>
     <p class="display t-xl" data-split style="max-width:17ch;margin:.12em auto 0"><em class="pink">Don't let Rehri Goth be next.</em></p>
-    <p class="lede note" data-reveal>Nobody has measured Rehri Goth's mangroves the way we measured Keti Bandar's. That is the point. NISAR looks again every 12 days, and the data is open.</p>
+    <p class="lede note" data-reveal>We measured the mangroves from Rehri Goth to Port Qasim: the coast is greener overall, but seven pockets kept losing forest for years. NISAR looks again every 12 days, and the data is open.</p>
     <div class="row" style="justify-content:center;margin-top:36px" data-reveal>
       <a class="btn solid" href="nisar.html">How the radar works</a>
       <a class="btn" href="insights.html">Our findings</a>

@@ -4,7 +4,7 @@ import { Tree3D } from './tree3d.js';
 
 init();
 const SAND = '#f4ede0', MOCHA = '#3a2c24', SOFT = '#6a584b', L = '176,120,42', GREEN = '#4a5d3a', WATER = '#b9c6bf';
-const optical = () => mosaic('s2_truecolor_2025_26'), radarImg = () => mosaic('nisar_hv_20261010', 12, '#141210');
+const optical = () => mosaic('s2_truecolor_2025_26'), radarImg = () => mosaic('nisar_hv_20261011', 12, '#141210');
 const mono = (g, px) => (g.font = `500 ${px * DPR}px "Geist Mono", monospace`);
 
 function satellite(g, x, y, s = 1) {
@@ -64,7 +64,7 @@ loadStats().then((S) => {
   const row = S.nisar_timeseries.backscatter.series.at(-1);
   const cols = [
     { name: 'OPEN WATER', db: row.water_hv, back: 1, kind: 0 },
-    { name: 'OTHER LAND', db: row.land_hv, back: 3, kind: 1 },
+    { name: 'TOWN & LAND', db: row.land_hv, back: 6, kind: 1 },
     { name: 'MANGROVE', db: row.mangrove_hv, back: 6, kind: 2 },
   ];
   const c = $('#cEcho'), g = c.getContext('2d');
@@ -105,7 +105,7 @@ loadStats().then((S) => {
   const passes = S.nisar_timeseries.backscatter.series, bad = S.nisar_timeseries.qc_suspect_dates;
   const strip = $('#passes');
   strip.innerHTML = passes.map((p) => `<i class="${bad.includes(p.date) ? 'bad' : ''}" title="${p.date}"></i>`).join('');
-  strip.setAttribute('aria-label', `${passes.length} NISAR passes over Keti Bandar, ${passes[0].date} to ${passes.at(-1).date}`);
+  strip.setAttribute('aria-label', `${passes.length} NISAR passes over Karachi's coast, ${passes[0].date} to ${passes.at(-1).date}`);
   const bars = $$('i', strip), note = $('#passNote');
   const o = $('#cOrbit'), og = o.getContext('2d');
   let ot = 0, shown = -1;
@@ -132,12 +132,12 @@ loadStats().then((S) => {
     og.strokeStyle = 'rgba(58,44,36,.35)'; og.setLineDash([4 * u, 7 * u]);
     og.beginPath(); og.ellipse(cx, cy, R * 0.34, R * 1.38, 0.16, 0, 7); og.stroke(); og.setLineDash([]);
     const a = ot * 1.4, sx = cx + Math.cos(a) * R * 0.34 * Math.cos(0.16) - Math.sin(a) * R * 1.38 * Math.sin(0.16), sy = cy + Math.cos(a) * R * 0.34 * Math.sin(0.16) + Math.sin(a) * R * 1.38 * Math.cos(0.16);
-    // Keti Bandar, about 24°N
+    // Karachi's coast, about 24.75°N
     const kx = cx + R * 0.2, ky = cy - R * 0.4, pulse = (ot / 1.1) % 1;
     og.strokeStyle = `rgba(${L},${1 - pulse})`; og.lineWidth = 2 * u; og.beginPath(); og.arc(kx, ky, pulse * 34 * u, 0, 7); og.stroke();
     og.fillStyle = '#f0566f'; og.beginPath(); og.arc(kx, ky, 5 * u, 0, 7); og.fill();
     satellite(og, sx, sy, u * 0.7);
-    mono(og, 10); og.fillStyle = MOCHA; og.fillText('KETI BANDAR', kx + 12 * u, ky + 4 * u);
+    mono(og, 10); og.fillStyle = MOCHA; og.fillText('KARACHI', kx + 12 * u, ky + 4 * u);
     og.fillStyle = SOFT; og.textAlign = 'center'; og.fillText('ORBIT NOT TO SCALE', cx, h - 16 * u); og.textAlign = 'left';
   });
 });

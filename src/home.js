@@ -3,7 +3,7 @@ import { mosaic, cover, drawClouds, BBOX } from './tiles.js';
 import { Tree3D, TREE, FOCUS } from './tree3d.js';
 
 init();
-const OPTICAL = 's2_truecolor_2025_26', RADAR = 'nisar_hv_20261010';
+const OPTICAL = 's2_truecolor_2025_26', RADAR = 'nisar_hv_20261011';
 const SAND = '#eadfcb', MOCHA = '#3a2c24', LBAND = '#b0782a';
 
 /* ---------- 1 · hero: real image, illustrated cloud, radar lens ---------- */
@@ -124,7 +124,7 @@ if (!REDUCE) {
   const copy = [
     ['01 / 03 · Optical', 'A camera in space needs clear sky.', 'In the monsoon, cloud can hide this coast from ordinary satellite cameras. No picture, no answer.'],
     ['02 / 03 · NISAR pass', 'In 2025, a different kind of satellite.', 'NISAR, built by NASA and India’s ISRO, does not take photographs. It sends its own radar signal and listens for the echo.'],
-    ['03 / 03 · Radar', 'It sees straight through.', 'Day or night, cloud or not, every 12 days. This is its real image of Keti Bandar: bright is forest, dark is water.'],
+    ['03 / 03 · Radar', 'It sees straight through.', 'Day or night, cloud or not, every 12 days. This is its real image of Karachi\'s coast: bright is forest and town, dark is water.'],
   ];
   let p = REDUCE ? 1 : 0, stage = -1, t = 0;
   const draw = () => {
@@ -178,7 +178,7 @@ function lineChart(sel, pts, labels, col) {
 lineChart('#gWorld', [152604, 147359], ['1996 · 152,604 km²', '2020 · 147,359 km²'], MOCHA);
 lineChart('#gDelta', [50973, 101446], ['1990 · 50,973 ha', '2023 · 101,446 ha'], MOCHA);
 loadStats().then((S) => {
-  const ys = S.mangrove_area.years, bw = 44;
+  const ys = S.gmw_timeseries.years.filter((y) => y.year % 10 === 5), bw = 44; // 1985, 1995, ... 2025 (GMW v4.1)
   $('#gLocal').innerHTML = `<line x1="6" x2="294" y1="100" y2="100" stroke="currentColor" opacity=".3"/>` + ys.map((y, i) => {
     const hgt = (y.km2 / 200) * 92, x = 14 + i * ((280 - bw) / (ys.length - 1));
     return `<rect class="bar" x="${x}" y="${100 - hgt}" width="${bw}" height="${hgt}" fill="#7d8f63"/>

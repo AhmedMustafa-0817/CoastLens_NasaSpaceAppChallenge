@@ -1,7 +1,7 @@
-// Real CoastLens imagery. Tiles are loaded from the team's analysis site and
-// stitched into one canvas per layer. Change TILE_BASE if the tiles move.
-export const TILE_BASE = 'https://nasa-space-apps26-team-momos.vercel.app/tiles';
-export const BBOX = [67.2, 23.8, 67.8, 24.3]; // west, south, east, north
+// Real CoastLens imagery. Tiles are self-hosted in public/tiles/ (made by scripts/tiles/make_tiles.py)
+// and stitched into one canvas per layer.
+export const TILE_BASE = import.meta.env.BASE_URL + 'tiles';
+export const BBOX = [67.155304, 24.671376, 67.433395, 24.828817]; // west, south, east, north: Karachi coast, Rehri Goth to Port Qasim
 
 const lon2x = (lon, z) => ((lon + 180) / 360) * 2 ** z;
 const lat2y = (lat, z) => {

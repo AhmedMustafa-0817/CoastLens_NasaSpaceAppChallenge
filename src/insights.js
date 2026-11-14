@@ -24,13 +24,15 @@ function lines(sel, series, { y0, y1, ticks, xLabels, unit = '', label }) {
 const day = (d) => Date.parse(d) / 864e5;
 const months = (a, b) => { const out = []; const d = new Date(a); d.setUTCDate(1); d.setUTCMonth(d.getUTCMonth() + 1); while (d <= new Date(b)) { out.push([d / 864e5, d.toLocaleString('en', { month: 'short', timeZone: 'UTC' }) + (d.getUTCMonth() === 0 ? ' ’' + String(d.getUTCFullYear()).slice(2) : '')]); d.setUTCMonth(d.getUTCMonth() + 1); } return out; };
 
-loadStats().then((S) => {
-  const ch = S.mangrove_change, ar = S.mangrove_area.years, a0 = ar[0].km2, a1 = ar.at(-1).km2;
+loadStats().then(async (S) => {
+  const gt = S.gmw_timeseries, ar = gt.years.filter((y) => y.year % 10 === 5), a0 = ar[0].km2, a1 = ar.at(-1).km2;
+  const zones = S.decline_zones.zones, z0 = zones[0], lostPct = zones.map((z) => z.lost_pct);
+  const v3 = S.mangrove_area.years[0], v4same = gt.years.find((y) => y.year === v3.year).km2;
   $('#stats4').innerHTML = [
-    [`<em class="pink">${f1(ch.loss_km2)}</em>`, `km² mapped as lost (${f1((ch.loss_km2 / a0) * 100)}% of ${ch.from})`],
-    [f1(ch.gain_km2), `km² mapped as gained (${f1((ch.gain_km2 / a0) * 100)}%)`],
-    [f1(ch.stable_km2), 'km² unchanged'],
-    [`${ch.from}–${String(ch.to).slice(2)}`, 'Global Mangrove Watch v3 maps'],
+    [f1(a1), `km² mapped as mangrove in ${ar.at(-1).year}`],
+    [f1(a0), `km² in ${ar[0].year}`],
+    [`<em class="pink">${zones.length}</em>`, `zones that kept losing forest (−${Math.round(Math.min(...lostPct))}% to −${Math.round(Math.max(...lostPct))}%)`],
+    [`${ar[0].year}–${String(ar.at(-1).year).slice(2)}`, 'Global Mangrove Watch v4.1, yearly maps'],
   ].map(([b, s], i) => `<div data-reveal="${i * 0.1}"><b class="num">${b}</b><span>${s}</span></div>`).join('');
   if (!REDUCE) gsap.to('#stats4 > div', { opacity: 1, y: 0, duration: 1.4, ease: EASE, stagger: 0.12, delay: 0.6 });
 
@@ -47,14 +49,14 @@ loadStats().then((S) => {
     if (!REDUCE) gsap.from('#chArea .bar', { scaleY: 0, transformOrigin: '50% 100%', duration: 1.8, ease: EASE, stagger: 0.16, scrollTrigger: { trigger: el, start: 'top 82%', once: true } });
   }
   $('#f1').innerHTML = finding({
-    measured: `Mangrove was mapped on ${f1(a0)} km² in ${ar[0].year} and ${f1(a1)} km² in ${ar.at(-1).year}: a net fall of ${f1(a0 - a1)} km² (${f1(((a0 - a1) / a0) * 100)}%). Source: Global Mangrove Watch v3, about 25 m, area computed by CoastLens.`,
-    maybe: 'Real loss, for example creek-bank erosion, cutting for fuel and fodder, grazing, or less fresh water reaching the delta. Some of it may also be a difference between how the 1996 and 2020 maps were made.',
-    confidence: 'Medium', why: 'One external map product. The figure includes mapping error and has not been checked in the field.',
+    measured: `Mangrove was mapped on ${f1(a0)} km² in ${ar[0].year} and ${f1(a1)} km² in ${ar.at(-1).year} (+${Math.round(gt.summary.net_change_pct)}%), flattening since about 2015. But in ${zones.length} small zones the forest kept shrinking year after year; in the largest (zone ${z0.id}, ${z0.centroid[1].toFixed(3)}°N ${z0.centroid[0].toFixed(3)}°E) it fell from ${z0.peak_km2.toFixed(2)} km² in ${z0.peak_year} to ${z0.km2_2025.toFixed(2)} km² in 2025. Source: Global Mangrove Watch v4.1, about 25 m, area computed by CoastLens.`,
+    maybe: 'The growth fits restoration planting and mangrove spreading onto new mudflats. The shrinking zones could be clearing, land filling, cutting, grazing or erosion; some losses there were sudden, which points to clearing or filling rather than slow die-back.',
+    confidence: 'Medium', why: `One external map product, not field-checked. The older GMW v3 maps disagree strongly: they put ${f1(v3.km2)} km² here in ${v3.year}, where v4.1 puts ${f1(v4same)} km².`,
   });
 
   // 02 NDVI
   const nd = S.ndvi_in_mangroves.series, s1 = S.s1_vh_in_mangroves.series;
-  lines('#chNdvi', [{ color: '#4a5d3a', pts: nd.map((d, i) => [i, d.mean]) }], { y0: 0.28, y1: 0.42, ticks: [0.3, 0.34, 0.38, 0.42], xLabels: nd.map((d, i) => [i, d.season]), label: 'Mean NDVI inside mangroves: ' + nd.map((d) => `${d.season}: ${d.mean}`).join(', ') });
+  lines('#chNdvi', [{ color: '#4a5d3a', pts: nd.map((d, i) => [i, d.mean]) }], { y0: 0.44, y1: 0.58, ticks: [0.44, 0.48, 0.52, 0.56], xLabels: nd.map((d, i) => [i, d.season]), label: 'Mean NDVI inside mangroves: ' + nd.map((d) => `${d.season}: ${d.mean}`).join(', ') });
   $('#f2').innerHTML = finding({
     measured: `Mean NDVI inside the 2020 mangrove area rose from ${nd[0].mean.toFixed(3)} (${nd[0].season}) to ${nd.at(-1).mean.toFixed(3)} (${nd.at(-1).season}), Landsat 8, 30 m. Sentinel-1 radar over the same area was flat: ${minus(s1[0].mean_db)} dB (${s1[0].season}) and ${minus(s1[1].mean_db)} dB (${s1[1].season}).`,
     maybe: 'A denser canopy, young planted or regrown trees maturing, or wetter recent years. Tide height at the time of each image also shifts greenness.',
@@ -71,44 +73,49 @@ loadStats().then((S) => {
   const rng = (rows) => { const v = rows.map((d) => d.mangrove); return `${Math.min(...v).toFixed(2)} to ${Math.max(...v).toFixed(2)}`; };
   const mon = (d) => +d.mid.slice(5, 7), yr = (d) => +d.mid.slice(0, 4);
   $('#f3').innerHTML = finding({
-    measured: `Over ${ok.length} usable passes (${bs[0].date} to ${bs.at(-1).date}) the mangrove echo stayed between ${minus(Math.min(...hv).toFixed(1))} and ${minus(Math.max(...hv).toFixed(1))} dB, always well above land and water. Mangrove coherence was ${rng(cm.filter((d) => yr(d) === 2025 || mon(d) <= 3))} from late November to March, ${rng(cm.filter((d) => yr(d) === 2026 && mon(d) >= 5 && mon(d) <= 6))} in May and June, and ${rng(cm.filter((d) => yr(d) === 2026 && mon(d) >= 7))} from July to October. NISAR L-band, track 164, 80 m.`,
+    measured: `Over ${ok.length} usable passes (${bs[0].date} to ${bs.at(-1).date}) the mangrove echo stayed between ${minus(Math.min(...hv).toFixed(1))} and ${minus(Math.max(...hv).toFixed(1))} dB, always far above open water and just below town and other land, where buildings echo strongly. Mangrove coherence was ${rng(cm.filter((d) => yr(d) === 2025 || mon(d) <= 3))} from late November to March, ${rng(cm.filter((d) => yr(d) === 2026 && mon(d) >= 5 && mon(d) <= 6))} in May and June, and ${rng(cm.filter((d) => yr(d) === 2026 && mon(d) >= 7))} from July to October. NISAR L-band, track 164, 80 m.`,
     maybe: 'The steady echo is consistent with a forest whose structure did not change this year. The early-summer dip in coherence could be wind, tides and moisture before the monsoon, or a change in how the data were acquired.',
     confidence: 'Low', why: 'One year only. We need a second year, at the same season, before calling anything a trend.',
   });
 
-  // flags
-  $('#flags').innerHTML = S.flags.map((f) => {
-    const loss = f.kind === 'loss';
-    return `<article class="flag"><div><span class="mono">${loss ? 'Mapped loss' : 'Mapped gain'}</span><h3>${loss ? `<em class="pink">−${f.gmw_loss.toFixed(2)}</em>` : `<em class="green" style="font-style:normal">+${f.gmw_gain.toFixed(2)}</em>`} km²</h3><span class="mono where">${f.lat.toFixed(3)}°N ${f.lon.toFixed(3)}°E · 1 km square</span></div>
+  // NISAR alerts (written by scripts/monitor/coastlens_monitor.py)
+  const alerts = await fetch(import.meta.env.BASE_URL + 'data/alerts.json').then((r) => r.json());
+  $('#flags').innerHTML = alerts.alerts.map((f) => `<article class="flag"><div><span class="mono">${f.title.split(':')[0]} · ${f.priority} priority</span><h3><em class="pink">${f.area_ha.toFixed(1)}</em> ha thinning</h3><span class="mono where">${f.lat.toFixed(3)}°N ${f.lon.toFixed(3)}°E${f.zone ? ` · decline zone ${f.zone}` : ''} · <a href="${f.maps_url}" target="_blank" rel="noopener">map ↗</a></span></div>
     ${finding({
-      measured: `${loss ? `${f.gmw_loss.toFixed(2)} km² mapped as mangrove in 1996 but not in 2020.` : `${f.gmw_gain.toFixed(2)} km² mapped as mangrove in 2020 but not in 1996.`} Greenness change 2015–16 to 2024–25: +${f.ndvi.toFixed(3)}. NISAR HV change Nov 2025 to Oct 2026, relative to the whole landscape: ${f.hv >= 0 ? '+' : '−'}${Math.abs(f.hv).toFixed(1)} dB. 12-day coherence, Dec 2025: ${f.coh.toFixed(2)}.`,
-      maybe: loss ? 'Newer sensors do not show decline here, so this may be regrowth after 2020, or a difference between the two maps. Erosion, cutting or grazing before 2020 are also possible.' : 'Restoration planting, natural spread onto new mudflats, or a difference between the two maps.',
-      confidence: f.confidence, why: `${f.agree} independent indicators agree. Not field-verified.`,
-    })}</article>`;
-  }).join('');
+      measured: `NISAR: ${f.observed} ${f.evidence}`,
+      maybe: f.possible_causes.replace('To verify on the ground: ', ''),
+      confidence: f.priority, why: `${f.confidence.replace(`${f.priority} (`, "").replace(").", ".")} NISAR checks again around ${alerts.next_nisar_pass}.`,
+    })}</article>`).join('');
 
-  compare(S.flags);
+  compare(alerts.alerts);
 });
 
 /* ---------- side-by-side map of the real tile layers ---------- */
 const LAYERS = [
-  ['nisar_hv_20261010', 'NISAR radar (HV), 10 Oct 2026', 13],
-  ['nisar_hv_20251120', 'NISAR radar (HV), 20 Nov 2025', 13],
-  ['nisar_hh_20261010', 'NISAR radar (HH), 10 Oct 2026', 13],
-  ['nisar_coh_20251214_20251226', 'NISAR coherence, 14–26 Dec 2025', 13],
-  ['nisar_coh_20260904_20260916', 'NISAR coherence, 4–16 Sep 2026', 13],
-  ['nisar_hv_change_20251120_20261010', 'NISAR HV change, Nov 2025 → Oct 2026', 12],
-  ['gmw_1996', 'Mangrove extent 1996 (GMW)', 13],
-  ['gmw_2020', 'Mangrove extent 2020 (GMW)', 13],
-  ['gmw_lossgain_1996_2020', 'Mangrove loss and gain, 1996 → 2020', 13],
-  ['l8_truecolor_2015_16', 'Photo, dry season 2015–16 (Landsat 8)', 13],
-  ['l8_truecolor_2024_25', 'Photo, dry season 2024–25 (Landsat 8)', 13],
-  ['s2_truecolor_2025_26', 'Sharper photo, 2025–26 (Sentinel-2)', 14],
-  ['l8_ndvi_2015_16', 'Greenness (NDVI), 2015–16', 13],
-  ['l8_ndvi_2024_25', 'Greenness (NDVI), 2024–25', 13],
-  ['l8_ndvi_change_2015_16_to_2024_25', 'Greenness change, 2015–16 → 2024–25', 13],
+  ['nisar_hv_20261011', 'NISAR radar (HV), 11 Oct 2026', 14],
+  ['nisar_hv_20251121', 'NISAR radar (HV), 21 Nov 2025', 14],
+  ['nisar_hh_20261011', 'NISAR radar (HH), 11 Oct 2026', 14],
+  ['nisar_coh_20251214_20251226', 'NISAR coherence, 14–26 Dec 2025', 14],
+  ['nisar_coh_20260904_20260916', 'NISAR coherence, 4–16 Sep 2026', 14],
+  ['nisar_hv_change_20251121_20261011', 'NISAR HV change, Nov 2025 → Oct 2026', 14],
+  ['nisar_ai_mangrove_2025_26', 'Mangrove mapped by NISAR alone (AI), 2025–26', 14],
+  ['nisar_hv_trend_2025_26', 'NISAR forest watch: weakening vs strengthening', 14],
+  ['gmw4_1985', 'Mangrove extent 1985 (GMW v4.1)', 14],
+  ['gmw4_2025', 'Mangrove extent 2025 (GMW v4.1)', 14],
+  ['gmw4_lossyear', 'Year each patch of mangrove was lost (GMW v4.1)', 14],
+  ['alos_hv_2024', 'Older L-band radar (HV), 2024 (ALOS-2)', 14],
+  ['l8_truecolor_2015_16', 'Photo, dry season 2015–16 (Landsat 8)', 14],
+  ['l8_truecolor_2024_25', 'Photo, dry season 2024–25 (Landsat 8)', 14],
+  ['s2_truecolor_2025_26', 'Sharper photo, 2025–26 (Sentinel-2)', 15],
+  ['l8_ndvi_2015_16', 'Greenness (NDVI), 2015–16', 14],
+  ['l8_ndvi_2024_25', 'Greenness (NDVI), 2024–25', 14],
+  ['l8_ndvi_change_2015_16_to_2024_25', 'Greenness change, 2015–16 → 2024–25', 14],
 ];
 const NOTES = {
+  nisar_ai: 'Mangrove mapped from NISAR radar alone by our AI model (Random Forest), tested on areas it never saw. Darker green means more certain.',
+  nisar_hv_trend: 'Each mangrove pixel compared with the whole forest over 27 passes. Red: weakening. Green: strengthening. One year of data only.',
+  alos: 'ALOS-2 is the older L-band radar: same kind of image as NISAR, but one picture a year instead of every 12 days.',
+  gmw4_lossyear: 'Each lost patch is coloured by the year it disappeared: yellow long ago, red recently.',
   nisar_hv: 'Radar: brighter means a stronger echo. Brightness also depends on tide and moisture, so a change is not proof of loss.',
   nisar_hh: 'HH radar is boosted where waves bounce off water and then tree trunks.',
   nisar_coh: 'Coherence: bright means the surface stayed the same for 12 days, dark means it changed.',
@@ -118,7 +125,7 @@ const NOTES = {
 };
 function compare(flags) {
   const [w, s, e, n] = BBOX, box = $('#cmp'), handle = $('#handle');
-  const map = L.map('map', { scrollWheelZoom: false, minZoom: 9, maxZoom: 14, maxBounds: [[s - 0.6, w - 0.8], [n + 0.6, e + 0.8]] }).fitBounds([[s, w], [n, e]]);
+  const map = L.map('map', { scrollWheelZoom: false, minZoom: 9, maxZoom: 16, maxBounds: [[s - 0.6, w - 0.8], [n + 0.6, e + 0.8]] }).fitBounds([[s, w], [n, e]]);
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Basemap: Esri, Maxar, Earthstar Geographics (reference only)', maxNativeZoom: 18, opacity: 0.55 }).addTo(map);
   L.rectangle([[s, w], [n, e]], { color: '#f4ede0', weight: 1, dashArray: '4 6', fill: false, interactive: false }).addTo(map);
   const side = {};
@@ -127,11 +134,11 @@ function compare(flags) {
     pane.style.zIndex = 250 + i;
     const sel = $('#sel' + k);
     sel.innerHTML = LAYERS.map(([id, t]) => `<option value="${id}">${t}</option>`).join('');
-    sel.value = k === 'L' ? 'l8_truecolor_2015_16' : 'nisar_hv_20261010';
+    sel.value = k === 'L' ? 'l8_truecolor_2015_16' : 'nisar_hv_20261011';
     const set = () => {
       const [id, title, z] = LAYERS.find((l) => l[0] === sel.value);
       side[k]?.layer.remove();
-      side[k] = { pane, layer: L.tileLayer(`${TILE_BASE}/${id}/{z}/{x}/{y}.png`, { pane: 'side' + k, maxNativeZoom: z, minNativeZoom: 9, bounds: [[s, w], [n, e]], attribution: 'Layers: CoastLens' }).addTo(map) };
+      side[k] = { pane, layer: L.tileLayer(`${TILE_BASE}/${id}/{z}/{x}/{y}.png`, { pane: 'side' + k, maxNativeZoom: z, minNativeZoom: 10, bounds: [[s, w], [n, e]], attribution: 'Layers: CoastLens' }).addTo(map) };
       $('#lab' + k).textContent = title;
       const note = (id) => NOTES[Object.keys(NOTES).find((p) => id.startsWith(p))];
       $('#mapNote').textContent = [...new Set([note($('#selL').value), note($('#selR').value)])].join(' ');
@@ -139,8 +146,8 @@ function compare(flags) {
     sel.onchange = set;
     set();
   });
-  flags.forEach((f) => L.circleMarker([f.lat, f.lon], { radius: 7, color: '#f4ede0', weight: 2, fillColor: f.kind === 'loss' ? '#f0566f' : '#4a5d3a', fillOpacity: 1 })
-    .bindTooltip(`${f.kind === 'loss' ? 'Mapped loss' : 'Mapped gain'} · ${(f.kind === 'loss' ? f.gmw_loss : f.gmw_gain).toFixed(2)} km² · ${f.confidence} confidence`).addTo(map));
+  flags.forEach((f) => L.circleMarker([f.lat, f.lon], { radius: 7, color: '#f4ede0', weight: 2, fillColor: '#f0566f', fillOpacity: 1 })
+    .bindTooltip(`${f.title} · ${f.area_ha.toFixed(1)} ha · ${f.priority} priority`).addTo(map));
   let fx = 0.5;
   const clip = () => {
     const nw = map.containerPointToLayerPoint([0, 0]), se = map.containerPointToLayerPoint(map.getSize()), cx = nw.x + fx * map.getSize().x;

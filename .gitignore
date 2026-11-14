@@ -1,3 +1,17 @@
 node_modules
 dist
 .DS_Store
+
+# Python pipeline (scripts/): raw satellite data and environments stay local
+data_raw/
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.h5
+*.tif
+*.tiff
+.env
+.netrc
+_netrc
+credentials*.json
