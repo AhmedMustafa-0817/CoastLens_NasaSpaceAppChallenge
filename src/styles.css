@@ -131,7 +131,17 @@ em.green { font-style: italic; color: var(--mangrove); }
 #oneline h2 { max-width: 17ch; margin: 0 auto; }
 #oneline .w { display: inline-block; opacity: 0.14; }
 
-#tree { padding: 0; overflow: hidden; background: linear-gradient(var(--sand-light), var(--sand)); }
+#tree { padding: 0; overflow: hidden; background: var(--sand-light); } /* solid: the 3D viewer is painted this same colour */
+#tree .sf { position: absolute; z-index: 1; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; border: 0; background: var(--sand-light); opacity: 0; transition: opacity 1.2s var(--ease); }
+#tree.ready .sf { opacity: 1; }
+#tree .sf-grab { position: absolute; z-index: 2; inset: 0; touch-action: pan-y; cursor: grab; }
+#tree .sf-grab.dragging { cursor: grabbing; }
+#tree .sf-msg { position: absolute; z-index: 3; left: 66%; top: 50%; transform: translate(-50%, -50%); color: var(--mocha-soft); }
+#tree .sf-msg .err, #tree.failed .sf-msg .wait, #tree.ready .sf-msg { display: none; }
+#tree.failed .sf-msg .err { display: inline; }
+#tree .hot { transform: translate(-17px, -50%); transition: opacity 0.3s; } /* dot centre (10px pad + 7px), not the whole label, sits on the point */
+#tree .hot.behind { opacity: 0.35; }
+#tree .credit a { text-decoration: underline; text-underline-offset: 2px; }
 #tree canvas, #radar-tree canvas { cursor: grab; touch-action: pan-y; }
 #tree .copy { position: absolute; z-index: 3; left: var(--pad); top: clamp(110px, 16vh, 170px); max-width: 460px; pointer-events: none; }
 .hot { position: absolute; z-index: 4; transform: translate(-50%, -50%); border: 0; background: none; padding: 10px; display: flex; align-items: center; gap: 10px; }
@@ -167,6 +177,10 @@ em.green { font-style: italic; color: var(--mangrove); }
 /* pinned: image expansion + cloud + radar sweep */
 #blind { padding: 0; height: 100vh; height: 100dvh; overflow: hidden; background: var(--sand-light); }
 #blind .frame { position: absolute; inset: 0; clip-path: inset(24% 30% 24% 30%); will-change: clip-path; }
+#blind .sat { position: absolute; left: 0; top: 0; width: clamp(200px, 22vw, 300px); opacity: 0; pointer-events: none; z-index: 2; transition: opacity 0.4s ease; will-change: transform, opacity; }
+#blind .sat img { display: block; width: 100%; height: auto; animation: satFloat 6s ease-in-out infinite; }
+@keyframes satFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@media (prefers-reduced-motion: reduce) { #blind .sat img { animation: none; } }
 #blind .copy { position: absolute; z-index: 4; left: var(--pad); bottom: clamp(60px, 10vh, 110px); max-width: 560px; padding: 26px 28px; background: var(--sand-light); }
 #blind .intro { position: absolute; z-index: 3; left: var(--pad); top: clamp(110px, 16vh, 160px); max-width: 16ch; }
 #blind .hud { right: var(--pad); top: 96px; text-align: right; color: var(--mocha); background: var(--sand-light); padding: 8px 12px; }
@@ -299,7 +313,92 @@ footer nav a { text-decoration: none; }
 .leaflet-control-attribution { font-size: 9px !important; background: rgba(244, 237, 224, 0.8) !important; }
 .leaflet-bar a { border-radius: 0 !important; background: var(--sand-light) !important; color: var(--mocha) !important; }
 
+/* 6 · paradox: global numbers, a local voice, the map as proof */
+#paradox .scales.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#paradox .voice, #paradox .proof { margin-top: clamp(64px, 10vh, 120px); max-width: 860px; }
+#paradox .voice blockquote { margin: 22px 0 12px; font-family: var(--font-display); }
+#paradox .placeholder.vid { aspect-ratio: 16 / 9; display: grid; place-items: center; text-align: center; margin-top: 14px; }
+#paradox .placeholder.map { aspect-ratio: 16 / 10; display: grid; place-items: center; text-align: center; margin: 22px 0 18px; }
+#paradox .voice video { width: 100%; margin-top: 14px; background: var(--mocha); }
+#paradox .voice { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: clamp(20px, 2.6vw, 36px); align-items: center; max-width: 1240px; }
+#paradox .voice > .mono { grid-column: 1 / -1; }
+#paradox .voice-media .placeholder { width: 100%; aspect-ratio: 16 / 9; margin: 0; }
+#paradox .voice-video { position: relative; width: 100%; aspect-ratio: 16 / 9; background: var(--mocha); overflow: hidden; }
+#paradox .voice-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+#paradox .voice { grid-template-columns: minmax(0, 1fr); max-width: 860px; }
+#paradox .voice-text blockquote { margin-top: 0; font-size: clamp(1.7rem, 3vw, 2.6rem); line-height: 1.25; }
+#paradox .voice-text small { display: block; margin-top: 14px; }
+@media (max-width: 900px) { #paradox .voice { grid-template-columns: 1fr; } }
+
+/* 4 · why should I care: the fish's journey, then what else mangroves do */
+#fish { position: relative; padding: clamp(96px, 14vh, 160px) var(--pad) clamp(90px, 12vh, 140px); background: var(--sand-light); }
+#fish .lead { margin-top: 18px; max-width: 30ch; }
+#fish .tl-hop { position: absolute; left: 0; top: 0; width: 64px; height: 32px; pointer-events: none; z-index: 3; overflow: visible; will-change: transform; filter: drop-shadow(0 6px 8px rgba(58,44,36,.25)); }
+#fish .tl { --d: clamp(112px, 13vw, 184px); --p: 0; position: relative; list-style: none; margin: clamp(48px, 8vh, 80px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+#fish .tl-track { position: absolute; left: 10%; right: 10%; top: calc(var(--d) / 2); height: 1px; background: var(--border-strong, rgba(58,44,36,.25)); }
+#fish .tl-fill { position: absolute; inset: 0; background: #f0566f; transform-origin: left center; transform: scaleX(var(--p)); }
+#fish .tl-fish { position: absolute; width: 36px; height: 18px; left: calc(10% + 80% * var(--p)); top: -9px; transform: translateX(-50%); overflow: visible; }
+#fish .tl-step { position: relative; z-index: 1; text-align: center; }
+#fish .ph { width: var(--d); height: var(--d); margin: 0 auto; border-radius: 50%; overflow: hidden; border: 1px solid var(--mocha); opacity: 0.28; filter: grayscale(0.8); transform: scale(0.9); transition: opacity 0.8s ease, filter 0.8s ease, transform 0.9s cubic-bezier(.2,.7,.2,1), outline-color 0.8s ease; outline: 1px solid transparent; outline-offset: 8px; }
+#fish .tl-step.on .ph { opacity: 0.7; filter: grayscale(0.25); transform: scale(0.97); }
+#fish .tl-step.cur .ph { opacity: 1; filter: none; transform: scale(1.05); outline-color: #f0566f; box-shadow: 0 18px 40px -18px rgba(58, 44, 36, 0.45); }
+#fish .tl-step.cur .ph svg { animation: bob 4.5s ease-in-out infinite; }
+#fish .tl-cap { margin: 8px auto 0; max-width: 18ch; font-size: 0.95rem; line-height: 1.45; opacity: 0; transform: translateY(6px); transition: opacity 0.6s ease 0.15s, transform 0.6s ease 0.15s; }
+#fish .tl-step.cur .tl-cap { opacity: 1; transform: none; }
+#fish .tl-step:not(.cur) h3 { opacity: 0.45; }
+#fish .tl-step h3 { transition: opacity 0.6s ease; }
+#fish .mg-card { transition: transform 0.5s cubic-bezier(.2,.7,.2,1), border-color 0.5s ease; }
+#fish .mg-card:hover { transform: translateY(-4px); border-color: #f0566f; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+#fish .ph svg { display: block; width: 100%; height: 100%; }
+#fish .tl-step.on .ph { opacity: 1; transform: scale(1); outline-color: var(--mocha); }
+#fish .tl-n { display: block; margin-top: 18px; font-size: 0.7rem; letter-spacing: 0.12em; opacity: 0.6; }
+#fish .tl-step h3 { margin-top: 6px; font-size: 1rem; font-weight: 500; line-height: 1.35; }
+#fish .mg-title { margin-top: clamp(96px, 16vh, 150px); max-width: 22ch; }
+#fish .mg-facts { margin-top: 36px; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+#fish .mg-card { background: var(--sand); padding: 22px 22px 24px; border: 0.5px solid var(--border-strong, rgba(58,44,36,.25)); }
+#fish .mg-card .mini { height: 120px; margin-bottom: 14px; overflow: hidden; }
+#fish .mg-card .mini svg { width: 100%; height: 100%; display: block; overflow: visible; }
+#fish .mg-card h4 { font-size: 1rem; font-weight: 500; margin: 0 0 6px; }
+#fish .mg-card p { margin: 0; font-size: 0.95rem; line-height: 1.55; }
+#fish .mg-card a { color: var(--mocha); text-decoration: underline; text-underline-offset: 2px; }
+#fish .storm-copy { margin-top: clamp(56px, 9vh, 90px); }
+#fish .home-link { margin-top: clamp(40px, 7vh, 64px); }
+#fish .tl-foot { display: flex; justify-content: center; margin-top: clamp(32px, 5vh, 52px); }
+#fish .tl-foot .home-link { margin-top: 0; }
+#fish .wv { animation: drift 4s linear infinite; }
+#fish .wv.w2 { animation-duration: 6s; animation-direction: reverse; }
+#fish .sp { animation: fall 3.2s linear infinite; }
+#fish .sp:nth-child(2) { animation-delay: -0.6s; } #fish .sp:nth-child(3) { animation-delay: -1.3s; } #fish .sp:nth-child(4) { animation-delay: -2s; } #fish .sp:nth-child(5) { animation-delay: -2.6s; }
+#fish .ly { transform-box: fill-box; transform-origin: 50% 100%; animation: rise 6s ease-in-out infinite; }
+#fish .ly.l2 { animation-delay: -1s; } #fish .ly.l3 { animation-delay: -2s; } #fish .ly.l4 { animation-delay: -3s; }
+#fish .swim { animation: swim 5s ease-in-out infinite alternate; }
+@keyframes drift { to { transform: translateX(-40px); } }
+@keyframes fall { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: 0.9; } 100% { transform: translateY(96px); opacity: 0; } }
+@keyframes rise { 0%, 100% { transform: scaleY(0.4); } 50% { transform: scaleY(1); } }
+@keyframes swim { from { transform: translateX(-30px); } to { transform: translateX(30px); } }
 @media (max-width: 900px) {
+  #fish .tl { grid-template-columns: 1fr; gap: 40px; justify-items: center; }
+  #fish .tl-track { left: calc(var(--d) / 2); right: auto; top: 0; bottom: 0; width: 1px; height: auto; }
+  #fish .tl-fill { transform: scaleY(var(--p)); transform-origin: top center; transform-box: fill-box; }
+  #fish .tl-fish { left: 0; top: calc(var(--p) * 100%); transform: translate(-50%, -50%) rotate(90deg); }
+  #fish .tl-step { display: grid; grid-template-columns: var(--d) 1fr; column-gap: 20px; align-items: center; text-align: left; width: 100%; }
+  #fish .ph { margin: 0; }
+  #fish .tl-n { margin: 0; }
+  #fish .tl-cap { margin: 4px 0 0; }
+  #fish .tl-step:not(.cur) h3 { opacity: 0.6; }
+  #fish .tl-step h3 { grid-column: 2; margin: 0; }
+  #fish .tl-n { grid-column: 2; grid-row: 1; align-self: end; }
+  #fish .tl-step h3 { grid-row: 2; align-self: start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #fish .wv, #fish .sp, #fish .ly, #fish .swim { animation: none; }
+  #fish .ph { transition: none; }
+}
+
+
+@media (max-width: 900px) {
+  #paradox .scales.two { grid-template-columns: 1fr; }
   body { font-size: 16px; }
   .nav nav { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh; background: var(--mocha); color: var(--sand-light); flex-direction: column; justify-content: center; align-items: flex-start; padding: var(--pad); gap: 8px; opacity: 0; visibility: hidden; transition: opacity 0.6s var(--ease), visibility 0.6s; }
   .nav nav a { font-family: var(--font-display); font-size: 2.8rem; text-transform: none; letter-spacing: -0.01em; }
@@ -324,6 +423,8 @@ footer nav a { text-decoration: none; }
   .rtext { min-height: 0; font-size: 0.88rem; }
   #tree .copy, #radar-tree .copy { top: 84px; right: var(--pad); }
   #tree .copy .lede, #radar-tree .copy .lede { display: none; }
+  #tree .sf, #tree .sf-grab { top: 26%; height: 74%; }
+  #tree .sf-msg { left: 50%; top: 60%; }
   .counter { display: none; }
   .chain { grid-template-columns: 1fr; gap: 26px; justify-items: start; }
   .chain::before, .chain .trail, .chain .fishy { display: none; }
@@ -340,6 +441,28 @@ footer nav a { text-decoration: none; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   #blind .frame { clip-path: none; }
 }
+
+.dark .lede.note em.now { display: inline-block; margin-top: 10px; font-family: var(--font-display); font-style: italic; font-size: clamp(1.9rem, 3.4vw, 2.8rem); line-height: 1.1; color: #f0566f; }
+
+/* final generated art (Recraft) */
+#fish .ph > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+#fish .mini img, .mg-card .mini img { display: block; width: 100%; height: 120px; object-fit: contain; }
+
+/* watermelon pink accents: active stage number and the stage label dot */
+#fish .tl-step.cur .tl-n { color: #f0566f; opacity: 1; font-weight: 500; }
+#fish .tl-step.on .tl-n { color: #f0566f; opacity: .7; }
+
+/* Story strip (homepage) */
+#story .story { width: min(92vw, 980px); margin: 0 auto; text-align: center; }
+#story .display { max-width: none !important; }
+#story .display { line-height: 1.1; }
+#story .story-src { display: block; margin-top: 28px; opacity: .6; font-size: .8rem; }
+
+/* story beats: one line each, clear space before the source */
+#story { padding-block: clamp(90px, 13vh, 140px); }
+#story .story .display { font-size: clamp(2.1rem, 4.8vw, 4.2rem); line-height: 1.12; }
+#story .story p + p { margin-top: 0.45em; }
+#story .story-src { margin-top: 72px; font-size: .78rem; line-height: 1.5; }
 
 /* full map page (map.html) */
 .mapx { display: grid; grid-template-columns: minmax(300px, 380px) 1fr; height: 100vh; height: 100dvh; padding-top: 72px; background: var(--sand-light); }
@@ -416,3 +539,55 @@ footer nav a { text-decoration: none; }
   .mapx-panel { border-right: 0; }
   .mapx-legend { right: 8px; bottom: 26px; max-height: 50%; font-size: 0.85rem; }
 }
+
+/* home · the impact map (one fixed view, no controls) */
+#paradox .impact { margin: 22px 0 18px; }
+#paradox .impact-map { width: 100%; aspect-ratio: 16 / 10; background: var(--sand); border: 1px solid var(--mocha); cursor: default; }
+#paradox .impact-map .leaflet-control-attribution { font-size: 0.6rem; }
+#paradox .impact-key { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 12px; font-size: 0.72rem; color: var(--mocha-soft); }
+#paradox .impact-key span { display: inline-flex; align-items: center; gap: 8px; }
+#paradox .impact-key i { display: inline-block; width: 26px; height: 12px; flex: none; }
+#paradox .impact-key .ramp { background: linear-gradient(90deg, #ffe678, #c80028); }
+#paradox .impact-key .zone { border: 2px dashed #f0566f; background: rgba(240, 86, 111, 0.08); }
+#paradox .impact-src { display: block; margin-top: 10px; font-size: 0.66rem; color: var(--mocha-soft); }
+.impact-tip { font-family: var(--font-mono); font-size: 0.72rem; background: var(--sand-light); color: var(--mocha); border: 1px solid #f0566f; border-radius: 0; box-shadow: none; }
+.impact-tip::before { display: none; }
+@media (max-width: 900px) { #paradox .impact-map { aspect-ratio: 4 / 5; } }
+
+/* NISAR page: 3D model, at a glance, words to know */
+.nisar-3d .sketchfab-embed-wrapper { margin-top: 28px; }
+.nisar-3d .sketchfab-embed-wrapper iframe { display: block; width: 100%; height: clamp(360px, 62vh, 620px); border: 0; }
+.gloss { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px 28px; margin: 28px 0 0; }
+.gloss dt { font-family: var(--font-mono); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; opacity: .7; }
+.gloss dd { margin: 6px 0 0; font-size: 1.05rem; line-height: 1.5; }
+.nisar-3d .n3d { position: relative; margin-top: 28px; }
+.n3d-stage { position: relative; height: clamp(360px, 62vh, 620px); overflow: hidden; }
+.nisar-3d .n3d iframe { position: absolute; left: 0; top: -64px; width: 100%; height: calc(100% + 64px); border: 0; background: transparent;
+  /* fade the edges into the page, and crop the Sketchfab title bar out of view */
+  -webkit-mask-image: radial-gradient(ellipse 58% 60% at 50% 55%, #000 68%, transparent 100%);
+          mask-image: radial-gradient(ellipse 58% 60% at 50% 55%, #000 68%, transparent 100%); }
+.n3d-hots { position: absolute; left: 0; right: 0; top: -64px; bottom: 0; pointer-events: none; }
+.n3d-hots button { position: absolute; left: 0; top: 0; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; border: 1.5px solid var(--mocha); background: var(--sand-light, #fffaf2); color: var(--mocha); font: 500 12px/1 var(--font-mono); cursor: pointer; pointer-events: auto; }
+.n3d-hots button[aria-pressed="true"] { background: var(--mocha); color: var(--sand); }
+.n3d-hots button::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 1.5px solid var(--mocha); opacity: 0; animation: n3dPulse 2.4s ease-out infinite; pointer-events: none; }
+.n3d-hots button:nth-child(2n)::after { animation-delay: 1.2s; }
+.n3d-hots button[aria-pressed="true"]::after { animation: none; opacity: 0; }
+@keyframes n3dPulse { 0% { transform: scale(.8); opacity: .6; } 100% { transform: scale(1.9); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .n3d-hots button::after { animation: none; opacity: 0; } }
+.n3d-card { position: absolute; left: 16px; bottom: 16px; max-width: 380px; padding: 18px 20px; background: var(--sand-light, #fffaf2); border: 1px solid var(--mocha); }
+.n3d-card b { display: block; font-family: var(--font-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; opacity: .7; }
+.n3d-card h3 { margin: 6px 0 8px; font-size: 1.3rem; font-weight: 500; }
+.n3d-card p { margin: 0; font-size: 1.02rem; line-height: 1.5; }
+.n3d-card button { margin-top: 12px; }
+.n3d-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; margin-top: 16px; }
+.n3d-list button { text-align: left; padding: 10px 12px; background: transparent; border: 1px solid var(--mocha); cursor: pointer; font-size: .98rem; color: var(--mocha); }
+.n3d-list button[aria-pressed="true"] { background: var(--mocha); color: var(--sand); }
+.n3d-list button span { font-family: var(--font-mono); margin-right: 8px; }
+.nisar-3d .sketchfab-embed-wrapper { margin-top: 14px; }
+@media (max-width: 700px) { .n3d-card { position: static; max-width: none; margin-top: 12px; } }
+.glance { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-top: 34px; }
+.glance article { position: relative; padding: 22px 20px 20px; border: 1px solid var(--mocha); background: var(--sand-light, #fffaf2); }
+.glance article::before { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 3px; background: #f0566f; }
+.glance .g-n { font-family: var(--font-mono); font-size: .8rem; letter-spacing: .08em; color: #f0566f; }
+.glance h3 { margin: 10px 0 8px; font-size: 1.15rem; font-weight: 500; line-height: 1.3; }
+.glance p { margin: 0; font-size: .98rem; line-height: 1.5; }

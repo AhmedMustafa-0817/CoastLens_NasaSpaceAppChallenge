@@ -21,12 +21,24 @@
 |---|---|---|
 | Global mangrove area 152,604 → 147,359 km² (−3.4%), 1996–2020 | Bunting et al. 2022, Global Mangrove Watch v3 | Check against the paper before final submission |
 | Indus Delta 50,973 ha (1990) → 101,446 ha (2023) | Ahmed et al. 2025, Ecological Indicators, "Substantial rehabilitation of mangrove forests along the Indus Delta coastline of Pakistan: A 33-year review" | Taken from the abstract. Read the paper. Also cited on the map (GMW 1985 → 2025 layer and story 04) for planting in the wider Indus Delta; the map says the planted share of the gain in our box is not measured |
-| Kharo Chan: 28 of 42 dehs lost to the sea | The News on Sunday, "The sea has grown closer" | News report. Find the primary source or soften the line |
+| Kharo Chan: 28 of 42 dehs lost to the sea | The News on Sunday, "The sea has grown closer" | News report. No longer quoted on the home page; kept here for reference |
+| Sukhi Bandar "was a busy harbour", taken by the sea; Kharo Chan's villages "going the same way" (home page story) | Dawn, "Swallowed by the sea" (Sukhi Bandar); The Express Tribune, 2024, and AFP, 2025 (Kharo Chan) | News reports, cited on the page. Add the exact links |
+| Rehri Goth resident: "The polluted water is destroying our mangroves..." (home page) | *Living with the Sea*, documentary by Sarah Ather Khan (Invisible Dust), youtube.com/watch?v=JAWbHc-2mt4 at 6:05 | Quoted from the film, linked on the page |
+| 98 fish species recorded in Indus delta mangroves (home page card) | Sindh Forest Department, sindhforests.gov.pk/page-mangroves | Linked on the page |
 | NISAR launch 30 Jul 2025, 747 km orbit, 12 m antenna, 12-day repeat, L-band ≈ 24 cm, S-band ≈ 9 cm | NASA / ISRO mission pages | Check against science.nasa.gov/mission/nisar |
 
 ## Statements without a number that still need a citation
 - Mangroves as nursery habitat, wave buffer and carbon store (home page). Add a reference (for example IUCN or FAO) on the About page.
-- The four mangrove facts on the 3D tree (pencil roots, salt on leaves, seedlings, nursery) describe the grey mangrove, *Avicennia marina*. Have a botanist or NGO contact confirm.
+- The four mangrove facts on the home page 3D tree (stilt roots with breathing pores, salt sent to older leaves, hanging seedling pods, root nursery) describe the red / stilt-root mangrove, *Rhizophora*, which is what the 3D model shows. Most of Karachi's mangroves are the grey mangrove, *Avicennia marina*, which has pencil roots instead of stilt roots. Have a botanist or NGO contact confirm.
+- The SDG links on the home page describe how the project relates to each goal; they are not measurements.
+
+## 3D models
+- Home page tree: "red-mangrove-tree" by SAVIA_Colombia (Sketchfab, https://sketchfab.com/3d-models/red-mangrove-tree-e806105d83bc440499495e62bb010f7a), CC BY 4.0. Shown unmodified through the Sketchfab Viewer API; the info dots are ours.
+- NISAR page satellite: "NISAR Satellite ISRO - NASA Joint Mission" by MechLab3D (Sketchfab). Part descriptions are ours.
+- Satellite image in the home page cloud section and the hero credit: "NISAR" by Aniketfab.com (Sketchfab).
+
+## Home page impact map
+- Global Mangrove Watch v4.1 loss year (GMW tile N25E067, 1985–2025) and the seven decline zones (`zones.geojson`), over our Sentinel-2 2025–26 photo, framed on zones A, B, C and G. The caption numbers are read from `zones.geojson`.
 
 ## Illustrations (not data)
-Clouds, the 3D tree, the radar wave animations, the orbit drawing, and the S-band view.
+Clouds, the NISAR page's radar tree, the radar wave animations, the orbit drawing, the fish journey and card images, and the S-band view.

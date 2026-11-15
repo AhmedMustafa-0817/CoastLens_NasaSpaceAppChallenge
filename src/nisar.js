@@ -16,34 +16,74 @@ function satellite(g, x, y, s = 1) {
 {
   const c = $('#cPulse'), g = c.getContext('2d');
   let sky = 'day', t = 0, dark = 0, cloud = 0;
+  const stars = Array.from({ length: 40 }, (_, i) => [((i * 61) % 100) / 100, ((i * 29) % 40) / 100, 0.5 + ((i * 7) % 4) * 0.35]);
   $$('[data-sky]').forEach((b) => (b.onclick = () => { sky = b.dataset.sky; $$('[data-sky]').forEach((o) => o.setAttribute('aria-pressed', o === b)); }));
+
+  // a small satellite: two solar wings with cell lines, and a shaded body so it reads as an object
+  const drawSat = (x, y, s) => {
+    g.save(); g.translate(x, y); g.scale(s, s);
+    g.fillStyle = '#23303f';
+    g.fillRect(-44, -10, 28, 20); g.fillRect(16, -10, 28, 20);
+    g.strokeStyle = 'rgba(190,210,225,.45)'; g.lineWidth = 0.7;
+    for (let k = 1; k < 4; k++) { const dx = k * 7; g.beginPath(); g.moveTo(-44 + dx, -10); g.lineTo(-44 + dx, 10); g.moveTo(16 + dx, -10); g.lineTo(16 + dx, 10); g.stroke(); }
+    g.beginPath(); g.moveTo(-16, 0); g.lineTo(-44, 0); g.moveTo(16, 0); g.lineTo(44, 0); g.strokeStyle = '#8f7f6c'; g.lineWidth = 2; g.stroke();
+    g.fillStyle = MOCHA; g.fillRect(-12, -12, 24, 24);
+    g.restore();
+  };
+
   whileVisible(c, () => {
     fit(c);
     const w = c.width, h = c.height, u = DPR;
     t += REDUCE ? 0 : 0.016;
     dark = lerp(dark, sky === 'night' ? 1 : 0, 0.05); cloud = lerp(cloud, sky === 'cloud' ? 1 : 0, 0.05);
-    g.fillStyle = `rgb(${lerp(244, 40, dark)},${lerp(237, 31, dark)},${lerp(224, 27, dark)})`; g.fillRect(0, 0, w, h);
-    const ink = dark > 0.5 ? SAND : MOCHA, gy = h * 0.6;
-    // ground: water, mudflat, a line of mangroves
-    g.fillStyle = WATER; g.globalAlpha = 1 - dark * 0.6; g.fillRect(0, gy, w, h - gy);
-    g.fillStyle = '#cdbfa3'; g.beginPath(); g.moveTo(w * 0.2, h); g.quadraticCurveTo(w * 0.5, gy - (h - gy) * 1.05, w * 0.84, h); g.fill();
-    g.fillStyle = GREEN; for (let i = 0; i < 11; i++) { g.beginPath(); g.arc(w * (0.33 + i * 0.035), gy - (2 + (i % 3) * 5) * u, 13 * u, 0, 7); g.fill(); }
-    g.globalAlpha = 1;
-    const cam = { x: w * 0.27, y: h * 0.16 }, rad = { x: w * 0.73, y: h * 0.16 }, cy = h * 0.5;
-    // camera: a cone of sight that needs light and clear air
-    const sees = 1 - Math.max(dark, cloud);
-    g.fillStyle = `rgba(106,88,75,${0.06 + 0.12 * sees})`; g.beginPath(); g.moveTo(cam.x, cam.y); g.lineTo(cam.x - 70 * u, lerp(gy, cy, cloud)); g.lineTo(cam.x + 70 * u, lerp(gy, cy, cloud)); g.fill();
-    // radar: pulses down (solid), echoes up (dashed)
-    for (let k = 0; k < 4; k++) {
-      const p = (t * 0.35 + k / 4) % 1, down = p < 0.5, q = down ? p * 2 : (p - 0.5) * 2, y = down ? lerp(rad.y, gy, q) : lerp(gy, rad.y, q), wd = lerp(8, 70, down ? q : 1 - q) * u;
-      g.strokeStyle = `rgba(${L},${down ? 0.9 : 0.55})`; g.lineWidth = 2.5 * u; g.setLineDash(down ? [] : [5 * u, 6 * u]);
+    const gy = h * 0.6, cy = h * 0.5, cam = { x: w * 0.27, y: h * 0.2 }, rad = { x: w * 0.73, y: h * 0.2 };
+    const sees = 1 - Math.max(dark, cloud), ink = dark > 0.5 ? SAND : MOCHA;
+
+    // sky: pale by day, deep blue-grey at night
+    g.fillStyle = `rgb(${lerp(244, 22, dark)},${lerp(237, 30, dark)},${lerp(224, 44, dark)})`; g.fillRect(0, 0, w, h);
+    if (dark > 0.05) { g.fillStyle = `rgba(245,240,228,${0.7 * dark})`; stars.forEach(([x, y, r]) => { g.beginPath(); g.arc(x * w, y * h, r * u, 0, 7); g.fill(); }); }
+    if (dark < 0.5) { // the sun: the camera needs its light
+      const sx = w * 0.1, sy = h * 0.12;
+      g.fillStyle = `rgba(230,165,70,${1 - dark})`; g.beginPath(); g.arc(sx, sy, 10 * u, 0, 7); g.fill();
+    }
+
+    // water with soft ripples, a mudflat, and mangroves with stilt roots
+    g.fillStyle = '#b9c9c0'; g.fillRect(0, gy, w, h - gy);
+    g.strokeStyle = `rgba(255,255,255,${0.35 * (1 - dark * 0.5)})`; g.lineWidth = 1.2 * u;
+    for (let r = 0; r < 3; r++) {
+      const yy = gy + (h - gy) * (0.2 + r * 0.22); g.beginPath();
+      for (let x = 0; x <= w; x += 12) { const yv = yy + Math.sin(x / 26 + t * 2 + r) * 2 * u; if (x) g.lineTo(x, yv); else g.moveTo(x, yv); }
+      g.stroke();
+    }
+    g.fillStyle = '#d2c3a2'; g.beginPath(); g.moveTo(w * 0.18, h); g.quadraticCurveTo(w * 0.5, gy - (h - gy) * 0.95, w * 0.84, h); g.fill();
+    for (let i = 0; i < 9; i++) {
+      const x = w * (0.34 + i * 0.04), base = gy - 2 * u + (i % 2) * 3 * u;
+      g.strokeStyle = MOCHA; g.lineWidth = 1.3 * u; g.globalAlpha = 0.7;
+      [-1, 0, 1].forEach((d) => { g.beginPath(); g.moveTo(x, base); g.quadraticCurveTo(x + d * 6 * u, base - 4 * u, x + d * 12 * u, base + 4 * u); g.stroke(); });
+      g.globalAlpha = 1;
+      g.fillStyle = i % 2 ? '#4a5d3a' : '#5c7049'; g.beginPath(); g.arc(x, base - 12 * u, 11 * u, 0, 7); g.fill();
+    }
+
+    // camera: a cone of light it can only use in daylight and clear air
+    g.fillStyle = `rgba(200,150,70,${0.12 + 0.12 * sees})`; g.beginPath(); g.moveTo(cam.x - 6 * u, cam.y + 12 * u); g.lineTo(cam.x - 70 * u, gy); g.lineTo(cam.x + 70 * u, gy); g.lineTo(cam.x + 6 * u, cam.y + 12 * u); g.fill();
+
+    // radar: its own beam goes down and the echo comes back up
+    g.fillStyle = `rgba(${L},0.12)`; g.beginPath(); g.moveTo(rad.x - 10 * u, rad.y + 12 * u); g.lineTo(rad.x - 80 * u, gy); g.lineTo(rad.x + 80 * u, gy); g.lineTo(rad.x + 10 * u, rad.y + 12 * u); g.fill();
+    for (let k = 0; k < 3; k++) {
+      const p = (t * 0.35 + k / 3) % 1, down = p < 0.5, q = down ? p * 2 : (p - 0.5) * 2;
+      const y = down ? lerp(rad.y + 14 * u, gy, q) : lerp(gy, rad.y + 14 * u, q), wd = lerp(10, 70, q) * u;
+      g.strokeStyle = `rgba(${L},${down ? 0.95 : 0.5})`; g.lineWidth = (down ? 2.6 : 2) * u; g.setLineDash(down ? [] : [6 * u, 6 * u]);
       g.beginPath(); g.moveTo(rad.x - wd, y); g.quadraticCurveTo(rad.x, y + (down ? 12 : -12) * u, rad.x + wd, y); g.stroke();
     }
     g.setLineDash([]);
     if (cloud > 0.01) { g.save(); g.beginPath(); g.rect(0, cy - 44 * u, w, 88 * u); g.clip(); drawClouds(g, w, h, t * 2, cloud); g.fillStyle = `rgba(250,245,236,${0.55 * cloud})`; g.fillRect(0, cy - 26 * u, w, 52 * u); g.restore(); }
-    satellite(g, cam.x, cam.y, u); satellite(g, rad.x, rad.y, u);
+
+    drawSat(cam.x, cam.y, u); drawSat(rad.x, rad.y, u);
     mono(g, 10); g.fillStyle = ink; g.textAlign = 'center';
-    g.fillText('CAMERA', cam.x, cam.y - 20 * u); g.fillText('RADAR · NISAR', rad.x, rad.y - 20 * u);
+    g.fillText('CAMERA', cam.x, cam.y - 26 * u); g.fillText('RADAR · NISAR', rad.x, rad.y - 26 * u);
+    mono(g, 8.5);
+    g.fillText(sees > 0.5 ? 'needs light and clear sky' : 'blocked', cam.x, cam.y + 30 * u);
+    g.fillText('works day, night and cloud', rad.x, rad.y + 30 * u);
     // what each one gets: thumbnails cut from the real images
     const tw = Math.min(w * 0.3, 190 * u), th = tw * 0.62, ty = h - th - 16 * u;
     [[cam.x, optical(), sees], [rad.x, radarImg(), 1]].forEach(([x, img, a], i) => {
@@ -190,4 +230,86 @@ loadStats().then((S) => {
     const tagAt = (txt, x, right) => { const tw = g.measureText(txt).width + 16 * u, bx = right ? x - tw : x; g.fillStyle = SAND; g.fillRect(bx, 12 * u, tw, 24 * u); g.fillStyle = MOCHA; g.fillText(txt, bx + 8 * u, 28 * u); };
     tagAt('PHOTO · SENTINEL-2', 12 * u, false); tagAt('RADAR · NISAR', w - 12 * u, true);
   });
+}
+
+/* ---------- 00 · NISAR in 3D, with numbered parts ----------
+   The model is MechLab3D's "NISAR Satellite ISRO - NASA Joint Mission" on Sketchfab.
+   Dots sit on the model's own annotations (read through the Viewer API), in the same order as PARTS.
+   The list under the model works on its own if the dots cannot load. */
+const N3D_UID = '0103309668d243dbbfab3c8fc6b9683c';
+const NISAR_PARTS = [
+  ['L-SAR Radar Instrument Controller & RF Back-End', 'The brain of the L-band radar. It tells the radar when to send a wave and when to listen.'],
+  ['L-SAR Digital Signal Processing Electronics', 'The computer part. It turns the returning echoes into numbers that become a picture.'],
+  ['L-SAR Transit Receive Modules', 'Small parts that send out the radio waves and catch the weak echoes that come back.'],
+  ['L-SAR Feed RF Aperture', 'The opening where L-band radio waves leave the satellite, and where the echoes come back in.'],
+  ['S-SAR Feed RF Aperture', 'The same kind of opening, but for the S-band radar. It uses shorter radio waves.'],
+  ['S-SAR Electronics (Inside)', 'The S-band radar computer, kept safe inside the satellite body.'],
+  ['Radar Antenna Reflector', 'The big round mesh dish. It shapes the radio waves into one beam aimed at the Earth.'],
+  ['Radar Antenna Boom', 'A long arm that holds the big dish away from the satellite body.'],
+  ['Solar Panels', 'Dark panels that catch sunlight and turn it into electricity for the satellite.'],
+  ['Antenna Holding Mechanism', 'A frame that holds the antenna safe during launch, then lets it open in space.'],
+];
+{
+  const iframe = $('#nSf'), dots = $('#nHots'), card = $('#nCard'), list = $('#nList');
+  if (iframe && list) {
+    let api = null, shown = -1;
+    const call = (fn, ...a) => new Promise((ok) => { try { api[fn](...a, (err, v) => ok(v === undefined ? err : v)); } catch { ok(null); } });
+    const choose = (i) => {
+      shown = i;
+      list.querySelectorAll('button').forEach((b, k) => b.setAttribute('aria-pressed', k === i));
+      dots?.querySelectorAll('button').forEach((b, k) => b.setAttribute('aria-pressed', k === i));
+      card.hidden = false;
+      card.innerHTML = `<b>Part ${i + 1} of ${NISAR_PARTS.length}</b><h3></h3><p></p><button class="btn" type="button">Close</button>`;
+      card.querySelector('h3').textContent = NISAR_PARTS[i][0];
+      card.querySelector('p').textContent = NISAR_PARTS[i][1];
+      card.querySelector('button').onclick = () => { card.hidden = true; shown = -1; list.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', 'false')); dots?.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', 'false')); };
+      if (api) call('gotoAnnotation', i);
+    };
+    NISAR_PARTS.forEach(([name], i) => {
+      const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-pressed', 'false');
+      b.innerHTML = `<span>${i + 1}</span>`; b.append(name);
+      b.onclick = () => choose(i);
+      list.append(b);
+    });
+    const load = () => new Promise((ok, fail) => {
+      if (window.Sketchfab) return ok();
+      const s = document.createElement('script'); s.src = 'https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js';
+      s.onload = ok; s.onerror = fail; document.head.append(s);
+    });
+    load().then(() => new Promise((ok, fail) => {
+      new window.Sketchfab(iframe).init(N3D_UID, {
+        autostart: 1, preload: 1, camera: 0, scrollwheel: 0, ui_controls: 0, ui_infos: 0, ui_stop: 0, ui_hint: 0, ui_watermark: 0, dnt: 1,
+        success: (a) => {
+          a.start();
+          a.addEventListener('viewerready', () => {
+            // same cream as the website, so the model floats on the page with no box around it
+            a.setBackground({ color: [0.957, 0.929, 0.878] }, () => {});
+            ok(a);
+          });
+        },
+        error: () => fail(new Error('viewer')),
+      });
+    })).then(async (a) => {
+      api = a;
+      const items = (await call('getAnnotationList')) || [];
+      if (!Array.isArray(items) || !items.length || !dots) return;
+      items.slice(0, NISAR_PARTS.length).forEach((it, i) => {
+        const b = document.createElement('button'); b.type = 'button'; b.textContent = String(i + 1);
+        b.setAttribute('aria-label', NISAR_PARTS[i][0]); b.setAttribute('aria-pressed', 'false');
+        b.onclick = () => choose(i); dots.append(b); b._pos = it.position || it.target;
+      });
+      const tick = async () => {
+        const w = iframe.clientWidth, h = iframe.clientHeight;
+        for (const b of dots.querySelectorAll('button')) {
+          const r = await call('getWorldToScreenCoordinates', b._pos);
+          const c = r && r.canvasCoord;
+          if (!c) continue;
+          b.style.transform = `translate(${c[0]}px, ${c[1]}px)`;
+          b.style.display = c[0] > 0 && c[0] < w && c[1] > 0 && c[1] < h ? '' : 'none';
+        }
+        requestAnimationFrame(() => tick());
+      };
+      tick();
+    }).catch(() => { /* the list below still works */ });
+  }
 }

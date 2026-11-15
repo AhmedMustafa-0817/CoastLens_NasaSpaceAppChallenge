@@ -19,62 +19,120 @@
   <div class="hud tl"><b>Rehri Goth to Port Qasim</b> · Karachi<br>Sindh, Pakistan</div>
   <div class="hud tr">Lens <b id="hudPos" class="num">24.750°N 67.294°E</b><br>NISAR L-band · HV · <b>11 Oct 2026</b><br>Orbit 747 km · repeat 12 days</div>
   <div class="title">
-    <h1 class="t-hero" data-split>CoastLens</h1>
-    <p data-reveal="0.5">Move across the clouds. The circle shows what radar sees underneath.</p>
+    <span class="label">CoastLens</span>
+    <h1 class="t-xl" data-split style="max-width:14ch">Watching Pakistan's mangrove forest through the clouds.</h1>
+    <p data-reveal="0.5">With NASA–ISRO radar, every 12 days. Move to see through the clouds.</p>
   </div>
   <div class="scrollcue mono" aria-hidden="true"><span>Scroll</span><i></i></div>
-  <p class="credit">Image: Sentinel-2, Nov 2025 to Feb 2026 · Radar: NISAR L-band HV, 11 Oct 2026 (provisional), processed by CoastLens · Clouds illustrated</p>
-</section>
-
-<!-- 2 · ONE LINE -->
-<section id="oneline" class="screen center light">
-  <h2 class="t-xl" id="line">We watch the mangroves of Karachi's coast from space, and show where they are changing.</h2>
+  <p class="credit">Image: Sentinel-2, Nov 2025 to Feb 2026 · Radar: NISAR L-band HV, 11 Oct 2026 (provisional), processed by CoastLens · Clouds illustrated · 3D model: <a href="https://sketchfab.com/3d-models/nisar-18f8ec6b19db49d29d9c986842d79850" target="_blank" rel="nofollow noopener">NISAR</a> by Aniketfab.com on Sketchfab</p>
 </section>
 
 <!-- 3 · WHAT IS A MANGROVE -->
 <section id="tree" class="screen" data-cursor="Drag">
-  <canvas id="cTree" class="fill" role="img" aria-label="A 3D illustration of a grey mangrove standing in shallow tidal water. Drag to turn it."></canvas>
+  <iframe id="sfTree" class="sf" title="3D model of a red mangrove tree with arching stilt roots. Drag to turn it." allow="autoplay; fullscreen; xr-spatial-tracking" tabindex="-1"></iframe>
+  <div id="sfGrab" class="sf-grab" aria-hidden="true"></div>
+  <p class="sf-msg mono" aria-live="polite"><span class="wait">Loading the 3D tree…</span><span class="err">The 3D tree could not load. <a href="https://sketchfab.com/3d-models/red-mangrove-tree-e806105d83bc440499495e62bb010f7a" target="_blank" rel="noopener">Open it on Sketchfab</a></span></p>
   <div class="copy">
-    <span class="label">What is a mangrove?</span>
+    <span class="label">Meet the mangrove</span>
     <h2 class="t-l" data-split>A tree that grows in the sea.</h2>
-    <p class="lede" data-reveal style="margin-top:18px">It is more like you than you think. Open the four marked parts.</p>
+    <p class="lede" data-reveal style="margin-top:18px">And it's more like you than you think. Open the four marked parts.</p>
   </div>
   <div id="hots"></div>
   <div class="acard" id="acard" hidden></div>
   <div class="counter"><b id="foundN" class="num">0</b><span class="mono">of 4 found · drag to turn the tree</span></div>
-  <p class="credit">Stylised illustration of a grey mangrove (Avicennia marina)</p>
+  <p class="credit">3D model: <a href="https://sketchfab.com/3d-models/red-mangrove-tree-e806105d83bc440499495e62bb010f7a" target="_blank" rel="nofollow noopener">red-mangrove-tree</a> by <a href="https://sketchfab.com/Minambiente_Col" target="_blank" rel="nofollow noopener">SAVIA_Colombia</a> on <a href="https://sketchfab.com" target="_blank" rel="nofollow noopener">Sketchfab</a>, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></p>
 </section>
 
-<!-- 4 · WHY IT MATTERS -->
-<section id="fish" class="screen dark">
-  <div class="wrap">
-    <span class="label">Why it matters to you</span>
-    <h2 class="t-xl ask" data-split>Do you know someone who eats fish?</h2>
-    <div class="row" style="margin-top:34px" data-reveal>
-      <button class="btn" data-fish>Yes</button>
-      <button class="btn" data-fish>That's me</button>
-    </div>
-    <div class="chain" id="chain" aria-live="polite">
-      <div class="trail"></div>
-      <svg class="fishy" viewBox="0 0 54 28" aria-hidden="true"><path d="M2 14c8-10 24-12 36-4l12-8v24l-12-8C26 26 10 24 2 14z" fill="#f0566f"/><circle cx="12" cy="12" r="2" fill="#3a2c24"/></svg>
-      <div class="step"><svg viewBox="0 0 108 108" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="54" cy="54" r="52"/><path d="M26 70h56M34 70V50M44 70V44M54 70V40M64 70V46M74 70V52"/><circle cx="54" cy="30" r="14" fill="#4a5d3a" stroke="none"/><circle cx="40" cy="36" r="9" fill="#4a5d3a" stroke="none"/><circle cx="68" cy="36" r="9" fill="#4a5d3a" stroke="none"/></svg><b>Mangrove roots</b><small>Young fish, shrimp and crabs shelter here.</small></div>
-      <div class="step"><svg viewBox="0 0 108 108" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="54" cy="54" r="52"/><path d="M22 44c10-8 22 8 32 0s22 8 32 0M22 58c10-8 22 8 32 0s22 8 32 0M22 72c10-8 22 8 32 0s22 8 32 0"/></svg><b>Tidal creek</b><small>They grow, then move out with the tide.</small></div>
-      <div class="step"><svg viewBox="0 0 108 108" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="54" cy="54" r="52"/><path d="M24 60h60l-10 14H34zM54 60V28M54 30l18 22H54"/></svg><b>Fishing boat</b><small>A fisherman from the delta brings them in.</small></div>
-      <div class="step"><svg viewBox="0 0 108 108" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="54" cy="54" r="52"/><path d="M28 46h52v28H28zM24 46l6-14h48l6 14M42 46v28M66 46v28"/></svg><b>Market</b><small>Sold in Karachi and far beyond.</small></div>
-      <div class="step"><svg viewBox="0 0 108 108" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="54" cy="54" r="52"/><ellipse cx="54" cy="58" rx="30" ry="12"/><ellipse cx="54" cy="58" rx="18" ry="6"/></svg><b>Your plate</b><small>Start here. Follow it back.</small></div>
-    </div>
-    <div class="trio">
-      <div data-reveal><h3 class="t-m">A nursery</h3><p>Many of the fish, shrimp and crabs caught off this coast spend their early life among mangrove roots.</p></div>
-      <div data-reveal="0.12"><h3 class="t-m">A buffer</h3><p>Dense roots and trunks slow waves and hold mud in place before the sea reaches the villages behind them.</p></div>
-      <div data-reveal="0.24"><h3 class="t-m">A carbon store</h3><p>Mangroves bury carbon in the waterlogged mud beneath them, where it can stay locked away for a very long time.</p></div>
-    </div>
+<!-- 4 · WHY IT MATTERS: rewind your fish, then the tree's other jobs. Scroll plays it; nothing to click. -->
+<section id="fish">
+  <span class="label">You already depend on one</span>
+  <h2 class="t-l" data-split>Why should I care?</h2>
+  <p class="t-m lead" data-reveal>The fish on your plate started its life in the roots.</p>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="fishBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7d9466"/><stop offset=".55" stop-color="#4a5d3a"/><stop offset="1" stop-color="#334128"/></linearGradient>
+        <g id="fishG"><path d="M44 0L74-20Q66 0 74 20Z" fill="#4a5d3a" stroke="#3a2c24" stroke-width="2.2" stroke-linejoin="round"/><path d="M-50 0C-30-22 24-24 50 0C24 22-30 22-50 0Z" fill="#4a5d3a" stroke="#3a2c24" stroke-width="2.2" stroke-linejoin="round"/></g>
+      <pattern id="jaalS" width="20" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(12)"><path d="M0 0L20 20M20 0L0 20" stroke="#3a2c24" stroke-width=".8" opacity=".18"/></pattern>
+    </defs>
+  </svg>
+
+  <ol class="tl" aria-label="The fish's journey from the mangrove to your plate">
+    <li class="tl-track" aria-hidden="true"><span class="tl-fill"></span></li>
+    <li class="tl-step">
+      <div class="ph"><img src="/media/01-hatches.png" alt="Tiny fish in open water" loading="lazy" decoding="async"></div>
+      <span class="tl-n mono">01</span>
+      <h3>Hatches in open sea</h3>
+      <p class="tl-cap">Small and easy to miss.</p>
+    </li>
+    <li class="tl-step">
+      <div class="ph"><img src="/media/02-roots.png" alt="A young fish hiding among mangrove roots" loading="lazy" decoding="async"></div>
+      <span class="tl-n mono">02</span>
+      <h3>Hides in the roots</h3>
+      <p class="tl-cap">Safe among the roots.</p>
+    </li>
+    <li class="tl-step">
+      <div class="ph"><img src="/media/03-creek.png" alt="A bigger fish in a creek between muddy banks" loading="lazy" decoding="async"></div>
+      <span class="tl-n mono">03</span>
+      <h3>Grows in the creek</h3>
+      <p class="tl-cap">Bigger now, in the creek.</p>
+    </li>
+    <li class="tl-step">
+      <div class="ph"><img src="/media/04-jaal.png" alt="A fishing net (jaal)" loading="lazy" decoding="async"></div>
+      <span class="tl-n mono">04</span>
+      <h3>Caught in a net</h3>
+      <p class="tl-cap">Caught in the net.</p>
+    </li>
+    <li class="tl-step">
+      <div class="ph"><svg viewBox="0 0 200 200" role="img" aria-label="A fish served on a plate with a fork and knife"><rect width="200" height="200" fill="#f4ede0"/><ellipse cx="102" cy="108" rx="78" ry="74" fill="#3a2c24" opacity=".08"/><circle cx="100" cy="100" r="74" fill="#fffaf2" stroke="#3a2c24" stroke-width="1.5"/><circle cx="100" cy="100" r="60" fill="none" stroke="#3a2c24" stroke-width=".8" opacity=".25"/><use href="#fishG" transform="translate(100 100) rotate(-8) scale(.82)"/><g fill="none" stroke="#3a2c24" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity=".6"><path d="M24 62V138"/><path d="M19 62V80Q19 92 24 92Q29 92 29 80V62"/><path d="M24 62v-0"/><path d="M176 62Q186 84 176 104V138"/></g></svg></div>
+      <span class="tl-n mono">05</span>
+      <h3>On your plate</h3>
+      <p class="tl-cap">Dinner is served.</p>
+    </li>
+    <svg class="tl-hop" viewBox="-60 -30 120 60" aria-hidden="true"><use href="#fishG"/></svg>
+  </ol>
+  <div class="tl-foot">
+    <a class="btn solid home-link" href="#tree" data-open="fish">Visit the fish's home &uarr;</a>
+  </div>
+
+  <h3 class="t-l mg-title" data-reveal>Mangroves do more than that.</h3>
+  <div class="mg-facts">
+    <article class="mg-card" data-reveal>
+      <div class="mini"><img src="/media/card-waves.png" alt="" loading="lazy" decoding="async"></div>
+      <h4>Waves</h4>
+      <p>Roots slow the waves before they reach homes.</p>
+    </article>
+    <article class="mg-card" data-reveal>
+      <div class="mini"><img src="/media/card-carbon.png" alt="" loading="lazy" decoding="async"></div>
+      <h4>Carbon</h4>
+      <p>They lock carbon in the mud, out of the air.</p>
+    </article>
+    <article class="mg-card" data-reveal>
+      <div class="mini"><img src="/media/card-land.png" alt="" loading="lazy" decoding="async"></div>
+      <h4>Land</h4>
+      <p>Roots trap silt, and new land builds up.</p>
+    </article>
+    <article class="mg-card" data-reveal>
+      <div class="mini"><img src="/media/card-fish.png" alt="" loading="lazy" decoding="async"></div>
+      <h4>Fish</h4>
+      <p>98 fish species have been recorded in Indus delta mangroves. <a href="https://www.sindhforests.gov.pk/page-mangroves" target="_blank" rel="noopener">Sindh Forest Department</a></p>
+    </article>
+  </div>
+
+  <div class="storm-copy">
+    <p class="t-l" data-reveal>Food. Shelter. Cleaner air. <em class="green">You already depend on mangroves.</em></p>
   </div>
 </section>
 
+
 <!-- 5 · THE BLIND SPOT (image expands on scroll) -->
 <section id="blind" class="scan">
-  <h2 class="t-xl intro" data-split>Then the clouds come.</h2>
-  <div class="frame"><canvas id="cBlind" class="fill" role="img" aria-label="Karachi's mangrove coast from space. Cloud covers it, then a radar sweep reveals the NISAR radar image."></canvas></div>
+  <h2 class="t-xl intro" data-split>Clouds hide this coast for months.</h2>
+  <div class="frame"><canvas id="cBlind" class="fill" role="img" aria-label="Karachi's mangrove coast from space. Cloud covers it, then a radar sweep reveals the NISAR radar image."></canvas>
+    <div class="sat">
+      <img src="/media/nisar-satellite.png" width="278" height="168" alt="NISAR satellite" decoding="async">
+    </div>
+  </div>
   <div class="hud"><span id="bStage">01 / 03 · Optical</span></div>
   <div class="copy">
     <h3 class="t-m" id="bH">A camera in space needs clear sky.</h3>
@@ -83,12 +141,14 @@
   <p class="credit" style="background:var(--sand-light);padding:4px 8px">Sentinel-2, 2025 to 26 · NISAR L-band HV, 11 Oct 2026 · Clouds illustrated</p>
 </section>
 
-<!-- 6 · GLOBAL VS LOCAL -->
+<!-- 6 · GLOBAL VS LOCAL: the numbers say one thing, the people of Rehri Goth another, the map settles it -->
 <section id="paradox" class="screen">
   <div class="wrap">
-    <span class="label">Global vs local</span>
-    <h2 class="t-xl" data-split style="max-width:16ch">If the big picture looks fine, why are we here?</h2>
-    <div class="scales">
+    <span class="label">The paradox</span>
+    <h2 class="t-xl" data-split style="max-width:18ch">On paper, the forest is growing back. On the ground, the sea is still taking homes.</h2>
+
+    <!-- 1. the big picture -->
+    <div class="scales two">
       <div class="scale" data-reveal>
         <span class="mono">The world</span>
         <h3 class="t-m">Shrinking, but slowly.</h3>
@@ -97,27 +157,66 @@
         <small>Global mangrove area, 1996 to 2020.<br>Source: Global Mangrove Watch v3 (Bunting et al., 2022).</small>
       </div>
       <div class="scale" data-reveal="0.12">
-        <span class="mono">The Indus Delta</span>
-        <h3 class="t-m">Reported to be growing.</h3>
+        <span class="mono">Pakistan's Indus Delta</span>
+        <h3 class="t-m">Reported to have doubled.</h3>
         <svg id="gDelta" viewBox="0 0 300 120" role="img" aria-label="A published study reports Indus Delta mangroves rising from 50,973 hectares in 1990 to 101,446 in 2023."></svg>
         <div class="big num">&times;2</div>
         <small>50,973 ha (1990) to 101,446 ha (2023), whole delta.<br>Source: Ahmed et al., <i>Ecological Indicators</i>, 2025. Not our data, not our study area.</small>
       </div>
-      <div class="scale local" data-reveal="0.24">
-        <span class="mono">Karachi coast · our study area</span>
-        <h3 class="t-m">Growing overall, but some pockets kept shrinking.</h3>
-        <svg id="gLocal" viewBox="0 0 300 120" role="img" aria-label="Mapped mangrove area in the Karachi study box: 67.2 square kilometres in 1985, 80.7 in 1995, 119.4 in 2005, 168.4 in 2015 and 180.9 in 2025."></svg>
-        <div class="big num"><em class="pink">&minus;80%</em></div>
-        <small>The whole box grew from 67.2 km² (1985) to 180.9 km² (2025), 67.16 to 67.43°E, 24.67 to 24.83°N. But in seven small zones the forest kept shrinking; in the largest, 0.78 km² (2008) fell to 0.16 km² (2025).<br>Source: Global Mangrove Watch v4.1, area computed by CoastLens. Includes mapping error.</small>
+    </div>
+
+    <!-- 2. a voice from Rehri Goth -->
+    <div class="voice" data-reveal>
+      <span class="mono">Karachi's fishing communities, in their words</span>
+      <!-- TODO: put the clip at public/media/rehri-voice.mp4 (10–20 s, filmed with consent, with subtitles) and replace the placeholder with:
+      <video src="/media/rehri-voice.mp4" poster="/media/rehri-voice.jpg" controls playsinline preload="none"></video> -->
+      <div class="voice-text">
+      <blockquote class="t-l">&ldquo;The polluted water is destroying our mangroves and our crops. It used to have a shadow, but now it is shrinking.&rdquo;</blockquote>
+      <small>A resident of Rehri Goth, Karachi. From <i>Living with the Sea</i>, a documentary by Sarah Ather Khan (Invisible Dust), <a href="https://www.youtube.com/watch?v=JAWbHc-2mt4&amp;t=365s" target="_blank" rel="noopener">watch at 6:05</a>. Film details: <a href="https://invisibledust.com/journal/sea-stories-of-survival-and-resistance-karachi-coast/" target="_blank" rel="noopener">invisibledust.com</a>.</small>
       </div>
     </div>
-    <div class="verdict">
-      <h3 class="t-l" data-split>Both can be true. A total can rise while one creek empties.</h3>
-      <div data-reveal>
-        <p class="lede" style="max-width:none">So we look at one place, with one method, again and again. And the newer satellites add a twist: since 2015 the forest that remains here has become greener, not thinner.</p>
-        <div class="row" style="margin-top:26px"><a class="btn solid" href="insights.html">See what we found</a></div>
-      </div>
+
+    <!-- 3. the map as proof -->
+    <div class="proof" data-reveal>
+      <h3 class="t-l">So we checked from space.</h3>
+      <figure class="impact">
+        <div id="impactMap" class="impact-map" role="img" aria-label="Map of the mangrove coast east of Rehri Goth. Patches of mangrove lost since 1985 are coloured from yellow (long ago) to red (recently), and the decline zones, where the forest kept shrinking, are outlined in pink."></div>
+        <figcaption class="impact-key mono">
+          <span><i class="ramp"></i>Mangrove lost, 1986 &rarr; 2025 (yellow long ago, red recently)</span>
+          <span><i class="zone"></i>Decline zone: kept shrinking year after year</span>
+        </figcaption>
+      </figure>
+      <p class="lede" id="impactLine">Across the whole coast the mapped forest grew. But in seven small zones it kept shrinking: in the worst one, 0.78 km² of mangrove in 2008 became 0.16 km² by 2025.</p>
+      <small class="impact-src mono">Global Mangrove Watch v4.1, 1985 to 2025, area computed by CoastLens. Photo: Sentinel-2, 2025 to 26. Includes mapping error; not field-checked.</small>
+      <div class="row" style="margin-top:22px"><a class="btn solid" href="map.html">Explore the full map &rarr;</a></div>
     </div>
+  </div>
+</section>
+
+<!-- 6a · THE STORY SO FAR -->
+<section id="story" class="screen center">
+  <div class="story">
+    <span class="label">What the delta lost</span>
+    <p class="display t-xl" data-split>Sukhi Bandar was a busy harbour.</p>
+    <p class="display t-xl" data-split style="margin-top:.5em">The sea took it. Kharo Chan&rsquo;s villages are going the same way.</p>
+    <small class="story-src" data-reveal>Sources: Dawn, &ldquo;Swallowed by the sea&rdquo; (Sukhi Bandar); Tribune, 2024, and AFP, 2025 (Kharo Chan).</small>
+  </div>
+</section>
+
+<!-- 6b · WHY IT MATTERS BEYOND ONE DELTA -->
+<section id="goals" class="screen">
+  <div class="wrap block" style="padding-inline:var(--pad)">
+    <span class="label">Beyond one delta</span>
+    <h2 class="t-l" data-split style="max-width:20ch">Mangroves connect to five of the UN's global goals.</h2>
+    <p class="lede" data-reveal>The Sustainable Development Goals set 17 targets for 2030. Watching this one coast touches these five.</p>
+    <div class="list" data-reveal style="margin-top:40px">
+      <a href="https://sdgs.un.org/goals/goal6" target="_blank" rel="noopener" data-cursor="Visit"><h3>SDG 6 · Clean Water</h3><p>Residents describe polluted water in the creeks. This project tracks the mangroves that depend on that water. It does not measure pollution itself.</p><span class="mono">sdgs.un.org ↗</span></a>
+      <a href="https://sdgs.un.org/goals/goal13" target="_blank" rel="noopener" data-cursor="Visit"><h3>SDG 13 · Climate Action</h3><p>Mangrove soil and roots store carbon. If the trees are lost, that stored carbon can be released.</p><span class="mono">sdgs.un.org ↗</span></a>
+      <a href="https://sdgs.un.org/goals/goal14" target="_blank" rel="noopener" data-cursor="Visit"><h3>SDG 14 · Life Below Water</h3><p>Mangroves are habitat for many coastal and marine species. Tracking their change helps show where that habitat is shrinking.</p><span class="mono">sdgs.un.org ↗</span></a>
+      <a href="https://sdgs.un.org/goals/goal15" target="_blank" rel="noopener" data-cursor="Visit"><h3>SDG 15 · Life on Land</h3><p>Mangroves are coastal forests. Radar can still record them when clouds block optical satellites, so the view is less often lost.</p><span class="mono">sdgs.un.org ↗</span></a>
+      <a href="https://sdgs.un.org/goals/goal17" target="_blank" rel="noopener" data-cursor="Visit"><h3>SDG 17 · Partnerships</h3><p>We work with local organizations, including Saltwater Marina and Mangrove Crew, so the satellite data stays tied to what people see on the coast.</p><span class="mono">sdgs.un.org ↗</span></a>
+    </div>
+    <div class="row" style="margin-top:36px" data-reveal><a class="btn" href="nisar.html">See how the radar tracks change &rarr;</a></div>
   </div>
 </section>
 
@@ -125,14 +224,14 @@
 <section id="end" class="screen center dark">
   <div>
     <span class="label">Keep watching</span>
-    <p class="display t-xl" data-split style="max-width:17ch;margin:0 auto">Kharo Chan has reportedly lost 28 of its 42 villages to the sea.</p>
-    <p class="display t-xl" data-split style="max-width:17ch;margin:.12em auto 0"><em class="pink">Don't let Rehri Goth be next.</em></p>
-    <p class="lede note" data-reveal>We measured the mangroves from Rehri Goth to Port Qasim: the coast is greener overall, but seven pockets kept losing forest for years. NISAR looks again every 12 days, and the data is open.</p>
+    <p class="display t-xl" data-split style="max-width:17ch;margin:0 auto">Rehri Goth is still here.</p>
+    <p class="display t-xl" data-split style="max-width:17ch;margin:.12em auto 0"><em class="green">Watch it with us.</em></p>
+    <p class="lede note" data-reveal>NISAR looks again every 12 days. <em class="now">Now you can too.</em></p>
     <div class="row" style="justify-content:center;margin-top:36px" data-reveal>
-      <a class="btn solid" href="nisar.html">How the radar works</a>
-      <a class="btn" href="insights.html">Our findings</a>
+      <a class="btn solid" href="map.html">Explore the map</a>
+      <a class="btn" href="nisar.html">How it works</a>
+      <a class="btn" href="https://github.com/AhmedMustafa-0817/CoastLens_NasaSpaceAppChallenge" target="_blank" rel="noopener">Open data &amp; code</a>
     </div>
-    <p class="mono" style="margin-top:44px;opacity:.55" data-reveal>Kharo Chan figure as reported by The News on Sunday. Verify before reuse. See About.</p>
   </div>
 </section>
 

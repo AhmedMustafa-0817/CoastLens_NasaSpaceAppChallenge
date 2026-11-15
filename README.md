@@ -26,12 +26,21 @@ One box on Karachi's coast, **from Rehri Goth to Port Qasim and the creeks to th
 
 | Page | What it is for |
 |---|---|
-| **Home** | Why mangroves matter, why ordinary cameras in space struggle (clouds, night), and the main tension: the forest is growing overall, yet some pockets kept shrinking. |
-| **NISAR** | How radar works, explained with animations: the satellite brings its own "light", long L-band waves reach the trunks and branches, and it returns every 12 days. It also says plainly what radar cannot tell you. |
+| **Home** | A radar lens that sees through the clouds, a 3D mangrove to explore, a fish's journey from the roots to your plate, why clouds blind ordinary cameras, and the paradox: on paper the forest is growing back, on the ground the sea still takes homes. Then the **impact map** (below) as proof, the delta's story, the five UN goals mangroves touch, and a closing call. |
+| **NISAR** | How radar works: a 3D model of the satellite with its parts named, the main points at a glance, animations of how radar sees through cloud and night, why water is dark and forest bright, a real photo-vs-radar comparison, the 12-day repeat, what radar cannot tell you, and a short glossary. |
 | **Insights** | Three findings, each laid out as *what was measured*, *possible explanation* and *confidence*. Then a compare-the-layers tool and the eight alerts. |
 | **Map** | Every layer in one place, six guided stories, the decline zones and the alerts. This is the main page to present (see below). |
-| **Collaborators** | Organisations working in the Indus Delta, and three things only people on the ground can give us: planting records, field checks of the alerts, and interviews (with consent). |
-| **About us** | The team, our rules about what we will and will not claim, and where every number comes from. |
+| **Collaborators** | Our confirmed collaborators (Saltwater Marina, Mangrove Crew), organisations working in the Indus Delta, and three things only people on the ground can give us: planting records, field checks of the alerts, and interviews (with consent). |
+| **About us** | The team (six Computer Science students), our rules about what we will and will not claim, and where every number comes from. |
+
+## The impact map on the Home page
+
+Under "So we checked from space." the home page shows one fixed map, with no buttons or layers to change. It is the proof that there is a problem:
+
+- The background is our own Sentinel-2 photo of the coast east of Rehri Goth, around Port Qasim.
+- Coloured patches are mangrove that was there and is now gone, coloured by the year it was lost (yellow long ago, red recently).
+- Pink dashed outlines are the decline zones, where the forest kept shrinking year after year. The worst, zone A, is labelled.
+- *Say:* "Across the whole coast the mapped forest grew. But in seven small zones it kept shrinking. In the worst one, 0.78 km² of mangrove in 2008 became 0.16 km² by 2025, a loss of 80%." Then click **Explore the full map**.
 
 ## Presenting the Map page
 
@@ -235,7 +244,8 @@ NISAR also carries ISRO's S-band radar, but ASF lists only L-band files over our
 ## 6. How it was built
 
 ### Website
-- **Static site built with Vite 6**, plain JavaScript (no framework). Libraries: **Leaflet** (maps), **GSAP** (scroll animation), **Lenis** (smooth scrolling). The 3D mangrove, radar animations and clouds are drawn on canvas by our own code and labelled as illustrations.
+- **Static site built with Vite 6**, plain JavaScript (no framework). Libraries: **Leaflet** (maps), **GSAP** (scroll animation), **Lenis** (smooth scrolling). Radar animations and clouds are drawn on canvas by our own code and labelled as illustrations.
+- **3D models** are shown through the Sketchfab Viewer API, with our own info dots pinned to points on each model: the home page red mangrove ("red-mangrove-tree" by SAVIA_Colombia, CC BY 4.0) and the NISAR page satellite (by MechLab3D). The fish journey and card images are generated illustrations in `public/media/`.
 - **Hosting:** Vercel. Build command `npm run build`, output `dist/`. The Python pipeline and raw data are not deployed (`.vercelignore`).
 - **Map tiles** are self-hosted in `public/tiles/<layer-id>/{z}/{x}/{y}.png` (zoom 10–14, Sentinel-2 to 15), cut by `scripts/tiles/make_tiles.py`.
 - **No number is typed into the page by hand.** Charts, story texts and alert texts read `stats.json` and `alerts.json`. Layer descriptions in `layers.json` write numbers as `{{path.in.stats.json}}`, which the map page fills in when it loads.
@@ -301,7 +311,10 @@ Deploy on Vercel: import the repo, framework preset **Vite**. No other settings.
 | NISAR explainer animations | `nisar.html` + `src/nisar.js` |
 | Findings, charts, compare map, NISAR alerts | `insights.html` + `src/insights.js` |
 | Full map: every layer, decline zones, alerts, stories | `map.html` + `src/map.js` (layers from `public/data/layers.json`) |
-| 3D mangrove (home and NISAR) | `src/tree3d.js` |
+| 3D mangrove on Home (Sketchfab) | `src/mangrove3d.js` |
+| Radar tree on NISAR page | `src/tree3d.js` |
+| Home page images (fish journey, cards, satellite) | `public/media/` |
+| Home page impact map | `#impactMap` in `index.html`, bottom of `src/home.js` |
 | Real imagery loader | `src/tiles.js` |
 | Every number on the site | `public/data/stats.json` |
 | Map layers, decline zones, alerts | `public/data/layers.json`, `zones.geojson`, `alerts.json`; tiles in `public/tiles/` |

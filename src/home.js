@@ -1,6 +1,9 @@
-import { init, gsap, ScrollTrigger, SplitText, REDUCE, FINE, DPR, EASE, $, $$, clamp, lerp, fit, whileVisible, loadStats } from './core.js';
+import { init, gsap, ScrollTrigger, SplitText, REDUCE, FINE, DPR, EASE, $, $$, clamp, lerp, fit, whileVisible } from './core.js';
 import { mosaic, cover, drawClouds, BBOX } from './tiles.js';
-import { Tree3D, TREE, FOCUS } from './tree3d.js';
+import { Mangrove3D } from './mangrove3d.js';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import { TILE_BASE } from './tiles.js';
 
 init();
 const OPTICAL = 's2_truecolor_2025_26', RADAR = 'nisar_hv_20261011';
@@ -26,7 +29,7 @@ const SAND = '#eadfcb', MOCHA = '#3a2c24', LBAND = '#b0782a';
     g.imageSmoothingEnabled = true;
     cover(g, base, w, h, view.zoom);
     drawClouds(g, w, h, t);
-    const r = Math.min(w, h) * (FINE ? 0.2 : 0.24);
+    const r = Math.min(w, h) * (FINE ? 0.14 : 0.17);
     g.save();
     g.beginPath(); g.arc(lens.x, lens.y, r, 0, 7); g.clip();
     cover(g, rad, w, h, view.zoom);
@@ -51,70 +54,127 @@ const SAND = '#eadfcb', MOCHA = '#3a2c24', LBAND = '#b0782a';
   if (!REDUCE) gsap.to('#hero .title', { yPercent: -30, opacity: 0, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom 40%', scrub: 0.8 } });
 }
 
-/* ---------- 2 · one line, lit word by word ---------- */
-if (!REDUCE) {
-  document.fonts.ready.then(() => {
-    const s = SplitText.create('#line', { type: 'words', wordsClass: 'w' });
-    gsap.to(s.words, { opacity: 1, stagger: 0.12, ease: 'none', scrollTrigger: { trigger: '#oneline', start: 'top 70%', end: 'center 40%', scrub: 0.9 } });
-  });
-}
-
-/* ---------- 3 · the mangrove ---------- */
+/* ---------- 3 · the mangrove (Sketchfab model, dots pinned to real points on it) ---------- */
 {
-  const tree = Tree3D($('#cTree'), 'tree'), hots = $('#hots'), card = $('#acard'), seen = new Set();
+  const sec = $('#tree'), frameEl = $('#sfTree'), hots = $('#hots'), card = $('#acard'), seen = new Set();
+  // Facts are for the red / stilt-root mangrove (Rhizophora) that the model shows.
   const parts = [
-    { id: 'roots', label: 'Pencil roots', at: [1.6, 0.35, 1.2], t: 'It breathes through snorkels.', a: 'Pencil roots', b: 'Your lungs', p: 'The mud holds almost no oxygen. So the tree sends up hundreds of pencil-thin roots that stand above the mud and take in air at low tide.' },
-    { id: 'leaf', label: 'Leaves', at: [0.4, 3.4, 0.3], t: 'It sweats salt, like you on a hot day.', a: 'Salty leaves', b: 'Your sweat', p: 'Seawater would kill most trees. This one pushes salt out through its leaves. Look closely and you can find the crystals.' },
-    { id: 'seed', label: 'Seedlings', at: TREE.seeds[0], t: 'Its young are born ready.', a: 'Seedlings', b: 'A newborn', p: 'The seed starts to grow while it is still on the parent tree. When it drops, it floats on the tide until it finds mud.' },
-    { id: 'fish', label: 'Under the water', at: [-1.4, 0.2, -0.8], t: 'It runs a nursery.', a: 'Root maze', b: 'A nursery', p: 'When the tide comes in, young fish and shrimp hide among the roots until they are big enough for open water.' },
+    { id: 'roots', label: 'Stilt roots', t: 'It breathes through its stilts.', a: 'Stilt roots', b: 'Your nose', p: 'The mud holds almost no oxygen. These arching roots prop the tree up, and tiny pores on them take in air whenever the tide is out.' },
+    { id: 'leaf', label: 'Leaves', t: 'It drinks seawater and bins the salt.', a: 'Old leaves', b: 'Your kidneys', p: 'Its roots keep out most of the salt in seawater. The little that gets in is sent to older leaves, which turn yellow and drop off.' },
+    { id: 'seed', label: 'Hanging pods', t: 'Its babies are born ready.', a: 'Hanging pods', b: 'A newborn', p: 'Each long green pod is a seedling already growing on the parent tree. When it drops, it floats on the tide until it lodges in mud.' },
+    { id: 'fish', label: 'Under the water', t: 'It runs a daycare.', a: 'Root maze', b: 'A daycare', p: 'When the tide comes in, young fish and shrimp hide in this tangle of roots until they are big enough for open water.' },
   ];
+  let tree = null;
+  const wide = () => innerWidth > 900, copyEl = $('#tree .copy');
+  // centre of the free area between the heading block and `until` (the card, or the section edge), as fractions of the viewer
+  const freeSpot = (until) => {
+    const f = frameEl.getBoundingClientRect(), c = copyEl.getBoundingClientRect();
+    if (wide()) return { fx: clamp(((Math.max(f.left, c.right) + Math.min(f.right, until.left)) / 2 - f.left) / f.width, 0.15, 0.85), fy: 0.5 };
+    return { fx: 0.5, fy: clamp(((Math.max(f.top, c.bottom) + Math.min(f.bottom, until.top)) / 2 - f.top) / f.height, 0.2, 0.8) };
+  };
   const open = (a) => {
     seen.add(a.id); a.el.classList.add('seen');
     $('#foundN').textContent = seen.size;
-    tree.st.focus = FOCUS[a.id]; tree.st.auto = false;
     const next = parts.find((q) => !seen.has(q.id));
     card.hidden = false;
     card.innerHTML = `<span class="mono">${seen.size} of 4</span><h3>${a.t}</h3>
       <div class="eq"><div><b>${a.a}</b><span>the mangrove</span></div><span>=</span><div><b>${a.b}</b><span>you</span></div></div>
       <p>${a.p}</p>
       <div class="row">${next ? `<button class="btn" id="aNext">Next: ${next.label}</button>` : `<a class="btn" href="#fish">Why it matters</a>`}<button class="btn" id="aBack">Back to the tree</button></div>`;
+    // glide to the part, centred in the space between the heading and the card (beside it on desktop, above it on phones)
+    tree?.focus(a.id, freeSpot(card.getBoundingClientRect()));
     if (!REDUCE) gsap.from(card, { opacity: 0, y: 24, duration: 0.9, ease: EASE });
     if (next) $('#aNext').onclick = () => open(next);
-    $('#aBack').onclick = () => { card.hidden = true; tree.st.focus = null; tree.st.auto = true; };
+    $('#aBack').onclick = () => { card.hidden = true; tree?.reset(); };
   };
+  // "Visit the fish's home" in the next section scrolls back here and opens a card
+  document.addEventListener('mangrove:open', (e) => {
+    const a = parts.find((q) => q.id === e.detail);
+    if (a) setTimeout(() => open(a), 1400); // once the scroll has (nearly) arrived
+  });
   parts.forEach((a) => {
     a.el = document.createElement('button');
     a.el.className = 'hot';
     a.el.innerHTML = `<i></i><span>${a.label}</span>`;
     a.el.onclick = () => open(a);
+    a.el.style.display = 'none';
     hots.appendChild(a.el);
   });
-  whileVisible($('#tree'), () => {
-    const P = tree.draw();
-    parts.forEach((a) => {
-      const p = P(a.at), show = p && (card.hidden || !seen.has(a.id));
-      a.el.style.display = show ? 'flex' : 'none';
-      if (show) { a.el.style.left = p.x / DPR + 'px'; a.el.style.top = p.y / DPR + 'px'; }
-    });
-  });
+
+  // load the (heavy) model only when the section is about to be seen
+  new IntersectionObserver(([e], io) => {
+    if (!e.isIntersecting) return;
+    io.disconnect();
+    const edge = () => { const r = sec.getBoundingClientRect(); return { left: r.right, top: r.bottom }; };
+    Mangrove3D(frameEl, $('#sfGrab'), { home: () => freeSpot(edge()) })
+      .then((t) => {
+        tree = t;
+        sec.classList.add('ready');
+        let rs = 0;
+        addEventListener('resize', () => { clearTimeout(rs); rs = setTimeout(() => { if (!tree.st.focused) tree.reset(0); }, 200); });
+        let busy = false;
+        whileVisible(sec, () => {
+          if (busy) return;
+          busy = true;
+          tree.frame().then((P) => {
+            const f = frameEl.getBoundingClientRect(), s = sec.getBoundingClientRect();
+            parts.forEach((a) => {
+              const p = P[a.id], show = p.inView && (card.hidden || !seen.has(a.id));
+              a.el.style.display = show ? 'flex' : 'none';
+              a.el.classList.toggle('behind', !p.front);
+              a.el.style.left = f.left - s.left + p.x + 'px';
+              a.el.style.top = f.top - s.top + p.y + 'px';
+            });
+          }).finally(() => (busy = false));
+        });
+      })
+      .catch(() => sec.classList.add('failed'));
+  }, { rootMargin: '600px 0px' }).observe(sec);
 }
 
-/* ---------- 4 · your fish, traced back ---------- */
+/* ---------- 4 · why should I care: one fish travels from circle to circle as you scroll. No pin, no scroll lock ---------- */
 {
-  const steps = $$('#chain .step').reverse(); // plate first
-  let played = false;
-  const play = () => {
-    if (played) return;
-    played = true;
-    $$('[data-fish]').forEach((b) => b.setAttribute('aria-pressed', 'true'));
-    if (REDUCE) { gsap.set(steps, { opacity: 1 }); gsap.set('#chain .trail', { scaleX: 1 }); return; }
-    const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } });
-    tl.to(steps, { opacity: 1, duration: 0.9, stagger: 1 })
-      .to('#chain .trail', { scaleX: 1, duration: 5, ease: 'none' }, 0)
-      .fromTo('#chain .fishy', { opacity: 0, x: 0 }, { opacity: 1, x: () => -$('#chain').offsetWidth * 0.8, duration: 5, ease: 'none' }, 0);
+  const tl = $('#fish .tl'), steps = $$('#fish .tl-step'), N = steps.length, hop = $('#fish .tl-hop');
+  let target = 0, pos = 0, idx = -1;
+  const light = (k) => {
+    if (k === idx) return;
+    idx = k;
+    steps.forEach((el, i) => { el.classList.toggle('on', i <= k); el.classList.toggle('cur', i === k); });
   };
-  $$('[data-fish]').forEach((b) => (b.onclick = play));
-  ScrollTrigger.create({ trigger: '#chain', start: 'top 45%', once: true, onEnter: play });
+  // centre of each circle, measured against the timeline box
+  const centres = () => {
+    const base = tl.getBoundingClientRect();
+    return steps.map((el) => {
+      const r = el.querySelector('.ph').getBoundingClientRect();
+      return { x: r.left - base.left + r.width / 2, y: r.top - base.top + r.height / 2 };
+    });
+  };
+  let pts = [];
+  const place = (f) => {
+    const i = Math.min(N - 2, Math.floor(f)), t = f - i;
+    const a = pts[i], b = pts[i + 1];
+    hop.style.transform = `translate(${(a.x + (b.x - a.x) * t).toFixed(1)}px, ${(a.y + (b.y - a.y) * t).toFixed(1)}px) translate(-50%, -50%)`;
+  };
+  const measure = () => { pts = centres(); };
+  if (REDUCE) {
+    steps.forEach((el) => el.classList.add('on'));
+    tl.style.setProperty('--p', 1);
+    measure();
+    hop.style.transform = '';
+  } else {
+    measure();
+    window.addEventListener('resize', measure);
+    ScrollTrigger.create({
+      trigger: tl, start: 'top 72%', end: 'bottom 40%', scrub: true,
+      onUpdate: (self) => { target = self.progress; tl.style.setProperty('--p', self.progress.toFixed(3)); },
+    });
+    gsap.ticker.add(() => {
+      pos += (target * (N - 1) - pos) * 0.12;
+      if (pts.length) place(Math.min(N - 1, pos));
+      light(Math.min(N - 1, Math.round(pos)));
+    });
+  }
+  $('#fish .home-link').addEventListener('click', (e) => document.dispatchEvent(new CustomEvent('mangrove:open', { detail: e.currentTarget.dataset.open })));
 }
 
 /* ---------- 5 · blind spot: frame expands, cloud rolls in, radar reveals ---------- */
@@ -124,9 +184,11 @@ if (!REDUCE) {
   const copy = [
     ['01 / 03 · Optical', 'A camera in space needs clear sky.', 'In the monsoon, cloud can hide this coast from ordinary satellite cameras. No picture, no answer.'],
     ['02 / 03 · NISAR pass', 'In 2025, a different kind of satellite.', 'NISAR, built by NASA and India’s ISRO, does not take photographs. It sends its own radar signal and listens for the echo.'],
-    ['03 / 03 · Radar', 'It sees straight through.', 'Day or night, cloud or not, every 12 days. This is its real image of Karachi\'s coast: bright is forest and town, dark is water.'],
+    ['03 / 03 · Radar', 'It sees straight through.', 'Day or night, cloud or not, every 12 days. This is its real image of Karachi’s mangrove coast: bright is forest and town, dark is water.'],
   ];
   let p = REDUCE ? 1 : 0, stage = -1, t = 0;
+  const sat = $('#blind .sat');
+
   const draw = () => {
     fit(c);
     const w = c.width, h = c.height;
@@ -151,10 +213,17 @@ if (!REDUCE) {
       if (rev < 1) { const gr = g.createLinearGradient(w * rev - 90 * DPR, 0, w * rev, 0); gr.addColorStop(0, 'rgba(176,120,42,0)'); gr.addColorStop(1, 'rgba(176,120,42,.85)'); g.fillStyle = gr; g.fillRect(w * rev - 90 * DPR, 0, 90 * DPR, h); }
     }
     if (pass > 0 && pass < 1) { // the satellite crossing, with its radar beam
-      const X = lerp(-80 * DPR, w + 80 * DPR, pass), Y = h * 0.14;
+      const X = lerp(-80 * DPR, w + 80 * DPR, pass), Y = h * 0.2;
       g.fillStyle = 'rgba(176,120,42,.16)'; g.beginPath(); g.moveTo(X - 8 * DPR, Y); g.lineTo(X - 190 * DPR, h); g.lineTo(X + 190 * DPR, h); g.lineTo(X + 8 * DPR, Y); g.fill();
-      g.fillStyle = MOCHA; g.fillRect(X - 12 * DPR, Y - 9 * DPR, 24 * DPR, 18 * DPR);
-      g.fillStyle = '#8f7f6c'; g.fillRect(X - 46 * DPR, Y - 5 * DPR, 30 * DPR, 10 * DPR); g.fillRect(X + 16 * DPR, Y - 5 * DPR, 30 * DPR, 10 * DPR);
+    }
+    // the 3D satellite follows the same path as the beam, as a DOM element on top of the canvas
+    const fade = clamp(Math.min(pass * 6, (1 - pass) * 6), 0, 1);
+    if (pass > 0 && pass < 1) {
+      const X = lerp(-80 * DPR, w + 80 * DPR, pass), Y = h * 0.2;
+      sat.style.transform = `translate(${(X / w * c.clientWidth).toFixed(1)}px, ${(Y / h * c.clientHeight).toFixed(1)}px) translate(-50%, -50%)`;
+      sat.style.opacity = fade.toFixed(2);
+    } else {
+      sat.style.opacity = '0';
     }
     const s = p < 0.42 ? 0 : p < 0.62 ? 1 : 2;
     if (s !== stage) { stage = s; $('#bStage').textContent = copy[s][0]; $('#bH').textContent = copy[s][1]; $('#bD').textContent = copy[s][2]; }
@@ -177,15 +246,41 @@ function lineChart(sel, pts, labels, col) {
 }
 lineChart('#gWorld', [152604, 147359], ['1996 · 152,604 km²', '2020 · 147,359 km²'], MOCHA);
 lineChart('#gDelta', [50973, 101446], ['1990 · 50,973 ha', '2023 · 101,446 ha'], MOCHA);
-loadStats().then((S) => {
-  const ys = S.gmw_timeseries.years.filter((y) => y.year % 10 === 5), bw = 44; // 1985, 1995, ... 2025 (GMW v4.1)
-  $('#gLocal').innerHTML = `<line x1="6" x2="294" y1="100" y2="100" stroke="currentColor" opacity=".3"/>` + ys.map((y, i) => {
-    const hgt = (y.km2 / 200) * 92, x = 14 + i * ((280 - bw) / (ys.length - 1));
-    return `<rect class="bar" x="${x}" y="${100 - hgt}" width="${bw}" height="${hgt}" fill="#7d8f63"/>
-      <text x="${x + bw / 2}" y="${94 - hgt}" font-size="10" text-anchor="middle" font-family="Geist Mono" fill="currentColor">${y.km2.toFixed(1)}</text>
-      <text x="${x + bw / 2}" y="116" font-size="10" text-anchor="middle" font-family="Geist Mono" fill="currentColor" opacity=".7">${y.year}</text>`;
-  }).join('');
-  if (REDUCE) return;
-  gsap.from('#gLocal .bar', { scaleY: 0, transformOrigin: '50% 100%', duration: 1.6, ease: EASE, stagger: 0.15, scrollTrigger: { trigger: '#gLocal', start: 'top 85%', once: true } });
-});
 if (!REDUCE) $$('.draw').forEach((l) => gsap.from(l, { strokeDashoffset: 1, duration: 2, ease: 'power2.inOut', scrollTrigger: { trigger: l, start: 'top 85%', once: true } }));
+
+/* ---------- 6 · the proof: one fixed map of the forest that was lost ----------
+   Global Mangrove Watch v4.1 loss year (yellow long ago, red recently) and the decline zones, over our own
+   Sentinel-2 photo. Framed on the four zones east of Rehri Goth (A, B, C, G). No controls: it is evidence, not a tool;
+   the full map is one click away. Loaded only when the section comes near, so its tiles do not slow the page. */
+{
+  const el = $('#impactMap');
+  if (el) new IntersectionObserver(([e], io) => {
+    if (!e.isIntersecting) return;
+    io.disconnect();
+    const [w, s, ee, n] = BBOX, box = [[s, w], [n, ee]];
+    const view = L.latLngBounds([[24.738, 67.276], [24.794, 67.344]]);
+    const map = L.map(el, {
+      zoomControl: false, dragging: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false,
+      keyboard: false, touchZoom: false, tap: false, attributionControl: true, zoomSnap: 0.25,
+    }).fitBounds(view);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      { attribution: 'Basemap: Esri, Maxar, Earthstar Geographics (reference only)', maxNativeZoom: 18, opacity: 0.45 }).addTo(map);
+    L.tileLayer(`${TILE_BASE}/s2_truecolor_2025_26/{z}/{x}/{y}.png`, { bounds: box, minNativeZoom: 10, maxNativeZoom: 15, attribution: 'Photo: Sentinel-2 2025–26 (Copernicus)' }).addTo(map);
+    L.tileLayer(`${TILE_BASE}/gmw4_lossyear/{z}/{x}/{y}.png`, { bounds: box, minNativeZoom: 10, maxNativeZoom: 14, attribution: 'Global Mangrove Watch v4.1, CoastLens' }).addTo(map);
+    fetch(import.meta.env.BASE_URL + 'data/zones.geojson').then((r) => r.json()).then((zones) => {
+      L.geoJSON(zones, {
+        style: { color: '#f0566f', weight: 2.5, dashArray: '6 4', fillColor: '#f0566f', fillOpacity: 0.06 },
+        onEachFeature: (f, lyr) => {
+          const p = f.properties;
+          // the worst zone carries its number on the map; the rest say theirs on hover
+          lyr.bindTooltip(`Zone ${p.id}: ${p.peak_km2.toFixed(2)} → ${p.km2_2025.toFixed(2)} km² (−${Math.round(p.lost_pct)}%)`,
+            { permanent: p.id === 'A', className: 'impact-tip',
+              ...(innerWidth < 700 ? { direction: 'top', offset: [0, -6] } : { direction: 'right', offset: [8, 0] }) });
+        },
+      }).addTo(map);
+      const a = zones.features.find((f) => f.properties.id === 'A')?.properties;
+      if (a) $('#impactLine').textContent = `Across the whole coast the mapped forest grew. But in ${zones.features.length} small zones it kept shrinking: in the worst one, ${a.peak_km2.toFixed(2)} km² of mangrove in ${a.peak_year} became ${a.km2_2025.toFixed(2)} km² by 2025 (−${Math.round(a.lost_pct)}%).`;
+    });
+    addEventListener('resize', () => { map.invalidateSize(); map.fitBounds(view); });
+  }, { rootMargin: '400px 0px' }).observe(el);
+}
