@@ -7,7 +7,7 @@ import { TILE_BASE } from './tiles.js';
 
 init();
 const OPTICAL = 's2_truecolor_2025_26', RADAR = 'nisar_hv_20261011';
-const SAND = '#eadfcb', MOCHA = '#3a2c24', LBAND = '#b0782a';
+const SAND_LIGHT = '#f4ede0', MOCHA = '#3a2c24', CORAL = '#f0566f';
 
 /* ---------- 1 · hero: real image, illustrated cloud, radar lens ---------- */
 {
@@ -29,22 +29,45 @@ const SAND = '#eadfcb', MOCHA = '#3a2c24', LBAND = '#b0782a';
     g.imageSmoothingEnabled = true;
     cover(g, base, w, h, view.zoom);
     drawClouds(g, w, h, t);
-    const r = Math.min(w, h) * (FINE ? 0.14 : 0.17);
+    const r = Math.min(w, h) * (FINE ? 0.115 : 0.14), X = lens.x, Y = lens.y;
+    // soft shadow so the lens sits above the cloud
     g.save();
-    g.beginPath(); g.arc(lens.x, lens.y, r, 0, 7); g.clip();
-    cover(g, rad, w, h, view.zoom);
+    g.shadowColor = 'rgba(58, 44, 36, 0.4)'; g.shadowBlur = 26 * DPR; g.shadowOffsetY = 8 * DPR;
+    g.fillStyle = '#141210'; g.beginPath(); g.arc(X, Y, r, 0, 7); g.fill();
     g.restore();
-    // lens ring, ticks and label
-    g.strokeStyle = SAND; g.lineWidth = 5 * DPR;
-    g.beginPath(); g.arc(lens.x, lens.y, r, 0, 7); g.stroke();
-    g.strokeStyle = LBAND; g.lineWidth = 1.5 * DPR;
-    g.beginPath(); g.arc(lens.x, lens.y, r + 7 * DPR, 0, 7); g.stroke();
-    for (let k = 0; k < 36; k++) {
-      const a = (k / 36) * 6.283 + t * 0.05, l = (k % 9 ? 5 : 13) * DPR, r0 = r + 10 * DPR;
-      g.beginPath(); g.moveTo(lens.x + Math.cos(a) * r0, lens.y + Math.sin(a) * r0); g.lineTo(lens.x + Math.cos(a) * (r0 + l), lens.y + Math.sin(a) * (r0 + l)); g.stroke();
+    g.save();
+    g.beginPath(); g.arc(X, Y, r, 0, 7); g.clip();
+    cover(g, rad, w, h, view.zoom);
+    // a faint glass shade towards the rim
+    const sh = g.createRadialGradient(X, Y, r * 0.55, X, Y, r);
+    sh.addColorStop(0, 'rgba(20, 18, 16, 0)'); sh.addColorStop(1, 'rgba(20, 18, 16, 0.38)');
+    g.fillStyle = sh; g.fillRect(X - r, Y - r, r * 2, r * 2);
+    g.restore();
+    // thin light rim, a hairline outer ring with four ticks, and one slow coral sweep
+    g.lineCap = 'round';
+    g.strokeStyle = SAND_LIGHT; g.lineWidth = 2 * DPR;
+    g.beginPath(); g.arc(X, Y, r, 0, 7); g.stroke();
+    const r1 = r + 9 * DPR;
+    g.strokeStyle = 'rgba(58, 44, 36, 0.38)'; g.lineWidth = 1 * DPR;
+    g.beginPath(); g.arc(X, Y, r1, 0, 7); g.stroke();
+    for (let k = 0; k < 4; k++) {
+      const a = (k / 4) * 6.283 - 0.785;
+      g.beginPath(); g.moveTo(X + Math.cos(a) * (r1 - 4 * DPR), Y + Math.sin(a) * (r1 - 4 * DPR)); g.lineTo(X + Math.cos(a) * (r1 + 5 * DPR), Y + Math.sin(a) * (r1 + 5 * DPR)); g.stroke();
     }
-    g.font = `500 ${11 * DPR}px "Geist Mono", monospace`; g.fillStyle = MOCHA; g.textAlign = 'center';
-    g.fillText('RADAR · SEES THROUGH CLOUD', lens.x, lens.y - r - 30 * DPR);
+    const sw = t * 0.5;
+    g.strokeStyle = CORAL; g.lineWidth = 2.5 * DPR;
+    g.beginPath(); g.arc(X, Y, r1, sw, sw + 0.7); g.stroke();
+    g.fillStyle = CORAL; g.beginPath(); g.arc(X + Math.cos(sw + 0.7) * r1, Y + Math.sin(sw + 0.7) * r1, 3 * DPR, 0, 7); g.fill();
+    g.lineCap = 'butt';
+    // small label on a pill, so it reads over cloud and land alike
+    const txt = 'RADAR VIEW';
+    g.font = `500 ${9.5 * DPR}px "Geist Mono", monospace`; g.textAlign = 'center'; g.textBaseline = 'middle';
+    const tw = g.measureText(txt).width + 30 * DPR, th = 20 * DPR, ly = Y - r1 - 20 * DPR;
+    g.fillStyle = 'rgba(244, 237, 224, 0.86)';
+    g.beginPath(); g.roundRect(X - tw / 2, ly - th / 2, tw, th, th / 2); g.fill();
+    g.fillStyle = CORAL; g.beginPath(); g.arc(X - tw / 2 + 11 * DPR, ly, 2.5 * DPR, 0, 7); g.fill();
+    g.fillStyle = MOCHA; g.fillText(txt, X + 5 * DPR, ly + 0.5 * DPR);
+    g.textBaseline = 'alphabetic';
     // live coordinate of the lens centre (approximate, from the cover fit)
     const s = Math.max(w / base.width, h / base.height) * view.zoom;
     const u = (lens.x - (w - base.width * s) / 2) / (base.width * s), v = (lens.y - (h - base.height * s) / 2) / (base.height * s);
@@ -193,13 +216,15 @@ const SAND = '#eadfcb', MOCHA = '#3a2c24', LBAND = '#b0782a';
     fit(c);
     const w = c.width, h = c.height;
     t += REDUCE ? 0 : 0.016;
-    const grow = clamp(p / 0.22, 0, 1), cloud = clamp((p - 0.18) / 0.2, 0, 1), pass = clamp((p - 0.42) / 0.22, 0, 1), rev = clamp((p - 0.62) / 0.3, 0, 1);
+    const grow = clamp(p / 0.14, 0, 1), cloud = clamp((p - 0.12) / 0.14, 0, 1), pass = clamp((p - 0.3) / 0.4, 0, 1), rev = clamp((p - 0.7) / 0.24, 0, 1);
+    // the satellite slows down over the middle of the frame, so it stays in view while you scroll
+    const u = 2 * pass - 1, glide = 0.5 + 0.5 * Math.sign(u) * Math.pow(Math.abs(u), 1.7);
     if (!REDUCE) {
       const k = 1 - gsap.parseEase('power2.inOut')(grow), m = innerWidth < 900;
       frame.style.clipPath = `inset(${(m ? 30 : 24) * k}% ${(m ? 12 : 30) * k}%)`;
     }
     if (!REDUCE) {
-      const a = clamp((p - 0.14) / 0.1, 0, 1);
+      const a = clamp((p - 0.09) / 0.07, 0, 1);
       intro.style.opacity = 1 - grow; intro.style.transform = `translateY(${-40 * grow}px)`;
       box.style.opacity = a; box.style.transform = `translateY(${30 * (1 - a)}px)`;
     }
@@ -213,24 +238,24 @@ const SAND = '#eadfcb', MOCHA = '#3a2c24', LBAND = '#b0782a';
       if (rev < 1) { const gr = g.createLinearGradient(w * rev - 90 * DPR, 0, w * rev, 0); gr.addColorStop(0, 'rgba(176,120,42,0)'); gr.addColorStop(1, 'rgba(176,120,42,.85)'); g.fillStyle = gr; g.fillRect(w * rev - 90 * DPR, 0, 90 * DPR, h); }
     }
     if (pass > 0 && pass < 1) { // the satellite crossing, with its radar beam
-      const X = lerp(-80 * DPR, w + 80 * DPR, pass), Y = h * 0.2;
+      const X = lerp(-80 * DPR, w + 80 * DPR, glide), Y = h * 0.2;
       g.fillStyle = 'rgba(176,120,42,.16)'; g.beginPath(); g.moveTo(X - 8 * DPR, Y); g.lineTo(X - 190 * DPR, h); g.lineTo(X + 190 * DPR, h); g.lineTo(X + 8 * DPR, Y); g.fill();
     }
     // the 3D satellite follows the same path as the beam, as a DOM element on top of the canvas
-    const fade = clamp(Math.min(pass * 6, (1 - pass) * 6), 0, 1);
+    const fade = clamp(Math.min(pass * 8, (1 - pass) * 8), 0, 1);
     if (pass > 0 && pass < 1) {
-      const X = lerp(-80 * DPR, w + 80 * DPR, pass), Y = h * 0.2;
+      const X = lerp(-80 * DPR, w + 80 * DPR, glide), Y = h * 0.2;
       sat.style.transform = `translate(${(X / w * c.clientWidth).toFixed(1)}px, ${(Y / h * c.clientHeight).toFixed(1)}px) translate(-50%, -50%)`;
       sat.style.opacity = fade.toFixed(2);
     } else {
       sat.style.opacity = '0';
     }
-    const s = p < 0.42 ? 0 : p < 0.62 ? 1 : 2;
+    const s = p < 0.3 ? 0 : p < 0.7 ? 1 : 2;
     if (s !== stage) { stage = s; $('#bStage').textContent = copy[s][0]; $('#bH').textContent = copy[s][1]; $('#bD').textContent = copy[s][2]; }
   };
   whileVisible($('#blind'), draw);
   if (!REDUCE) {
-    ScrollTrigger.create({ trigger: '#blind', start: 'top top', end: '+=260%', pin: true, scrub: 1, onUpdate: (s) => (p = s.progress) });
+    ScrollTrigger.create({ trigger: '#blind', start: 'top top', end: '+=420%', pin: true, scrub: 1, onUpdate: (s) => (p = s.progress) });
   }
 }
 
